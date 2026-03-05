@@ -791,6 +791,7 @@ body.cursor-dark #cursor .c-ring {
 }
 
 /* ── CONTACT ── */
+
 #contact {
   background: var(--black);
   min-height: 80vh;
@@ -887,6 +888,33 @@ footer {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
+  #cursor .c-dot {
+    display: none;
+  }
+
+  #cursor .c-ring {
+    display: none;
+  }
+  #cursor {
+    display: none;
+  }
+
+  .proj-name {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    padding-left: 13rem;
+    margin-top: 7rem;
+  }
+
+  .proj-tag {
+    font-size: 0.56rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(236, 233, 227, 0.18);
+  }
   #about {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -932,6 +960,18 @@ footer {
 }
 
 @media (max-width: 600px) {
+  .proj-name {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    padding-left: 13rem;
+    margin-top: 7rem;
+  }
+  #cursor {
+    display: none;
+  }
   .projects-grid {
     grid-template-columns: 1fr;
   }
@@ -939,5 +979,13 @@ footer {
   .hero-meta {
     flex-direction: column;
     gap: 1.5rem;
+  }
+
+  #cursor .c-dot {
+    display: none;
+  }
+
+  #cursor .c-ring {
+    display: none;
   }
 }
