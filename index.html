@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A.M — Portfolio</title>
+
+    <link
+      rel="shortcut icon"
+      href="image/nanotechnology_4094724.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ── CUSTOM CURSOR ── -->
+    <div id="cursor">
+      <div class="c-ring"></div>
+      <div class="c-dot"></div>
+    </div>
+
+    <!-- ── INTRO OVERLAY ── -->
+    <div id="intro">
+      <div id="intro-rule"></div>
+      <div id="intro-monogram">
+        <span class="intro-letter" id="il-a">A</span>
+        <span class="intro-sep" id="il-dot">·</span>
+        <span class="intro-letter" id="il-m">M</span>
+      </div>
+      <div id="intro-sub">Adeogun Mojola</div>
+      <div id="intro-wipe"></div>
+    </div>
+
+    <!-- ── HEADER ── -->
+    <header id="site-header">
+      <div class="logo">A<span class="logo-dot">·</span>M</div>
+      <div class="avail-pill">
+        <span class="pulse"></span>Available for work
+      </div>
+    </header>
+
+    <!-- ── MAIN ── -->
+    <main id="main">
+      <!-- HERO -->
+      <section id="hero">
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+          <p class="hero-eyebrow">
+            <span>Frontend Developer · Lagos, NG · 2026</span>
+          </p>
+          <h1 class="hero-name">
+            <span class="hline"><span>ADEOGUN</span></span>
+            <span class="hline"><span>MOJOLA</span></span>
+          </h1>
+          <div class="hero-meta">
+            <div class="meta-item">
+              <span>Specialty</span>
+              <span><strong>Frontend Dev</strong></span>
+            </div>
+            <div class="meta-item">
+              <span>Stack</span>
+              <span
+                ><strong
+                  >HTML5 · CSS3 · JavaScript (ES6+) · React · Next.js · Three.js
+                  · GSAP</strong
+                ></span
+              >
+            </div>
+            <div class="meta-item">
+              <span>Based in</span>
+              <span><strong>Lagos, NG</strong></span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-scroll">Scroll</div>
+      </section>
+
+      <!-- MARQUEE -->
+      <div class="marquee-wrap">
+        <div class="marquee-track">
+          <span>Frontend Development</span><span class="sep">—</span>
+          <span>React</span><span class="sep">—</span> <span>Three.js</span
+          ><span class="sep">—</span> <span>GSAP</span
+          ><span class="sep">—</span> <span>WebGL</span
+          ><span class="sep">—</span> <span>Performance</span
+          ><span class="sep">—</span> <span>Animation</span
+          ><span class="sep">—</span> <span>Creative Code</span
+          ><span class="sep">—</span> <span>Frontend Development</span
+          ><span class="sep">—</span> <span>React</span
+          ><span class="sep">—</span> <span>Three.js</span
+          ><span class="sep">—</span> <span>GSAP</span
+          ><span class="sep">—</span> <span>WebGL</span
+          ><span class="sep">—</span> <span>Performance</span
+          ><span class="sep">—</span> <span>Animation</span
+          ><span class="sep">—</span> <span>Creative Code</span
+          ><span class="sep">—</span>
+        </div>
+      </div>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <div class="about-left">
+          <p class="section-label" data-reveal>00 / About</p>
+          <h2 class="about-headline" data-reveal="slow">
+            Building the<br />web with<br /><em>intention</em><br />and craft.
+          </h2>
+        </div>
+        <div class="about-right">
+          <p class="about-body" data-reveal>
+            I'm a frontend developer focused on building clean, responsive, and
+            interactive web experiences. I care about structure, performance,
+            and writing code that’s easy to scale and maintain.
+          </p>
+          <p class="about-body" data-reveal style="transition-delay: 0.12s">
+            From well-crafted landing pages to interactive 3D sections with
+            Three.js, I aim to combine solid engineering with thoughtful design.
+            I pay attention to details that improve usability — load speed,
+            smooth motion, and intuitive interactions.
+          </p>
+          <div class="about-stats" data-reveal style="transition-delay: 0.22s">
+            <div>
+              <div class="stat-num">05+</div>
+              <div class="stat-lbl">Yrs Experience</div>
+            </div>
+            <div>
+              <div class="stat-num">20+</div>
+              <div class="stat-lbl">Projects</div>
+            </div>
+            <div>
+              <div class="stat-num">12+</div>
+              <div class="stat-lbl">Clients</div>
+            </div>
+            <div>
+              <div class="stat-num">&#8734;</div>
+              <div class="stat-lbl">Commits</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WORKS -->
+      <section id="works">
+        <div class="works-hdr" data-reveal>
+          <h2 class="works-title">Selected Work</h2>
+          <span class="works-count">01 — 05</span>
+        </div>
+        <div class="projects-grid">
+          <div class="proj-card" data-reveal>
+            <img
+              src="image/project 01.png"
+              alt="Project One"
+              class="proj-img"
+            />
+            <div class="proj-bracket"><span></span></div>
+            <div class="proj-overlay"></div>
+            <div class="proj-ghost">01</div>
+            <div class="proj-inner">
+              <span class="proj-num">01 / 2025</span>
+              <div>
+                <div class="proj-name">FAISAL BIDMOS</div>
+                <div class="proj-tag">Frontend · React</div>
+              </div>
+            </div>
+            <div class="proj-arrow">
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <a
+              href="https://yoursite.com"
+              target="_blank"
+              rel="noopener"
+              class="proj-view-btn"
+            >
+              View Site
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="proj-card" data-reveal style="transition-delay: 0.08s">
+            <img
+              src="image/project 02.png"
+              alt="Project One"
+              class="proj-img"
+            />
+            <div class="proj-bracket"><span></span></div>
+            <div class="proj-overlay"></div>
+            <div class="proj-ghost">02</div>
+            <div class="proj-inner">
+              <span class="proj-num">02 / 2025</span>
+              <div>
+                <div class="proj-name">URBANHIVE</div>
+                <div class="proj-tag">Three.js · WebGL</div>
+              </div>
+            </div>
+            <div class="proj-arrow">
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <a
+              href="https://yoursite.com"
+              target="_blank"
+              rel="noopener"
+              class="proj-view-btn"
+            >
+              View Site
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="proj-card" data-reveal style="transition-delay: 0.04s">
+            <img src="image/project03.png" alt="Project One" class="proj-img" />
+            <div class="proj-bracket"><span></span></div>
+            <div class="proj-overlay"></div>
+            <div class="proj-ghost">03</div>
+            <div class="proj-inner">
+              <span class="proj-num">03 / 2024</span>
+              <div>
+                <div class="proj-name">ABP INDUSTRIES</div>
+                <div class="proj-tag">GSAP · Animation</div>
+              </div>
+            </div>
+            <div class="proj-arrow">
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <a
+              href="https://yoursite.com"
+              target="_blank"
+              rel="noopener"
+              class="proj-view-btn"
+            >
+              View Site
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="proj-card" data-reveal style="transition-delay: 0.1s">
+            <img
+              src="image/project 04.png"
+              alt="Project One"
+              class="proj-img"
+            />
+            <div class="proj-bracket"><span></span></div>
+            <div class="proj-overlay"></div>
+            <div class="proj-ghost">04</div>
+            <div class="proj-inner">
+              <span class="proj-num">04 / 2024</span>
+              <div>
+                <div class="proj-name">QPAT SOLUTION</div>
+                <div class="proj-tag">Next.js · Perf</div>
+              </div>
+            </div>
+            <div class="proj-arrow">
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+
+          <!-- <div class="proj-card" data-reveal style="transition-delay: 0.14s">
+            <img src="images/project1.jpg" alt="Project One" class="proj-img" />
+            <div class="proj-bracket"><span></span></div>
+            <div class="proj-overlay"></div>
+            <div class="proj-ghost">05</div>
+            <div class="proj-inner">
+              <span class="proj-num">05 / 2024</span>
+              <div>
+                <div class="proj-name">Project Five</div>
+                <div class="proj-tag">CSS · Motion</div>
+              </div>
+            </div>
+            <div class="proj-arrow">
+              <svg viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M1 11L11 1M11 1H1M11 1V11"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div> -->
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <p class="section-label" data-reveal>03 / Get In Touch</p>
+        <h2 class="contact-big" data-reveal="slow">
+          Let's build<br />something<br /><em>great.</em>
+        </h2>
+        <div class="contact-grid" data-reveal style="transition-delay: 0.1s">
+          <a class="contact-item" href="mailto:mojolaoluwa45@gmail.com">
+            <span class="contact-item-label">Email</span>
+            <span class="contact-item-val">mojolaoluwa45@gmail.com</span>
+          </a>
+          <a class="contact-item" href="tel:09160822180">
+            <span class="contact-item-label">Phone</span>
+            <span class="contact-item-val">+234 916 082 2180</span>
+          </a>
+          <a
+            class="contact-item"
+            href="https://linkedin.com/in/mojola-adeogun"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="contact-item-label">LinkedIn</span>
+            <span class="contact-item-val">Mojola Adeogun</span>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <span>© 2026 Adeogun Mojola</span>
+      <span>Built with precision</span>
+      <span>Lagos, NG</span>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>
