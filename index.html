@@ -395,7 +395,7 @@
         box-shadow:
           0 30px 80px rgba(0, 0, 0, 0.8),
           0 0 80px rgba(60, 80, 200, 0.15);
-        overflow: visible;
+
         color: #e8edff;
       }
       #card-solar .card-inner {
@@ -497,19 +497,107 @@
         pointer-events: all;
       }
       @media (max-width: 960px) {
+        html,
+        body {
+          overflow: hidden;
+          height: 100%;
+          zoom: 0.9;
+        }
         #portal {
           flex-direction: column;
-          gap: 1.5rem;
+          gap: 1.25rem;
           overflow-y: auto;
           align-items: center;
-          padding: 5rem 1.5rem 4rem;
+          padding: 4rem 1.25rem 3rem;
         }
         .card {
-          width: 300px;
+          width: min(300px, 90vw);
           height: auto;
         }
         .card-inner {
-          padding: 1.5rem;
+          padding: 1.25rem;
+        }
+        .card-title {
+          font-size: 18px;
+        }
+        .card-desc {
+          font-size: 12px;
+          margin-bottom: 1rem;
+        }
+        .card-avatar {
+          width: 44px;
+          height: 44px;
+          font-size: 18px;
+          margin-bottom: 0.75rem;
+        }
+        .card-subtitle {
+          margin-bottom: 0.6rem;
+        }
+      }
+      @media (max-width: 480px) {
+        html,
+        body {
+          overflow: hidden;
+          height: 100%;
+          zoom: 0.9;
+        }
+        #portal {
+          position: fixed;
+          inset: 0;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
+          padding: 3.5rem 1rem 2.5rem;
+          gap: 1rem;
+          justify-content: flex-start;
+        }
+        .card {
+          width: 100%;
+          max-width: 340px;
+          height: auto;
+          flex-shrink: 0;
+        }
+        .card-inner {
+          padding: 1.1rem;
+        }
+        .card-title {
+          font-size: 16px;
+          margin-bottom: 0.25rem;
+        }
+        #card-normal .card-title {
+          font-size: 22px;
+        }
+        #card-game .card-title {
+          font-size: 15px;
+        }
+        .card-desc {
+          font-size: 11px;
+          line-height: 1.55;
+          margin-bottom: 0.85rem;
+        }
+        .card-avatar {
+          width: 40px;
+          height: 40px;
+          font-size: 16px;
+          margin-bottom: 0.6rem;
+        }
+        .card-badge {
+          font-size: 8px;
+          padding: 3px 8px;
+        }
+        .card-subtitle {
+          font-size: 10px;
+          margin-bottom: 0.5rem;
+        }
+        .card-cta {
+          font-size: 10px;
+        }
+        #hint {
+          font-size: 9px;
+          bottom: 1rem;
+          gap: 6px;
+        }
+        #header .sub {
+          font-size: 9px;
         }
       }
     </style>
@@ -519,9 +607,7 @@
     <div id="overlay"></div>
     <div id="header"><div class="sub">three worlds · one creator</div></div>
 
-    <div id="hint">
-      press <span class="key">B</span> anywhere to return · tap a card to visit
-    </div>
+    <div id="hint">Tap the card to visit website</div>
 
     <div id="portal">
       <div class="card" id="card-normal" style="transition-delay: 0.1s">
@@ -537,7 +623,7 @@
           </div>
           <button
             class="card-cta"
-            onclick="visitSite('https://amdev-main.vercel.app/home.html')"
+            onclick="visitSite('http://127.0.0.1:5501/home.html')"
           >
             Enter site <span class="arrow"></span>
           </button>
@@ -700,7 +786,7 @@
       document
         .getElementById("card-normal")
         .addEventListener("click", () =>
-          visitSite("https://amdev-main.vercel.app/home.html"),
+          visitSite("http://127.0.0.1:5501/home.html"),
         );
       document
         .getElementById("card-game")
