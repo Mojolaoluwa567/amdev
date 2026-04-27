@@ -10,7 +10,11 @@
       href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;700;800&display=swap"
       rel="stylesheet"
     />
-
+    <link
+      rel="shortcut icon"
+      href="image/nanotechnology_4094724.png"
+      type="image/x-icon"
+    />
     <style>
       *,
       *::before,
@@ -19,12 +23,10 @@
         margin: 0;
         padding: 0;
       }
-
       :root {
         --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
         --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
       }
-
       html,
       body {
         width: 100%;
@@ -34,16 +36,12 @@
         color: #f4f4f5;
         font-family: "Syne", sans-serif;
       }
-
-      /* ── CANVAS BACKGROUND ─────────────────── */
       #bg-canvas {
         position: fixed;
         inset: 0;
         z-index: 0;
         pointer-events: none;
       }
-
-      /* ── HINT ─────────────────────────────── */
       #hint {
         position: fixed;
         bottom: 2rem;
@@ -61,7 +59,6 @@
         transition: opacity 1s ease;
         white-space: nowrap;
       }
-
       #hint .key {
         display: inline-flex;
         align-items: center;
@@ -86,8 +83,6 @@
         opacity: 0;
         pointer-events: none;
       }
-
-      /* ── PORTAL WRAPPER ───────────────────── */
       #portal {
         position: fixed;
         inset: 0;
@@ -107,8 +102,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-
-      /* ── CARDS ────────────────────────────── */
       .card {
         flex: 0 0 auto;
         width: 280px;
@@ -136,7 +129,6 @@
       .card:active {
         transform: scale(0.98);
       }
-
       .card-inner {
         width: 100%;
         height: 100%;
@@ -146,7 +138,6 @@
         justify-content: flex-end;
         padding: 2rem 1.75rem;
       }
-
       .card-badge {
         position: absolute;
         top: 1.25rem;
@@ -158,7 +149,6 @@
         border-radius: 100px;
         text-transform: uppercase;
       }
-
       .card-avatar {
         width: 54px;
         height: 54px;
@@ -171,7 +161,6 @@
         font-weight: 800;
         letter-spacing: -0.03em;
       }
-
       .card-title {
         font-size: 22px;
         font-weight: 800;
@@ -200,6 +189,11 @@
         letter-spacing: 0.15em;
         text-transform: uppercase;
         text-decoration: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        font-family: inherit;
         transition: gap 0.3s var(--ease-spring);
       }
       .card-cta:hover {
@@ -228,8 +222,7 @@
         inset: 0;
         background: currentColor;
       }
-
-      /* ─── CARD 1: NORMAL / EDITORIAL ─────── */
+      /* CARD 1 */
       #card-normal {
         background: #f5f0e8;
         box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
@@ -284,8 +277,7 @@
         height: 1px;
         background: rgba(0, 0, 0, 0.12);
       }
-
-      /* ─── CARD 2: GAME / NOKIA ────────────── */
+      /* CARD 2 */
       #card-game {
         background: #0a0e0a;
         border: 1px solid #1a3320;
@@ -334,7 +326,6 @@
         font-family: "Space Mono", monospace;
         font-size: 18px;
         border-radius: 4px;
-        image-rendering: pixelated;
       }
       #card-game .card-title {
         font-family: "Space Mono", monospace;
@@ -398,8 +389,7 @@
           opacity: 0;
         }
       }
-
-      /* ─── CARD 3: SOLAR SYSTEM / COSMIC ───── */
+      /* CARD 3 */
       #card-solar {
         background: #050818;
         box-shadow:
@@ -467,61 +457,8 @@
         border: 1px solid rgba(80, 100, 255, 0.15);
         pointer-events: none;
       }
+      /* BACK BTN */
 
-      /* ── BACK BUTTON ─────────────────────── */
-      #back-btn {
-        position: fixed;
-        top: 2rem;
-        left: 2rem;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-family: "Space Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        color: rgba(255, 255, 255, 0.4);
-        cursor: pointer;
-        padding: 8px 14px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 100px;
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(10px);
-        transition: all 0.3s ease;
-        text-decoration: none;
-        opacity: 0;
-        pointer-events: none;
-        transform: translateX(-20px);
-      }
-      #back-btn.visible {
-        opacity: 1;
-        pointer-events: all;
-        transform: translateX(0);
-        transition:
-          opacity 0.6s var(--ease-out) 0.3s,
-          transform 0.6s var(--ease-out) 0.3s,
-          color 0.2s,
-          border-color 0.2s,
-          background 0.2s;
-      }
-      #back-btn:hover {
-        color: rgba(255, 255, 255, 0.8);
-        border-color: rgba(255, 255, 255, 0.25);
-        background: rgba(255, 255, 255, 0.08);
-      }
-      #back-btn .b-key {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 18px;
-        height: 18px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
-        font-size: 11px;
-        font-weight: 700;
-      }
-
-      /* ── HEADER ──────────────────────────── */
       #header {
         position: fixed;
         top: 50%;
@@ -539,26 +476,13 @@
         transform: translate(-50%, calc(-50% - 20px));
         pointer-events: none;
       }
-      #header h1 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 96px;
-        font-weight: 300;
-        font-style: italic;
-        letter-spacing: -0.03em;
-        line-height: 1;
-        color: rgba(255, 255, 255, 0.08);
-        user-select: none;
-      }
       #header .sub {
         font-family: "Space Mono", monospace;
         font-size: 10px;
         letter-spacing: 0.3em;
         color: rgba(255, 255, 255, 0.2);
         text-transform: uppercase;
-        margin-top: 1rem;
       }
-
-      /* ── TRANSITION OVERLAY ──────────────── */
       #overlay {
         position: fixed;
         inset: 0;
@@ -572,8 +496,6 @@
         opacity: 1;
         pointer-events: all;
       }
-
-      /* ── RESPONSIVE ──────────────────────── */
       @media (max-width: 960px) {
         #portal {
           flex-direction: column;
@@ -594,30 +516,15 @@
   </head>
   <body>
     <canvas id="bg-canvas"></canvas>
-
     <div id="overlay"></div>
-
-    <div id="header">
-      <div class="sub">three worlds · one creator</div>
-    </div>
-
-    <a id="back-btn" href="#" onclick="goBack(event)">
-      <span class="b-key">B</span>
-      <span>back to site</span>
-    </a>
+    <div id="header"><div class="sub">three worlds · one creator</div></div>
 
     <div id="hint">
       press <span class="key">B</span> anywhere to return · tap a card to visit
     </div>
 
     <div id="portal">
-      <!-- CARD 1: Normal / Editorial -->
-      <div
-        class="card"
-        id="card-normal"
-        onclick="visitSite('normal')"
-        style="transition-delay: 0.1s"
-      >
+      <div class="card" id="card-normal" style="transition-delay: 0.1s">
         <div class="card-line"></div>
         <div class="card-inner">
           <span class="card-badge">Editorial</span>
@@ -628,20 +535,16 @@
             A refined space where craft meets code. Clean layouts, thoughtful
             typography, and a body of work built for clients who care.
           </div>
-          <a class="card-cta" href="https://amdev-main.vercel.app">
-            Enter site
-            <span class="arrow"></span>
-          </a>
+          <button
+            class="card-cta"
+            onclick="visitSite('https://amdev-main.vercel.app/home.html')"
+          >
+            Enter site <span class="arrow"></span>
+          </button>
         </div>
       </div>
 
-      <!-- CARD 2: Gameverse -->
-      <div
-        class="card"
-        id="card-game"
-        onclick="visitSite('game')"
-        style="transition-delay: 0.2s"
-      >
+      <div class="card" id="card-game" style="transition-delay: 0.2s">
         <div class="scanline"></div>
         <div class="pixel-corner tl"></div>
         <div class="pixel-corner tr"></div>
@@ -656,20 +559,16 @@
             A fully playable portfolio. Navigate the levels. Unlock the
             projects. High score beats the tutorial.
           </div>
-          <a class="card-cta" href="https://amdev2.vercel.app">
-            INSERT COIN
-            <span class="arrow"></span>
-          </a>
+          <button
+            class="card-cta"
+            onclick="visitSite('https://amdev2.vercel.app/')"
+          >
+            INSERT COIN <span class="arrow"></span>
+          </button>
         </div>
       </div>
 
-      <!-- CARD 3: Solar System -->
-      <div
-        class="card"
-        id="card-solar"
-        onclick="visitSite('solar')"
-        style="transition-delay: 0.3s"
-      >
+      <div class="card" id="card-solar" style="transition-delay: 0.3s">
         <div class="star-field" id="star-field"></div>
         <div
           class="orbit"
@@ -688,33 +587,31 @@
             Drift through a Three.js galaxy. Each planet is a project, each
             orbit a timeline. The universe is the interface.
           </div>
-          <a class="card-cta" href="https://solarsystem-two.vercel.app">
-            Launch
-            <span class="arrow"></span>
-          </a>
+          <button
+            class="card-cta"
+            onclick="visitSite('https://solarsystem-two.vercel.app/')"
+          >
+            Launch <span class="arrow"></span>
+          </button>
         </div>
       </div>
     </div>
-    <!-- /portal -->
 
     <script>
       const canvas = document.getElementById("bg-canvas");
       const ctx = canvas.getContext("2d");
-
       let W,
         H,
         particles = [];
-
       function resize() {
         W = canvas.width = window.innerWidth;
         H = canvas.height = window.innerHeight;
       }
       resize();
       window.addEventListener("resize", resize);
-
       function initParticles() {
         particles = [];
-        for (let i = 0; i < 120; i++) {
+        for (let i = 0; i < 120; i++)
           particles.push({
             x: Math.random() * W,
             y: Math.random() * H,
@@ -723,10 +620,8 @@
             vx: (Math.random() - 0.5) * 0.08,
             vy: (Math.random() - 0.5) * 0.08,
           });
-        }
       }
       initParticles();
-
       function drawBg() {
         ctx.clearRect(0, 0, W, H);
         for (const p of particles) {
@@ -744,54 +639,34 @@
         requestAnimationFrame(drawBg);
       }
       drawBg();
-
-      /* ── Star field inside solar card ── */
       const sf = document.getElementById("star-field");
       for (let i = 0; i < 60; i++) {
         const s = document.createElement("div");
         const size = Math.random() * 1.5 + 0.5;
-        s.style.cssText = `
-    position:absolute;
-    width:${size}px;height:${size}px;
-    border-radius:50%;
-    background:rgba(255,255,255,${Math.random() * 0.6 + 0.1});
-    top:${Math.random() * 100}%;left:${Math.random() * 100}%;
-    animation:twinkle ${2 + Math.random() * 3}s ease-in-out ${Math.random() * 3}s infinite alternate;
-  `;
+        s.style.cssText = `position:absolute;width:${size}px;height:${size}px;border-radius:50%;background:rgba(255,255,255,${Math.random() * 0.6 + 0.1});top:${Math.random() * 100}%;left:${Math.random() * 100}%;animation:twinkle ${2 + Math.random() * 3}s ease-in-out ${Math.random() * 3}s infinite alternate;`;
         sf.appendChild(s);
       }
-
-      const style = document.createElement("style");
-      style.textContent = `
-  @keyframes twinkle { from{opacity:0.1} to{opacity:0.9} }
-  @keyframes orbitSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-`;
-      document.head.appendChild(style);
-
-      /* ── Reveal sequence ── */
+      const st = document.createElement("style");
+      st.textContent = `@keyframes twinkle{from{opacity:0.1}to{opacity:0.9}}`;
+      document.head.appendChild(st);
       let revealed = false;
-
       function revealPortal() {
         if (revealed) return;
         revealed = true;
         document.getElementById("header").classList.add("hidden");
         document.getElementById("portal").classList.add("visible");
-        document.getElementById("back-btn").classList.add("visible");
 
-        const cards = document.querySelectorAll(".card");
-        cards.forEach((c, i) => {
-          setTimeout(() => c.classList.add("in"), 100 + i * 120);
-        });
-
-        setTimeout(() => {
-          document.getElementById("hint").classList.remove("hidden");
-        }, 600);
+        document
+          .querySelectorAll(".card")
+          .forEach((c, i) =>
+            setTimeout(() => c.classList.add("in"), 100 + i * 120),
+          );
+        setTimeout(
+          () => document.getElementById("hint").classList.remove("hidden"),
+          600,
+        );
       }
-
-      /* ── Auto-reveal after 0.8s ── */
       setTimeout(revealPortal, 800);
-
-      /* ── B key ── */
       document.addEventListener("keydown", (e) => {
         if (e.key === "b" || e.key === "B") {
           if (!revealed) {
@@ -801,37 +676,42 @@
           goBack(null);
         }
       });
-
       function goBack(e) {
         if (e) e.preventDefault();
-        const overlay = document.getElementById("overlay");
-        overlay.classList.add("active");
+        const ov = document.getElementById("overlay");
+        ov.classList.add("active");
         setTimeout(() => {
           history.back();
-          setTimeout(() => overlay.classList.remove("active"), 600);
+          setTimeout(() => ov.classList.remove("active"), 600);
         }, 400);
       }
-
-      function visitSite(type) {
-        const overlay = document.getElementById("overlay");
-        overlay.classList.add("active");
+      function visitSite(url) {
+        const ov = document.getElementById("overlay");
+        ov.classList.add("active");
         setTimeout(() => {
-          /* Replace with actual site URLs */
-          const urls = {
-            normal: "https://amdev-main.vercel.app/",
-            game: "https://amdev2.vercel.app/",
-            solar: "https://solarsystem-two.vercel.app/",
-          };
-          window.location.href = urls[type] || "/";
+          window.location.href = url;
         }, 500);
       }
+      setTimeout(
+        () => document.getElementById("hint").classList.add("hidden"),
+        7000,
+      );
 
-      /* ── Hide hint after 5s ── */
-      setTimeout(() => {
-        document.getElementById("hint").classList.add("hidden");
-      }, 7000);
-
-      /* ── Game card scanline flicker ── */
+      document
+        .getElementById("card-normal")
+        .addEventListener("click", () =>
+          visitSite("https://amdev-main.vercel.app/home.html"),
+        );
+      document
+        .getElementById("card-game")
+        .addEventListener("click", () =>
+          visitSite("https://amdev2.vercel.app/"),
+        );
+      document
+        .getElementById("card-solar")
+        .addEventListener("click", () =>
+          visitSite("https://solarsystem-two.vercel.app/"),
+        );
       const gameCard = document.getElementById("card-game");
       setInterval(() => {
         gameCard.style.filter = `brightness(${0.97 + Math.random() * 0.06})`;
