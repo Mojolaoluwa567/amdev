@@ -621,10 +621,7 @@
             A refined space where craft meets code. Clean layouts, thoughtful
             typography, and a body of work built for clients who care.
           </div>
-          <button
-            class="card-cta"
-            onclick="visitSite(' https://amdev-main.vercel.app/home.html')"
-          >
+          <button class="card-cta">
             Enter site <span class="arrow"></span>
           </button>
         </div>
@@ -645,10 +642,7 @@
             A fully playable portfolio. Navigate the levels. Unlock the
             projects. High score beats the tutorial.
           </div>
-          <button
-            class="card-cta"
-            onclick="visitSite('https://amdev2.vercel.app/')"
-          >
+          <button class="card-cta">
             INSERT COIN <span class="arrow"></span>
           </button>
         </div>
@@ -673,17 +667,13 @@
             Drift through a Three.js galaxy. Each planet is a project, each
             orbit a timeline. The universe is the interface.
           </div>
-          <button
-            class="card-cta"
-            onclick="visitSite('https://solarsystem-two.vercel.app/')"
-          >
-            Launch <span class="arrow"></span>
-          </button>
+          <button class="card-cta">Launch <span class="arrow"></span></button>
         </div>
       </div>
     </div>
 
     <script>
+      // ── Background canvas particles ──
       const canvas = document.getElementById("bg-canvas");
       const ctx = canvas.getContext("2d");
       let W,
@@ -725,6 +715,8 @@
         requestAnimationFrame(drawBg);
       }
       drawBg();
+
+      // ── Star field in solar card ──
       const sf = document.getElementById("star-field");
       for (let i = 0; i < 60; i++) {
         const s = document.createElement("div");
@@ -735,13 +727,14 @@
       const st = document.createElement("style");
       st.textContent = `@keyframes twinkle{from{opacity:0.1}to{opacity:0.9}}`;
       document.head.appendChild(st);
+
+      // ── Portal reveal ──
       let revealed = false;
       function revealPortal() {
         if (revealed) return;
         revealed = true;
         document.getElementById("header").classList.add("hidden");
         document.getElementById("portal").classList.add("visible");
-
         document
           .querySelectorAll(".card")
           .forEach((c, i) =>
@@ -753,36 +746,14 @@
         );
       }
       setTimeout(revealPortal, 800);
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "b" || e.key === "B") {
-          if (!revealed) {
-            revealPortal();
-            return;
-          }
-          goBack(null);
-        }
-      });
-      function goBack(e) {
-        if (e) e.preventDefault();
-        const ov = document.getElementById("overlay");
-        ov.classList.add("active");
-        setTimeout(() => {
-          history.back();
-          setTimeout(() => ov.classList.remove("active"), 600);
-        }, 400);
-      }
-      function visitSite(url) {
-        const ov = document.getElementById("overlay");
-        ov.classList.add("active");
-        setTimeout(() => {
-          window.location.href = url;
-        }, 500);
-      }
-      setTimeout(
-        () => document.getElementById("hint").classList.add("hidden"),
-        7000,
-      );
 
+      // ── visitSite: open in NEW TAB so portal stays alive ──
+      // Users can just close the tab or switch back — no blank page, no reload needed.
+      function visitSite(url) {
+        window.open(url, "_blank", "noopener,noreferrer");
+      }
+
+      // ── Card click listeners ──
       document
         .getElementById("card-normal")
         .addEventListener("click", () =>
@@ -798,10 +769,26 @@
         .addEventListener("click", () =>
           visitSite("https://solarsystem-two.vercel.app/"),
         );
+
+      // ── Keyboard shortcut ──
+      document.addEventListener("keydown", (e) => {
+        if (!revealed) {
+          revealPortal();
+          return;
+        }
+      });
+
+      // ── Game card flicker ──
       const gameCard = document.getElementById("card-game");
       setInterval(() => {
         gameCard.style.filter = `brightness(${0.97 + Math.random() * 0.06})`;
       }, 150);
+
+      // ── Hide hint after 7s ──
+      setTimeout(
+        () => document.getElementById("hint").classList.add("hidden"),
+        7000,
+      );
     </script>
   </body>
 </html>
