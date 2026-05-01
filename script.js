@@ -1,6 +1,11 @@
 /* =============================================
    A.M — Portfolio · script.js
    ============================================= */
+window.addEventListener("pageshow", (e) => {
+  if (e.persisted) {
+    window.location.reload();
+  }
+});
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js";
 
