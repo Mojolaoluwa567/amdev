@@ -345,9 +345,49 @@
         transition: opacity 0.4s ease;
       }
 
-      /* ─────────────────────────────────────────────────────
-         RESPONSIVE
-      ───────────────────────────────────────────────────── */
+      /* ── PLAY BUTTON (mobile video fallback) ── */
+      #play-btn {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 500;
+        display: none; /* hidden by default */
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        -webkit-tap-highlight-color: transparent;
+      }
+      /* shown when video fails to autoplay */
+      #play-btn.visible {
+        display: flex;
+      }
+      #play-btn.show {
+        opacity: 1;
+      }
+
+      .play-circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid currentColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.6;
+      }
+      .play-label {
+        font-family: "Oswald", sans-serif;
+        font-size: 9px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        opacity: 0.4;
+      }
+
+      /* ── RESPONSIVE ── */
       @media (max-width: 1024px) {
         .hero {
           margin-left: 4rem;
@@ -368,38 +408,6 @@
         .idx {
           left: -2.2rem;
           font-size: 9px;
-        }
-        #play-btn {
-          display: none; /* hidden by default always */
-          position: fixed;
-          bottom: 80px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 500;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          opacity: 0;
-          transition: opacity 0.5s ease;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .play-circle {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          border: 1px solid currentColor;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.6;
-        }
-        .play-label {
-          font-family: "Oswald", sans-serif;
-          font-size: 9px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          opacity: 0.4;
         }
       }
       @media (max-width: 540px) {
@@ -450,38 +458,6 @@
           font-size: 8px;
           letter-spacing: 0.22em;
         }
-        #play-btn {
-          display: none; /* hidden by default always */
-          position: fixed;
-          bottom: 80px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 500;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          opacity: 0;
-          transition: opacity 0.5s ease;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .play-circle {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          border: 1px solid currentColor;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.6;
-        }
-        .play-label {
-          font-family: "Oswald", sans-serif;
-          font-size: 9px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          opacity: 0.4;
-        }
       }
       @media (max-width: 380px) {
         .hero {
@@ -491,51 +467,20 @@
         .hero-line h1 {
           font-size: clamp(2rem, 17vw, 3rem);
         }
-        .idx {
-          left: -1.4rem;
-          font-size: 7px;
-        }
         .hero-line {
           padding: 0.42em 0;
         }
-        #play-btn {
-          display: none; /* hidden by default always */
-          position: fixed;
-          bottom: 80px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 500;
-          flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-          opacity: 0;
-          transition: opacity 0.5s ease;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .play-circle {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          border: 1px solid currentColor;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0.6;
-        }
-        .play-label {
-          font-family: "Oswald", sans-serif;
-          font-size: 9px;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          opacity: 0.4;
+        .idx {
+          left: -1.4rem;
+          font-size: 7px;
         }
       }
     </style>
   </head>
   <body>
     <div id="intro"></div>
-    <!-- CUSTOM PLAY BUTTON -->
+
+    <!-- MOBILE VIDEO FALLBACK BUTTON -->
     <div id="play-btn">
       <div class="play-circle">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
@@ -544,6 +489,7 @@
       </div>
       <span class="play-label">Play Reel</span>
     </div>
+
     <video
       id="bg-video"
       src="video/Folio edit.mp4"
@@ -556,6 +502,7 @@
       disablepictureinpicture
       disableremoteplayback
     ></video>
+
     <div class="cursor" id="cur"></div>
     <div class="cursor-ring" id="ring"></div>
     <div class="noise"></div>
@@ -572,13 +519,9 @@
 
     <main>
       <section class="hero">
-        <!-- ═══════════════════════════════════════════════
-             01 — DESIGN
-             MOBILE SIZES: data-mob-lw/lh/lleft/lmt  (left image)
-                           data-mob-rw/rh/rright/rmt  (right image)
-        ════════════════════════════════════════════════ -->
         <div
           class="hero-line"
+          data-word="Design"
           data-hover-class="hover-design"
           data-url="https://amdev-main.vercel.app/home.html"
           data-left="image/AM WIDE.png"
@@ -603,16 +546,14 @@
           data-mob-rmt="-70vw"
         >
           <span class="idx">01</span>
-          <h1 id="w1"></h1>
+          <h1></h1>
           <div class="ticker"></div>
           <span class="enter-tag">→ Enter</span>
         </div>
 
-        <!-- ═══════════════════════════════════════════════
-             02 — PLAY
-        ════════════════════════════════════════════════ -->
         <div
           class="hero-line"
+          data-word="Play"
           data-hover-class="hover-play"
           data-url="https://amdev2.vercel.app/"
           data-left="image/GP SLIM.png"
@@ -637,16 +578,14 @@
           data-mob-rmt="30vw"
         >
           <span class="idx">02</span>
-          <h1 id="w2"></h1>
+          <h1></h1>
           <div class="ticker"></div>
           <span class="enter-tag">→ Enter</span>
         </div>
 
-        <!-- ═══════════════════════════════════════════════
-             03 — UNIVERSE
-        ════════════════════════════════════════════════ -->
         <div
           class="hero-line"
+          data-word="Universe"
           data-hover-class="hover-universe"
           data-url="https://solarsystem-two.vercel.app/"
           data-left="image/uni WIDE.png"
@@ -671,7 +610,7 @@
           data-mob-rmt="-50vw"
         >
           <span class="idx">03</span>
-          <h1 id="w3"></h1>
+          <h1></h1>
           <div class="ticker"></div>
           <span class="enter-tag">→ Enter</span>
         </div>
@@ -692,7 +631,23 @@
     <p class="bottom-hint" id="bottom-hint"></p>
 
     <script>
-      /* ── BG VIDEO ────────────────────────────────────── */
+      /* ── DEVICE DETECTION ── */
+      const touch =
+        window.matchMedia("(hover:none),(pointer:coarse)").matches ||
+        "ontouchstart" in window ||
+        navigator.maxTouchPoints > 0;
+
+      /* ── INJECT WORDS + SPLIT INTO CHARS ── */
+      document.querySelectorAll(".hero-line").forEach((line) => {
+        const word = line.dataset.word || "";
+        const h1 = line.querySelector("h1");
+        h1.innerHTML = word
+          .split("")
+          .map((ch) => `<span class="char">${ch}</span>`)
+          .join("");
+      });
+
+      /* ── BG VIDEO ── */
       (function () {
         const vid = document.getElementById("bg-video");
         const btn = document.getElementById("play-btn");
@@ -701,9 +656,9 @@
         vid.defaultMuted = true;
 
         function showBtn() {
-          if (!touch) return;
           btn.classList.add("visible");
-          setTimeout(() => btn.classList.add("show"), 800);
+          // small delay so it doesn't flash on fast-loading devices
+          setTimeout(() => btn.classList.add("show"), 600);
         }
 
         function hideBtn() {
@@ -712,10 +667,10 @@
         }
 
         vid.play().catch(() => {
-          // show custom button on mobile
+          // Autoplay blocked — show the manual play button
           showBtn();
 
-          // still silently catch any tap anywhere as backup
+          // Also listen for any user gesture as a backup trigger
           const events = ["touchstart", "touchend", "click"];
           function onGesture() {
             vid
@@ -732,7 +687,7 @@
           );
         });
 
-        // explicit button tap
+        // Explicit button tap
         btn.addEventListener("click", () => {
           vid
             .play()
@@ -741,19 +696,13 @@
         });
       })();
 
-      /* ── DEVICE DETECTION ────────────────────────────── */
-      const touch =
-        window.matchMedia("(hover:none),(pointer:coarse)").matches ||
-        "ontouchstart" in window ||
-        navigator.maxTouchPoints > 0;
-
-      /* ── HINT TEXT ───────────────────────────────────── */
+      /* ── HINT TEXT ── */
       const hintEl = document.getElementById("bottom-hint");
       hintEl.textContent = touch
         ? "Tap a profile to enter"
         : "Hover a profile · click to enter";
 
-      /* ── INTRO WIPE ──────────────────────────────────── */
+      /* ── INTRO WIPE ── */
       const introEl = document.getElementById("intro");
       introEl.classList.add("ready");
       requestAnimationFrame(() => {
@@ -773,7 +722,7 @@
           });
       }
 
-      /* ── CUSTOM CURSOR ───────────────────────────────── */
+      /* ── CUSTOM CURSOR ── */
       const cur = document.getElementById("cur");
       const ringEl = document.getElementById("ring");
       const vline = document.getElementById("vline");
@@ -807,7 +756,7 @@
         });
       }
 
-      /* ── IMAGE ANIMATION ENGINE ──────────────────────── */
+      /* ── IMAGE ANIMATION ENGINE ── */
       const easeOut3 = (t) => 1 - Math.pow(1 - t, 3);
       const DUR = 660;
 
@@ -927,21 +876,7 @@
         setTimeout(() => sR[aR].retrace(), 80);
       }
 
-      /* ── SLOT LAYOUT ─────────────────────────────────── */
-      /*
-        MOBILE IMAGE SIZES — edit the data-mob-* attributes on each
-        hero-line div in the HTML above. The attributes are:
-
-          data-mob-lw      left image width   e.g. "40vw" or "200px"
-          data-mob-lh      left image height  e.g. "50vw" or "250px"
-          data-mob-lleft   left image distance from left edge  e.g. "0px"
-          data-mob-lmt     left image vertical offset (negative = up) e.g. "-25vw"
-
-          data-mob-rw      right image width
-          data-mob-rh      right image height
-          data-mob-rright  right image distance from right edge e.g. "0px"
-          data-mob-rmt     right image vertical offset e.g. "-25vw"
-      */
+      /* ── SLOT LAYOUT ── */
       function applySlotLayout(line) {
         if (touch) {
           ["slotL-a", "slotL-b"].forEach((id) => {
@@ -986,7 +921,7 @@
         });
       }
 
-      /* ── HINT DISMISS ────────────────────────────────── */
+      /* ── HINT DISMISS ── */
       let hintDismissed = false;
       function dismissHint() {
         if (hintDismissed) return;
@@ -994,7 +929,10 @@
         hintEl.classList.add("dismissed");
       }
 
-      /* ── RESET ALL LINES ─────────────────────────────── */
+      /* ── RESET ALL LINES ── */
+      const body = document.body;
+      const lines = document.querySelectorAll(".hero-line");
+
       function resetAllLines() {
         body.classList.remove("hover-design", "hover-play", "hover-universe");
         lines.forEach((l) => {
@@ -1008,10 +946,7 @@
         hideImages();
       }
 
-      /* ── LINE INTERACTIONS ───────────────────────────── */
-      const body = document.body;
-      const lines = document.querySelectorAll(".hero-line");
-
+      /* ── LINE INTERACTIONS ── */
       lines.forEach((line) => {
         const hc = line.dataset.hoverClass;
         const url = line.dataset.url;
@@ -1055,9 +990,8 @@
             setTimeout(() => (window.location.href = url), 300);
           });
         } else {
-          /* MOBILE — first tap previews, second tap navigates */
+          /* MOBILE — first tap previews, second navigates */
           let moved = false;
-
           line.addEventListener(
             "touchstart",
             () => {
@@ -1072,18 +1006,13 @@
             },
             { passive: true },
           );
-
           line.addEventListener(
             "touchend",
             () => {
               if (moved) return;
-
               if (!line._activated) {
-                /* first tap — preview */
                 line._activated = true;
                 dismissHint();
-
-                /* reset other lines */
                 lines.forEach((l) => {
                   if (l !== line) {
                     l._activated = false;
@@ -1094,7 +1023,6 @@
                     });
                   }
                 });
-
                 body.classList.remove(
                   "hover-design",
                   "hover-play",
@@ -1109,7 +1037,6 @@
                 applySlotLayout(line);
                 showImages(line.dataset.left, line.dataset.right);
               } else {
-                /* second tap — navigate */
                 setTimeout(() => (window.location.href = url), 240);
               }
             },
@@ -1118,13 +1045,11 @@
         }
       });
 
-      /* ── TAP OUTSIDE — RESET ─────────────────────────── */
+      /* ── TAP OUTSIDE — RESET ── */
       document.addEventListener(
         "touchend",
         (e) => {
-          if (!e.target.closest(".hero-line")) {
-            resetAllLines();
-          }
+          if (!e.target.closest(".hero-line")) resetAllLines();
         },
         { passive: true },
       );
