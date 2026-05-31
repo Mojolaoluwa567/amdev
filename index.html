@@ -585,6 +585,10 @@
     <p class="bottom-hint" id="bottom-hint"></p>
 
     <script>
+      /* ── MOBILE VIDEO AUTOPLAY ───────────────────────── */
+      const vid = document.getElementById("bg-video");
+      vid.muted = true;
+      vid.play().catch(() => {}); // silent catch, no fallback needed
       /* ── SPLIT TEXT ──────────────────────────────────── */
       ["w1", "w2", "w3"].forEach((id, i) => {
         const t = ["DESIGN", "PLAY", "UNIVERSE"][i];
