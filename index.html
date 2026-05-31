@@ -447,6 +447,7 @@
       muted
       playsinline
       preload="auto"
+      webkit-playsinline
     ></video>
     <div class="cursor" id="cur"></div>
     <div class="cursor-ring" id="ring"></div>
@@ -584,6 +585,18 @@
     <p class="bottom-hint" id="bottom-hint"></p>
 
     <script>
+      /* ── MOBILE VIDEO AUTOPLAY ───────────────────────── */
+      const vid = document.getElementById("bg-video");
+      vid.muted = true; // must be set via JS for iOS
+      const playPromise = vid.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Autoplay blocked — try again on first user touch
+          document.addEventListener("touchstart", () => vid.play(), {
+            once: true,
+          });
+        });
+      }
       /* ── SPLIT TEXT ──────────────────────────────────── */
       ["w1", "w2", "w3"].forEach((id, i) => {
         const t = ["DESIGN", "PLAY", "UNIVERSE"][i];
