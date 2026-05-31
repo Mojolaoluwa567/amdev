@@ -369,6 +369,38 @@
           left: -2.2rem;
           font-size: 9px;
         }
+        #play-btn {
+          display: none; /* hidden by default always */
+          position: fixed;
+          bottom: 80px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 500;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .play-circle {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 1px solid currentColor;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.6;
+        }
+        .play-label {
+          font-family: "Oswald", sans-serif;
+          font-size: 9px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          opacity: 0.4;
+        }
       }
       @media (max-width: 540px) {
         .hero {
@@ -418,6 +450,38 @@
           font-size: 8px;
           letter-spacing: 0.22em;
         }
+        #play-btn {
+          display: none; /* hidden by default always */
+          position: fixed;
+          bottom: 80px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 500;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .play-circle {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 1px solid currentColor;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.6;
+        }
+        .play-label {
+          font-family: "Oswald", sans-serif;
+          font-size: 9px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          opacity: 0.4;
+        }
       }
       @media (max-width: 380px) {
         .hero {
@@ -434,11 +498,52 @@
         .hero-line {
           padding: 0.42em 0;
         }
+        #play-btn {
+          display: none; /* hidden by default always */
+          position: fixed;
+          bottom: 80px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 500;
+          flex-direction: column;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          opacity: 0;
+          transition: opacity 0.5s ease;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .play-circle {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          border: 1px solid currentColor;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0.6;
+        }
+        .play-label {
+          font-family: "Oswald", sans-serif;
+          font-size: 9px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          opacity: 0.4;
+        }
       }
     </style>
   </head>
   <body>
     <div id="intro"></div>
+    <!-- CUSTOM PLAY BUTTON -->
+    <div id="play-btn">
+      <div class="play-circle">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+          <polygon points="3,1 13,7 3,13" />
+        </svg>
+      </div>
+      <span class="play-label">Play Reel</span>
+    </div>
     <video
       id="bg-video"
       src="video/Folio edit.mp4"
@@ -446,8 +551,10 @@
       loop
       muted
       playsinline
-      preload="auto"
       webkit-playsinline
+      preload="auto"
+      disablepictureinpicture
+      disableremoteplayback
     ></video>
     <div class="cursor" id="cur"></div>
     <div class="cursor-ring" id="ring"></div>
@@ -585,18 +692,54 @@
     <p class="bottom-hint" id="bottom-hint"></p>
 
     <script>
-      /* ── MOBILE VIDEO AUTOPLAY ───────────────────────── */
-      const vid = document.getElementById("bg-video");
-      vid.muted = true;
-      vid.play().catch(() => {}); // silent catch, no fallback needed
-      /* ── SPLIT TEXT ──────────────────────────────────── */
-      ["w1", "w2", "w3"].forEach((id, i) => {
-        const t = ["DESIGN", "PLAY", "UNIVERSE"][i];
-        document.getElementById(id).innerHTML = t
-          .split("")
-          .map((c) => `<span class="char">${c}</span>`)
-          .join("");
-      });
+      /* ── BG VIDEO ────────────────────────────────────── */
+      (function () {
+        const vid = document.getElementById("bg-video");
+        const btn = document.getElementById("play-btn");
+
+        vid.muted = true;
+        vid.defaultMuted = true;
+
+        function showBtn() {
+          if (!touch) return;
+          btn.classList.add("visible");
+          setTimeout(() => btn.classList.add("show"), 800);
+        }
+
+        function hideBtn() {
+          btn.classList.remove("show");
+          setTimeout(() => btn.classList.remove("visible"), 500);
+        }
+
+        vid.play().catch(() => {
+          // show custom button on mobile
+          showBtn();
+
+          // still silently catch any tap anywhere as backup
+          const events = ["touchstart", "touchend", "click"];
+          function onGesture() {
+            vid
+              .play()
+              .then(() => hideBtn())
+              .catch(() => {});
+            events.forEach((e) => document.removeEventListener(e, onGesture));
+          }
+          events.forEach((e) =>
+            document.addEventListener(e, onGesture, {
+              once: true,
+              passive: true,
+            }),
+          );
+        });
+
+        // explicit button tap
+        btn.addEventListener("click", () => {
+          vid
+            .play()
+            .then(() => hideBtn())
+            .catch(() => {});
+        });
+      })();
 
       /* ── DEVICE DETECTION ────────────────────────────── */
       const touch =
