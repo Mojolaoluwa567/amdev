@@ -46,20 +46,6 @@ body::after {
   z-index: 9997;
 }
 
-p {
-  opacity: 0.2;
-  transform: translateY(15px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-  will-change: opacity, transform;
-}
-
-p.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* ─────────────────────────────────────────────
    PERSISTENT THREE.JS CANVAS BACKDROP
 ───────────────────────────────────────────── */
@@ -903,8 +889,16 @@ footer {
     background: rgba(6, 6, 6, 0.68);
   }
 
-  .about-right {
-    padding-top: 0;
+  /* Fix 1 — remove the 15rem left margin that pushed text off-screen */
+  .about-right p {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  /* Fix 2 — same for stats */
+  .about-stats {
+    margin-left: 0;
+    grid-template-columns: repeat(2, 1fr); /* keep 2-col on tablet */
   }
 
   #hero {
@@ -983,12 +977,28 @@ footer {
     display: none;
   }
 
+  /* hero-meta already wraps from base fix, tighten gap further */
   .hero-meta {
-    flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.2rem 2rem;
   }
 
-  /* Increase tint on mobile — canvas still visible but text reads clearly */
+  /* Fix 4 — tighten floor further on small phones */
+  .hero-name {
+    font-size: clamp(3rem, 14vw, 7rem);
+  }
+
+  /* Fix 1+2 already handled at 900px, reinforce for safety */
+  .about-right p {
+    margin-left: 0;
+    max-width: 100%;
+  }
+
+  .about-stats {
+    margin-left: 0;
+    grid-template-columns: 1fr 1fr; /* stays 2-col — readable at 600px */
+  }
+
+  /* Increase tint on mobile */
   #about {
     background: rgba(6, 6, 6, 0.75) !important;
   }
@@ -997,5 +1007,20 @@ footer {
   }
   #contact {
     background: rgba(6, 6, 6, 0.82) !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-name {
+    font-size: clamp(2.6rem, 15vw, 4rem);
+  }
+
+  /* Stats to single column on tiny screens */
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-item {
+    padding: 1.4rem 1.2rem;
   }
 }
