@@ -870,6 +870,22 @@ footer {
   transition-duration: 1.5s;
 }
 
+@media (max-width: 1024px) and (max-height: 600px) {
+  .about-right {
+    padding-top: 2rem;
+  }
+
+  .about-right p {
+    margin-left: 4rem;
+    max-width: 80%;
+  }
+
+  .about-stats {
+    margin-left: 4rem;
+    gap: 1.5rem 2rem;
+  }
+}
+
 /* ─────────────────────────────────────────────
    RESPONSIVE — 900px
 ───────────────────────────────────────────── */

@@ -14,38 +14,47 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160/build/three.mod
 const lenis = new Lenis({
   duration: 1.6,
   easing: (t) => 1 - Math.pow(1 - t, 4),
-  smooth: true,
-  smoothTouch: false,
 });
 
-(function raf(t) {
-  lenis.raf(t);
-  requestAnimationFrame(raf);
-})(0);
+lenis.on("scroll", ScrollTrigger.update);
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+});
+
+gsap.ticker.lagSmoothing(0);
 
 /* ─────────────────────────────────────────────
    SCROLL PROGRESS — drives the entire scene
 ───────────────────────────────────────────── */
-let scrollProgress = 0; // 0 = hero top, 1 = contact bottom
+
+const heroName = document.querySelector(".hero-name");
+const heroEyebrow = document.querySelector(".hero-eyebrow");
+const heroMeta = document.querySelector(".hero-meta");
+
+let scrollProgress = 0;
 
 lenis.on("scroll", ({ scroll }) => {
   const totalHeight = document.body.scrollHeight - window.innerHeight;
   scrollProgress = totalHeight > 0 ? scroll / totalHeight : 0;
 
-  /* Parallax hero content */
   const vh = window.innerHeight;
+
   if (scroll < vh) {
     const t = scroll / vh;
 
-    const heroName = document.querySelector(".hero-name");
     if (heroName) {
       heroName.style.transform = `translateY(${t * 70}px)`;
       heroName.style.opacity = String(Math.max(0, 1 - t * 1.3));
     }
-    const heroEyebrow = document.querySelector(".hero-eyebrow");
-    if (heroEyebrow) heroEyebrow.style.opacity = String(Math.max(0, 1 - t * 2));
-    const heroMeta = document.querySelector(".hero-meta");
-    if (heroMeta) heroMeta.style.opacity = String(Math.max(0, 1 - t * 2.2));
+
+    if (heroEyebrow) {
+      heroEyebrow.style.opacity = String(Math.max(0, 1 - t * 2));
+    }
+
+    if (heroMeta) {
+      heroMeta.style.opacity = String(Math.max(0, 1 - t * 2.2));
+    }
   }
 });
 
@@ -143,7 +152,7 @@ const innerBox = new THREE.LineSegments(
   new THREE.EdgesGeometry(new THREE.BoxGeometry(1.2, 1.2, 1.2)),
   new THREE.LineBasicMaterial({
     color: 0xece9e3,
-    opacity: 0.3,
+    opacity: 0.6,
     transparent: true,
   }),
 );
@@ -193,7 +202,7 @@ r6.material.opacity = 0.5;
 scene.add(r4, r5, r6);
 
 /* ── PARTICLES ── */
-const pN = 180;
+const pN = 100;
 const pPos = new Float32Array(pN * 3);
 const pVel = [];
 const pBasePos = new Float32Array(pN * 3); // store originals for lerp
@@ -369,9 +378,15 @@ let state = {
   requestAnimationFrame(animate);
 
   /* ── Mouse smoothing ── */
-  currentMX += (targetMX - currentMX) * 0.055;
-  currentMY += (targetMY - currentMY) * 0.055;
+  currentMX += (targetMX - currentMX) * 0.12;
+  currentMY += (targetMY - currentMY) * 0.12;
   hoverSpeed += (targetHoverSpeed - hoverSpeed) * 0.04;
+
+  mainBox.position.x = currentMX * 0.6;
+  mainBox.position.y = currentMY * 0.35;
+
+  innerBox.position.x = currentMX * 0.4;
+  innerBox.position.y = currentMY * 0.25;
 
   /* ── Get target phase values ── */
   const target = getPhaseValues(scrollProgress);
@@ -390,11 +405,11 @@ let state = {
 
   /* ── Apply rings ── */
   r1.material.opacity = state.ringOpacity;
-  r2.material.opacity = state.ringOpacity * 1.1;
-  r3.material.opacity = state.ringOpacity * 0.9;
+  r2.material.opacity = state.ringOpacity * 1.5;
+  r3.material.opacity = state.ringOpacity * 1.5;
   r4.material.opacity = state.outerRingOpacity;
-  r5.material.opacity = state.outerRingOpacity * 1.15;
-  r6.material.opacity = state.outerRingOpacity * 0.9;
+  r5.material.opacity = state.outerRingOpacity * 2;
+  r6.material.opacity = state.outerRingOpacity * 2;
 
   /* ── Scale outer rings slightly with progress ── */
   const outerScale = 1 + scrollProgress * 0.5;
@@ -409,9 +424,9 @@ let state = {
   const rm = state.rotationMult * hoverSpeed;
   mainBox.rotation.y += 0.004 * rm;
   mainBox.rotation.x =
-    currentMY * 0.28 * (1 / Math.max(1, state.cubeScale * 0.6));
+    currentMY * 0.9 * (1 / Math.max(1, state.cubeScale * 0.6));
   mainBox.rotation.z =
-    currentMX * 0.14 * (1 / Math.max(1, state.cubeScale * 0.6));
+    currentMX * 0.6 * (1 / Math.max(1, state.cubeScale * 0.6));
 
   innerBox.rotation.x -= 0.007 * rm;
   innerBox.rotation.y += 0.009 * rm;
@@ -422,6 +437,12 @@ let state = {
   r4.rotation.z -= 0.0018 * rm;
   r5.rotation.y -= 0.0022 * rm;
   r6.rotation.x -= 0.0015 * rm;
+
+  r1.rotation.x += currentMY * 0.0015;
+  r2.rotation.z += currentMX * 0.0015;
+
+  r4.rotation.x += currentMY * 0.001;
+  r5.rotation.z += currentMX * 0.001;
 
   /* ── Particles ── */
   pMesh.material.opacity = state.particleOpacity;
@@ -446,8 +467,8 @@ let state = {
     const dx = pos[i * 3] - currentMX * 5;
     const dy = pos[i * 3 + 1] - currentMY * 3.5;
     const d = Math.sqrt(dx * dx + dy * dy);
-    if (d < 3 && repulseStrength > 0) {
-      const force = ((3 - d) / 3) * 0.01 * hoverSpeed * repulseStrength;
+    if (d > 0.001 && d < 3 && repulseStrength > 0) {
+      const force = ((3 - d) / 3) * 0.08 * hoverSpeed * repulseStrength;
       pos[i * 3] += (dx / d) * force;
       pos[i * 3 + 1] += (dy / d) * force;
     }
@@ -459,12 +480,15 @@ let state = {
   const targetCamZ = state.camZ;
   camera.position.z += (targetCamZ - camera.position.z) * 0.04;
   camera.position.x +=
-    (currentMX * 0.55 * (7 / Math.max(7, state.camZ)) - camera.position.x) *
+    (currentMX * 2.55 * (7 / Math.max(7, state.camZ)) - camera.position.x) *
     0.045;
   camera.position.y +=
-    (currentMY * 0.38 * (7 / Math.max(7, state.camZ)) - camera.position.y) *
+    (currentMY * 1.8 * (7 / Math.max(7, state.camZ)) - camera.position.y) *
     0.045;
   camera.lookAt(0, 0, 0);
+
+  scene.rotation.y = currentMX * 0.12;
+  scene.rotation.x = currentMY * 0.08;
 
   renderer.render(scene, camera);
 })();
@@ -593,9 +617,17 @@ setTimeout(() => {
 }, 3950);
 
 /* ─────────────────────────────────────────────
-   GSAP
+   GSAP + LENIS SYNC
 ───────────────────────────────────────────── */
 gsap.registerPlugin(ScrollTrigger);
+
+lenis.on("scroll", ScrollTrigger.update);
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000);
+});
+
+gsap.ticker.lagSmoothing(0);
 
 /* ── Reveal Projects ── */
 const projects = document.querySelectorAll(".project");
