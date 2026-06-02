@@ -884,6 +884,10 @@ footer {
     margin-left: 4rem;
     gap: 1.5rem 2rem;
   }
+
+  .hero-name {
+    font-size: clamp(3.5rem, 9vw, 7rem);
+  }
 }
 
 /* ─────────────────────────────────────────────
@@ -920,7 +924,16 @@ footer {
   #hero {
     padding: 0 1.5rem 4rem;
   }
+  .meta-item {
+    margin-left: -1rem;
+  }
+  #hey {
+    display: none;
+  }
 
+  .hero-scroll {
+    display: none;
+  }
   #site-header {
     padding: 1.5rem;
   }
