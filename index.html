@@ -47,7 +47,7 @@
       }
       body.hover-universe {
         background: #04072b;
-        color: #c8d6ff;
+        color: #ffffff;
       }
 
       #bg-video {
@@ -192,6 +192,7 @@
         justify-content: center;
         padding-left: clamp(3rem, 14vw, 16rem);
         margin-left: 8rem;
+        margin-top: 2.7rem;
       }
       .hero-line {
         position: relative;
@@ -590,16 +591,16 @@
           data-url="https://solarsystem-two.vercel.app/"
           data-left="image/uni WIDE.png"
           data-right="image/uni SLIM.png"
-          data-lw="350"
-          data-lh="750"
-          data-lleft="1vw"
-          data-ltop="20%"
-          data-lmt="-140"
-          data-rw="700"
+          data-lw="500"
+          data-lh="225"
+          data-lleft="12.5vw"
+          data-ltop="35%"
+          data-lmt="-350"
+          data-rw="350"
           data-rh="450"
-          data-rright="0.5vw"
-          data-rtop="50%"
-          data-rmt="-350"
+          data-rright="10vw"
+          data-rtop="60%"
+          data-rmt="-140"
           data-mob-lw="80vw"
           data-mob-lh="40vw"
           data-mob-lleft="0px"
@@ -758,7 +759,7 @@
 
       /* ── IMAGE ANIMATION ENGINE ── */
       const easeOut3 = (t) => 1 - Math.pow(1 - t, 3);
-      const DUR = 660;
+      const DUR = 700;
 
       function makeSlotAnim(wrap, img) {
         let rafId = null,
