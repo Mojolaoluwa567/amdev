@@ -132,57 +132,28 @@ const easeOut3 = (t) => 1 - Math.pow(1 - t, 3);
 const DUR = 700;
 
 function makeSlotAnim(wrap, img) {
-  let rafId = null,
-    prog = 0,
-    dir = 0,
-    startProg = 0,
-    startT = null;
-
   function apply(p) {
-    wrap.style.clipPath = `inset(${((1 - p) * 100).toFixed(2)}% 0 0 0)`;
-    img.style.transform = `scale(${(1 + (1 - p) * 0.12).toFixed(4)})`;
-  }
-
-  function tick(ts) {
-    if (!startT) startT = ts;
-    const t = Math.min((ts - startT) / DUR, 1);
-    prog = startProg + ((dir === 1 ? 1 : 0) - startProg) * easeOut3(t);
-    apply(prog);
-    if (t < 1) rafId = requestAnimationFrame(tick);
-    else {
-      prog = dir === 1 ? 1 : 0;
-      apply(prog);
-      rafId = null;
-    }
-  }
-
-  function run(d) {
-    if (rafId) cancelAnimationFrame(rafId);
-    dir = d;
-    startProg = prog;
-    startT = null;
-    rafId = requestAnimationFrame(tick);
+    wrap.style.clipPath = "none";
+    img.style.transform = "scale(1)";
+    wrap.style.opacity = p;
   }
 
   return {
-    get prog() {
-      return prog;
-    },
+    prog: 0,
     reveal() {
-      run(1);
+      this.prog = 1;
+      apply(1);
     },
     retrace() {
-      run(-1);
+      this.prog = 0;
+      apply(0);
     },
     hide() {
-      if (rafId) cancelAnimationFrame(rafId);
-      prog = 0;
+      this.prog = 0;
       apply(0);
-      rafId = null;
     },
   };
 }
-
 const sL = [
   makeSlotAnim(
     document.getElementById("slotL-a"),
