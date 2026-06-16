@@ -24,7 +24,6 @@ document.querySelectorAll(".hero-line").forEach((line) => {
 
   function showBtn() {
     btn.classList.add("visible");
-    // small delay so it doesn't flash on fast-loading devices
     setTimeout(() => btn.classList.add("show"), 600);
   }
 
@@ -34,10 +33,8 @@ document.querySelectorAll(".hero-line").forEach((line) => {
   }
 
   vid.play().catch(() => {
-    // Autoplay blocked — show the manual play button
     showBtn();
 
-    // Also listen for any user gesture as a backup trigger
     const events = ["touchstart", "touchend", "click"];
     function onGesture() {
       vid
@@ -54,7 +51,6 @@ document.querySelectorAll(".hero-line").forEach((line) => {
     );
   });
 
-  // Explicit button tap
   btn.addEventListener("click", () => {
     vid
       .play()
@@ -99,20 +95,28 @@ let mx = 0,
   ry = 0;
 
 if (!touch) {
+  let moved = false;
+
   document.addEventListener("mousemove", (e) => {
     mx = e.clientX;
     my = e.clientY;
     cur.style.left = mx + "px";
     cur.style.top = my + "px";
     vline.style.left = mx + "px";
+    moved = true;
   });
+
   (function raf() {
-    rx += (mx - rx) * 0.1;
-    ry += (my - ry) * 0.1;
-    ringEl.style.left = rx + "px";
-    ringEl.style.top = ry + "px";
+    if (moved) {
+      rx += (mx - rx) * 0.1;
+      ry += (my - ry) * 0.1;
+      ringEl.style.left = rx + "px";
+      ringEl.style.top = ry + "px";
+      if (Math.abs(mx - rx) < 0.5 && Math.abs(my - ry) < 0.5) moved = false;
+    }
     requestAnimationFrame(raf);
   })();
+
   document.addEventListener("mousedown", () => {
     cur.style.transform = "translate(-50%,-50%) scale(3)";
     cur.style.opacity = "0.3";
@@ -133,10 +137,12 @@ function makeSlotAnim(wrap, img) {
     dir = 0,
     startProg = 0,
     startT = null;
+
   function apply(p) {
     wrap.style.clipPath = `inset(${((1 - p) * 100).toFixed(2)}% 0 0 0)`;
     img.style.transform = `scale(${(1 + (1 - p) * 0.12).toFixed(4)})`;
   }
+
   function tick(ts) {
     if (!startT) startT = ts;
     const t = Math.min((ts - startT) / DUR, 1);
@@ -149,6 +155,7 @@ function makeSlotAnim(wrap, img) {
       rafId = null;
     }
   }
+
   function run(d) {
     if (rafId) cancelAnimationFrame(rafId);
     dir = d;
@@ -156,6 +163,7 @@ function makeSlotAnim(wrap, img) {
     startT = null;
     rafId = requestAnimationFrame(tick);
   }
+
   return {
     get prog() {
       return prog;
@@ -199,39 +207,66 @@ const imgEls = {
   L: [document.getElementById("imgLA"), document.getElementById("imgLB")],
   R: [document.getElementById("imgRA"), document.getElementById("imgRB")],
 };
+
 sL[0].hide();
 sL[1].hide();
 sR[0].hide();
 sR[1].hide();
+
 let aL = 0,
   aR = 0,
   imVis = false;
 
+/* ── showImages — fixed image decode race condition ── */
 function showImages(lSrc, rSrc) {
   if (!imVis) {
     imVis = true;
-    imgEls.L[aL].src = lSrc;
-    imgEls.R[aR].src = rSrc;
-    sL[aL].reveal();
-    setTimeout(() => sR[aR].reveal(), 100);
+    const imgL = imgEls.L[aL];
+    const imgR = imgEls.R[aR];
+    imgL.src = lSrc;
+    imgR.src = rSrc;
+
+    // Wait for both images to fully decode before starting clip-path animation
+    // This prevents the wrong/old image from showing during the reveal
+    Promise.all([
+      imgL.decode().catch(() => {}),
+      imgR.decode().catch(() => {}),
+    ]).then(() => {
+      sL[aL].reveal();
+      sR[aR].reveal();
+    });
     return;
   }
+
   const nL = 1 - aL,
     nR = 1 - aR;
-  imgEls.L[nL].src = lSrc;
-  imgEls.R[nR].src = rSrc;
-  ["slotL-a", "slotL-b"].forEach(
-    (id, i) =>
-      (document.getElementById(id).style.zIndex = i === nL ? 202 : 200),
-  );
-  ["slotR-a", "slotR-b"].forEach(
-    (id, i) =>
-      (document.getElementById(id).style.zIndex = i === nR ? 202 : 200),
-  );
+  const imgL = imgEls.L[nL];
+  const imgR = imgEls.R[nR];
+
+  // Set z-index BEFORE decode to avoid z-fighting during transition
+  ["slotL-a", "slotL-b"].forEach((id, i) => {
+    document.getElementById(id).style.zIndex = i === nL ? 202 : 200;
+  });
+  ["slotR-a", "slotR-b"].forEach((id, i) => {
+    document.getElementById(id).style.zIndex = i === nR ? 202 : 200;
+  });
+
+  imgL.src = lSrc;
+  imgR.src = rSrc;
+
+  // Retrace old slots immediately
   sL[aL].retrace();
   sR[aR].retrace();
-  sL[nL].reveal();
-  setTimeout(() => sR[nR].reveal(), 90);
+
+  // Reveal new slots only after images are decoded
+  Promise.all([
+    imgL.decode().catch(() => {}),
+    imgR.decode().catch(() => {}),
+  ]).then(() => {
+    sL[nL].reveal();
+    sR[nR].reveal();
+  });
+
   aL = nL;
   aR = nR;
 }
@@ -240,7 +275,7 @@ function hideImages() {
   if (!imVis) return;
   imVis = false;
   sL[aL].retrace();
-  setTimeout(() => sR[aR].retrace(), 80);
+  sR[aR].retrace();
 }
 
 /* ── SLOT LAYOUT ── */
@@ -334,6 +369,7 @@ lines.forEach((line) => {
       applySlotLayout(line);
       showImages(line.dataset.left, line.dataset.right);
     });
+
     line.addEventListener("mouseleave", () => {
       body.classList.remove("hover-design", "hover-play", "hover-universe");
       vline.style.opacity = "0";
@@ -343,6 +379,7 @@ lines.forEach((line) => {
       });
       hideImages();
     });
+
     line.addEventListener("click", () => {
       lines.forEach((l) => l.classList.remove("active"));
       line.classList.add("active");
