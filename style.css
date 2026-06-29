@@ -1199,7 +1199,7 @@ footer {
   font-size: 0.7rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(236, 233, 227, 0.529);
+  color: rgba(236, 233, 227, 0.642);
   background: var(--black);
 }
 
@@ -1872,10 +1872,6 @@ textarea.f-input {
     font-size: 0.9rem;
     line-height: 1.6;
   }
-
-  .footer {
-    text-align: center;
-  }
 }
 
 /* ── 600px — phones ── */
@@ -1930,8 +1926,9 @@ textarea.f-input {
     font-size: 0.85rem;
   }
 
-  .footer {
+  footer {
     text-align: center;
+    justify-content: center;
   }
 }
 
@@ -1951,6 +1948,11 @@ textarea.f-input {
     max-width: 280px;
     font-size: 13px;
     padding: 12px 20px;
+  }
+
+  footer {
+    text-align: center;
+    justify-content: center;
   }
 }
 
@@ -1978,6 +1980,11 @@ textarea.f-input {
 
   .service p {
     font-size: 0.8rem;
+  }
+
+  footer {
+    text-align: center;
+    justify-content: center;
   }
 }
 
