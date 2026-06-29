@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A.M — Get Started</title>
+
+    <link
+      rel="shortcut icon"
+      href="image/Untitled design (1).png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      #main,
+      #site-header {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="cursor">
+      <div class="c-ring"></div>
+      <div class="c-dot"></div>
+    </div>
+
+    <!-- ── HEADER ── -->
+    <header id="site-header">
+      <div class="logo">A<span class="logo-dot">·</span>M</div>
+
+      <nav class="site-nav">
+        <a href="index.html" class="avail-pill"
+          ><span class="pulse"></span>Home</a
+        >
+        <a href="about.html" class="avail-pill"
+          ><span class="pulse"></span>About</a
+        >
+        <a href="services.html" class="avail-pill"
+          ><span class="pulse"></span>Services</a
+        >
+        <a href="contact.html" class="avail-pill"
+          ><span class="pulse"></span>Get Started</a
+        >
+      </nav>
+
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+    </header>
+
+    <nav id="mobile-nav">
+      <button class="mobile-close" id="mobile-close" aria-label="Close menu">
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="mobile-nav-list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html"> About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="contact.html">Get Started</a></li>
+      </ul>
+    </nav>
+
+    <main id="main">
+      <section id="chero">
+        <canvas id="contact-canvas"></canvas>
+        <div class="chero-content">
+          <p class="chero-eyebrow">
+            <span></span>
+          </p>
+          <h1 class="page-title">
+            <span class="chline"><span>LET'S</span></span>
+            <span class="chline"><span>TALK.</span></span>
+          </h1>
+          <p class="chero-sub">
+            <span>Available for freelance &amp; collaboration.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- CONTACT CHANNELS -->
+      <section id="channels">
+        <div class="channels-grid">
+          <a class="channel" href="mailto:mojolaoluwa455@gmail.com" data-reveal>
+            <div class="ch-type">Primary</div>
+            <div class="ch-icon">✉</div>
+            <div class="ch-label">Email</div>
+            <div class="ch-value">
+              mojolaoluwa455@gmail.com<br />Replies within 24 hrs
+            </div>
+            <div class="ch-arrow">↗</div>
+          </a>
+          <a
+            class="channel"
+            href="tel:+2349160822180"
+            data-reveal
+            style="transition-delay: 0.1s"
+          >
+            <div class="ch-type">Direct</div>
+            <div class="ch-icon">◎</div>
+            <div class="ch-label">Phone / WhatsApp</div>
+            <div class="ch-value">
+              +234 809 432 4807 <br />
+              +234 916 082 2180<br />
+            </div>
+            <div class="ch-arrow">↗</div>
+          </a>
+          <a
+            class="channel"
+            href="www.linkedin.com/in/adeogunmojola"
+            target="_blank"
+            rel="noopener"
+            data-reveal
+            style="transition-delay: 0.2s"
+          >
+            <div class="ch-type">Professional</div>
+            <div class="ch-icon">⬡</div>
+            <div class="ch-label">LinkedIn</div>
+            <div class="ch-value">
+              Mojola Adeogun<br />Connect for collabs &amp; referrals
+            </div>
+            <div class="ch-arrow">↗</div>
+          </a>
+          <a
+            class="channel"
+            href="https://github.com/Mojolaoluwa567"
+            target="_blank"
+            rel="noopener"
+            data-reveal
+            style="transition-delay: 0.3s"
+          >
+            <div class="ch-type">Code</div>
+            <div class="ch-icon">⟁</div>
+            <div class="ch-label">GitHub</div>
+            <div class="ch-value">
+              Mojolaoluwa567<br />Open source &amp; project work
+            </div>
+            <div class="ch-arrow">↗</div>
+          </a>
+          <a
+            class="channel"
+            href="https://twitter.com/boomaye0"
+            target="_blank"
+            rel="noopener"
+            data-reveal
+            style="transition-delay: 0.4s"
+          >
+            <div class="ch-type">Threads</div>
+            <div class="ch-icon">◈</div>
+            <div class="ch-label">X / Twitter</div>
+            <div class="ch-value">@boomaye0<br />Creative work</div>
+            <div class="ch-arrow">↗</div>
+          </a>
+          <a
+            class="channel"
+            href="https://www.instagram.com/am.studios26?igsh=a3VjZHhrMmR4MG5i&utm_source=qr"
+            target="_blank"
+            rel="noopener"
+            data-reveal
+            style="transition-delay: 0.5s"
+          >
+            <div class="ch-type">Chat</div>
+            <div class="ch-icon">⬕</div>
+            <div class="ch-label">Instagram</div>
+            <div class="ch-value">
+              @am.studios26 <br />
+              let's connect
+            </div>
+            <div class="ch-arrow">↗</div>
+          </a>
+        </div>
+      </section>
+
+      <!-- AVAILABILITY -->
+      <section id="availability">
+        <div class="avail-inner">
+          <div class="avail-left" data-reveal>
+            <div class="avail-dot">
+              <div class="avail-dot-light"></div>
+              Currently Available
+            </div>
+            <h2 class="avail-headline">
+              Open to new<br />projects &amp; full-time<br />opportunities.
+            </h2>
+            <p class="avail-note">
+              Available for freelance, contract, and full-time opportunities
+              across time zones.
+            </p>
+          </div>
+          <div class="avail-right" data-reveal style="transition-delay: 0.12s">
+            <div class="avail-stat">
+              <span class="as-label">Response Time</span
+              ><span class="as-val">Under 24 hrs</span>
+            </div>
+            <!-- <div class="avail-stat">
+              <span class="as-label">Timezone</span
+              ><span class="as-val">WAT (UTC+1)</span>
+            </div> -->
+            <div class="avail-stat">
+              <span class="as-label">Work Mode</span
+              ><span class="as-val">Remote / Hybrid</span>
+            </div>
+            <div class="avail-stat">
+              <span class="as-label">Languages</span
+              ><span class="as-val">English</span>
+            </div>
+            <div class="avail-stat">
+              <span class="as-label">Status</span
+              ><span class="as-val" style="color: #4ade80">● Open</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FORM -->
+      <section id="form-section">
+        <div class="form-header">
+          <p class="section-label" data-reveal>Send a Message</p>
+          <h2
+            style="
+              font-family: var(--display);
+              font-size: clamp(3rem, 7vw, 6rem);
+              color: var(--white);
+              line-height: 0.9;
+            "
+            data-reveal
+          >
+            START A<br />CONVERSATION
+          </h2>
+        </div>
+        <form class="contact-form" id="cform" data-reveal>
+          <div class="form-field">
+            <label class="f-label" for="fname">Your Name</label>
+            <input
+              class="f-input"
+              id="fname"
+              name="name"
+              type="text"
+              placeholder="John Doe"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label class="f-label" for="femail">Email Address</label>
+            <input
+              class="f-input"
+              id="femail"
+              name="email"
+              type="email"
+              placeholder="hello@domain.com"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label class="f-label" for="fbudget">Budget / Timeline</label>
+            <input
+              class="f-input"
+              id="fbudget"
+              name="budget"
+              type="text"
+              placeholder="₦300k · 4 weeks"
+            />
+          </div>
+          <div class="form-field">
+            <label class="f-label" for="fservice">Service</label>
+            <input
+              class="f-input"
+              id="fservice"
+              name="service"
+              type="text"
+              placeholder="Creative Frontend, Full Stack, Branding…"
+            />
+          </div>
+          <div class="form-field full">
+            <label class="f-label" for="fmsg">Message</label>
+            <textarea
+              class="f-input"
+              id="fmsg"
+              name="message"
+              placeholder="Tell me about your project…"
+              required
+            ></textarea>
+          </div>
+          <div id="form-msg"></div>
+          <button class="form-submit" type="submit">
+            <span>Send Message</span>
+            <span class="fs-arrow">↗</span>
+          </button>
+        </form>
+      </section>
+    </main>
+    <!-- FOOTER -->
+    <footer>
+      <span>© 2026 Portfolio</span>
+      <span>Built with precision</span>
+      <span>By Adeogun Mojola</span>
+    </footer>
+    <script type="module" src="contact.js"></script>
+  </body>
+</html>
