@@ -2,7 +2,13 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160/build/three.mod
 import Lenis from "https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.mjs";
 import gsap from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js";
 import ScrollTrigger from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js";
+import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
+
 gsap.registerPlugin(ScrollTrigger);
+
+emailjs.init({
+  publicKey: "LuHvQHxSQ4xqVQfVr",
+});
 
 window.addEventListener("pageshow", (e) => {
   if (e.persisted) window.location.reload();
@@ -64,18 +70,38 @@ if (curEl) {
 }
 
 /* FORM */
-document.getElementById("cform").addEventListener("submit", async (e) => {
+const form = document.getElementById("cform");
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  const btn = e.target.querySelector(".form-submit");
+
+  const btn = form.querySelector(".form-submit");
   const msg = document.getElementById("form-msg");
+
+  btn.disabled = true;
   btn.style.opacity = ".5";
-  btn.style.pointerEvents = "none";
-  await new Promise((r) => setTimeout(r, 1200));
-  msg.style.display = "block";
-  msg.textContent = "✓  Message sent — I'll be in touch within 24 hours.";
+
+  try {
+    await emailjs.sendForm("service_q4j1cve", "template_8quemfu", form, {
+      publicKey: "LuHvQHxSQ4xqVQfVr",
+    });
+
+    msg.style.display = "block";
+    msg.style.color = "#4ade80";
+    msg.textContent =
+      "✓ Message sent successfully! I'll be in touch within 24 hours.";
+
+    form.reset();
+  } catch (error) {
+    alert(error.text);
+
+    msg.style.display = "block";
+    msg.style.color = "#ef4444";
+    msg.textContent = "✕ Something went wrong. Please try again.";
+  }
+
+  btn.disabled = false;
   btn.style.opacity = "1";
-  btn.style.pointerEvents = "auto";
-  e.target.reset();
 });
 
 /* REVEAL HERO TEXT */
