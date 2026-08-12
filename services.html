@@ -26,6 +26,9 @@
         --accent: rgba(236, 233, 227, 0.06);
         --border: rgba(236, 233, 227, 0.07);
         --green: #4ade80;
+        --text-body: rgba(236, 233, 227, 0.86);
+        --text-muted: rgba(236, 233, 227, 0.68);
+        --text-label: rgba(236, 233, 227, 0.6);
       }
 
       *,
@@ -499,7 +502,7 @@
         font-size: 0.82rem;
         letter-spacing: 0.28em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.587);
+        color: rgba(255, 255, 255, 0.78);
         padding-top: 0.3rem;
         white-space: nowrap;
       }
@@ -517,24 +520,26 @@
         flex-direction: column;
         gap: 0.5rem;
         padding-top: 0.2rem;
-        color: rgba(255, 255, 255, 0.587);
+        color: rgba(255, 255, 255, 0.9);
       }
 
       .meta-item > span:first-child {
         font-family: var(--mono);
-        font-size: 0.82rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.587);
+        color: var(--green);
       }
 
       .meta-item strong {
         display: block;
         font-family: var(--mono);
-        font-size: 0.82rem;
-        line-height: 1.4;
+        font-size: 0.85rem;
+        line-height: 1.5;
         font-weight: 400;
-        color: rgba(255, 255, 255, 0.587);
+        color: rgba(255, 255, 255, 0.92);
         text-transform: uppercase;
+        letter-spacing: 0.01em;
       }
 
       .hero-scroll {
@@ -580,7 +585,7 @@
 
       .intro-headline em {
         font-style: italic;
-        opacity: 0.45;
+        opacity: 0.62;
       }
 
       .intro-meta {
@@ -594,10 +599,10 @@
 
       .intro-meta p {
         font-family: var(--serif);
-        font-size: 0.95rem;
-        line-height: 1.6;
-        opacity: 0.6;
-        max-width: 240px;
+        font-size: 1rem;
+        line-height: 1.65;
+        color: var(--text-body);
+        max-width: 260px;
       }
 
       .intro-count {
@@ -605,15 +610,15 @@
         font-size: 3.4rem;
         line-height: 1;
         color: var(--white);
-        opacity: 0.9;
+        opacity: 0.95;
       }
 
       .intro-count span {
         font-family: var(--mono);
-        font-size: 0.6rem;
+        font-size: 0.62rem;
         letter-spacing: 0.18em;
         text-transform: uppercase;
-        opacity: 0.4;
+        color: var(--green);
         display: block;
         margin-top: 6px;
       }
@@ -643,26 +648,27 @@
 
       .svc-header-label {
         font-family: var(--mono);
-        font-size: 0.58rem;
+        font-size: 0.7rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        opacity: 0.35;
+        color: var(--white);
+        font-weight: 400;
       }
 
       .svc-header-hint {
         font-family: var(--mono);
-        font-size: 0.58rem;
-        letter-spacing: 0.18em;
+        font-size: 0.62rem;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        opacity: 0.25;
+        color: var(--text-label);
       }
 
       /* ── Single definition for svc-row (desktop first) ── */
       .svc-row {
         display: grid;
-        grid-template-columns: 100px 1fr 2fr;
+        grid-template-columns: 110px 1.15fr 1.85fr;
         gap: 0 40px;
-        padding: 52px 0;
+        padding: 56px 0;
         border-bottom: 1px solid rgba(236, 233, 227, 0.09);
         align-items: start;
       }
@@ -672,27 +678,33 @@
       }
 
       .svc-category {
+        display: inline-block;
         font-family: var(--mono);
-        font-size: 0.55rem;
-        letter-spacing: 0.22em;
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        opacity: 0.3;
-        display: block;
-        margin-bottom: 10px;
+        color: var(--text-body);
+        background: rgba(236, 233, 227, 0.06);
+        border: 1px solid rgba(236, 233, 227, 0.16);
+        border-radius: 3px;
+        padding: 4px 8px;
+        margin-bottom: 14px;
       }
 
       .svc-num {
         font-family: var(--display);
         font-size: 3.8rem;
         line-height: 1;
-        color: var(--white);
-        opacity: 0.08;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(236, 233, 227, 0.4);
         display: block;
         letter-spacing: 0.01em;
       }
 
       .svc-img-col {
         position: relative;
+        border-left: 1px solid rgba(236, 233, 227, 0.08);
+        padding-left: 32px;
       }
 
       .svc-service-info {
@@ -818,14 +830,17 @@
         top: 10px;
         right: 12px;
         font-family: var(--mono);
-        font-size: 0.52rem;
+        font-size: 0.56rem;
         letter-spacing: 0.12em;
-        opacity: 0.38;
+        color: rgba(236, 233, 227, 0.75);
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
         z-index: 3;
       }
 
       .svc-text-col {
         padding-top: 2px;
+        border-left: 1px solid rgba(236, 233, 227, 0.08);
+        padding-left: 32px;
       }
 
       .svc-title-wrap {
@@ -833,18 +848,21 @@
       }
 
       .svc-tier {
+        display: inline-block;
         font-family: var(--mono);
-        font-size: 0.52rem;
-        letter-spacing: 0.22em;
+        font-size: 0.58rem;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        opacity: 0.3;
-        display: block;
-        margin-bottom: 8px;
+        color: var(--green);
+        border: 1px solid rgba(74, 222, 128, 0.35);
+        border-radius: 3px;
+        padding: 3px 8px;
+        margin-bottom: 12px;
       }
 
       .svc-title {
         font-family: var(--display);
-        font-size: clamp(2rem, 3.4vw, 3rem);
+        font-size: clamp(2.1rem, 3.4vw, 3.1rem);
         text-transform: uppercase;
         letter-spacing: 0.01em;
         line-height: 0.95;
@@ -853,47 +871,46 @@
 
       .svc-desc {
         font-family: var(--serif);
-        font-size: 0.98rem;
-        line-height: 1.7;
-        color: rgba(236, 233, 227, 0.6);
+        font-size: 1.08rem;
+        line-height: 1.75;
+        color: var(--text-body);
         margin-bottom: 28px;
         max-width: 480px;
       }
 
       .caps-label {
         font-family: var(--mono);
-        font-size: 0.52rem;
-        letter-spacing: 0.22em;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
         text-transform: uppercase;
-        opacity: 0.3;
+        color: var(--text-label);
         display: block;
-        margin-bottom: 12px;
+        margin-bottom: 14px;
       }
 
       .caps-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 7px 20px;
+        gap: 10px 20px;
       }
 
       .cap-item {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 9px;
         font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.1em;
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.65);
+        color: var(--text-body);
       }
 
       .cap-dot {
-        width: 3px;
-        height: 3px;
+        width: 4px;
+        height: 4px;
         border-radius: 50%;
         background: var(--green);
         flex-shrink: 0;
-        opacity: 0.7;
       }
 
       .svc-link {
@@ -950,9 +967,9 @@
 
       .coming-soon-content p {
         font-family: var(--serif);
-        font-size: 1rem;
+        font-size: 1.05rem;
         line-height: 1.7;
-        color: rgba(236, 233, 227, 0.6);
+        color: var(--text-body);
         max-width: 420px;
         margin: 0 auto;
       }
@@ -998,10 +1015,10 @@
 
       .project-year {
         font-family: var(--mono);
-        font-size: 0.6rem;
-        letter-spacing: 0.16em;
+        font-size: 0.65rem;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        opacity: 0.35;
+        color: var(--green);
         margin-bottom: 8px;
         display: block;
       }
@@ -1017,9 +1034,9 @@
 
       .project-desc {
         font-family: var(--serif);
-        font-size: 0.92rem;
-        line-height: 1.65;
-        color: rgba(236, 233, 227, 0.6);
+        font-size: 0.98rem;
+        line-height: 1.68;
+        color: var(--text-body);
         margin-bottom: 16px;
       }
 
@@ -1031,15 +1048,15 @@
       }
 
       .project-tag {
-        padding: 5px 10px;
+        padding: 5px 11px;
         font-family: var(--display);
-        font-size: 0.75rem;
+        font-size: 0.78rem;
         letter-spacing: 0.04em;
         text-transform: uppercase;
-        border: 1px solid rgba(236, 233, 227, 0.1);
-        background: rgba(236, 233, 227, 0.03);
+        border: 1px solid rgba(236, 233, 227, 0.18);
+        background: rgba(236, 233, 227, 0.05);
         border-radius: 999px;
-        color: rgba(236, 233, 227, 0.7);
+        color: rgba(236, 233, 227, 0.88);
       }
 
       .project-link {
@@ -1113,7 +1130,7 @@
         font-size: 0.65rem;
         letter-spacing: 0.42em;
         text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.18);
+        color: var(--green);
       }
 
       .scta-headline {
@@ -1126,7 +1143,7 @@
 
       .scta-headline em {
         font-style: italic;
-        color: rgba(236, 233, 227, 0.28);
+        color: rgba(236, 233, 227, 0.55);
       }
 
       .scta-btn {
@@ -1177,7 +1194,7 @@
         font-size: 0.7rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.642);
+        color: rgba(236, 233, 227, 0.75);
         background: var(--black);
       }
 
@@ -1300,6 +1317,10 @@
         .svc-text-col {
           grid-column: 1 / -1;
           grid-row: 2;
+          border-left: none;
+          padding-left: 0;
+          padding-top: 28px;
+          border-top: 1px solid rgba(236, 233, 227, 0.08);
         }
         .svc-projects-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1394,12 +1415,14 @@
         }
         .svc-num {
           font-size: 2.4rem;
-          opacity: 0.12;
+          -webkit-text-stroke: 1px rgba(236, 233, 227, 0.45);
         }
         .svc-img-col {
           grid-column: 1;
           grid-row: auto;
           margin-bottom: 24px;
+          border-left: none;
+          padding-left: 0;
         }
         .svc-service-info {
           position: static;
@@ -1407,6 +1430,10 @@
         .svc-text-col {
           grid-column: 1;
           grid-row: auto;
+          border-left: none;
+          padding-left: 0;
+          padding-top: 24px;
+          border-top: 1px solid rgba(236, 233, 227, 0.08);
         }
         .svc-projects-grid {
           grid-template-columns: 1fr;
@@ -1737,8 +1764,11 @@
                 year: "2026",
                 desc: "An AI-powered quiz and study platform built with Flask and React/Vite — multi-format content ingestion, teacher and student roles, gamification, and AI study aids, deployed across Railway and Vercel.",
                 tags: ["Flask", "React", "SQLAlchemy", "Render"],
-                images: ["image/STUDYMATE.png"],
-                link: "https://comingsoon-check-back.vercel.app",
+                images: [
+                  "image/STUDYMATE.png",
+                  "image/Screenshot 2026-08-12 at 9.31.32 PM.png",
+                ],
+                link: "https://studymatedemo.vercel.app/",
               },
               {
                 title: "URBANHIVE",
