@@ -829,7 +829,7 @@ body.menu-open .mobile-nav-list a {
 .projects {
   display: flex;
   flex-direction: column;
-  gap: 12rem;
+  gap: 6rem;
 }
 
 .project {
@@ -837,40 +837,33 @@ body.menu-open .mobile-nav-list a {
   overflow: visible;
 }
 
-.project-bg-num {
-  position: absolute;
-  right: -2rem;
-  top: -5rem;
-  font-family: var(--display);
-  font-size: 25vw;
-  line-height: 1;
-  opacity: 0.03;
-  pointer-events: none;
-  user-select: none;
-}
-
 .project-image {
   display: block;
-  height: 80vh;
+  height: clamp(420px, 70vh, 750px);
   overflow: hidden;
   border-radius: 32px;
   position: relative;
   background: #111;
   clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project.revealed .project-image {
+  clip-path: inset(0 0 0 0);
 }
 
 .project-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(1);
+  transform: scale(0.9);
   transition:
     transform 1.2s cubic-bezier(0.19, 1, 0.22, 1),
     filter 1.2s ease;
 }
 
 .project:hover img {
-  transform: scale(1.06);
+  transform: scale(0.92);
 }
 
 .project-image::after {
@@ -879,11 +872,6 @@ body.menu-open .mobile-nav-list a {
   inset: 0;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
   pointer-events: none;
-}
-
-.project.revealed .project-image {
-  clip-path: inset(0 0 0 0);
-  transition: clip-path 1.3s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .project-content {

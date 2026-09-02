@@ -213,12 +213,43 @@ for (let i = 0; i < PARTICLE_COUNT; i++) {
 /* Mouse repulsion */
 const mouse = new THREE.Vector2(9999, 9999);
 const mouseWorld = new THREE.Vector3();
-window.addEventListener("mousemove", (e) => {
-  const rect = heroEl.getBoundingClientRect();
-  mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-  mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-  mouseWorld.set(mouse.x * 18, mouse.y * 10, 0);
-});
+const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+if (hasFinePointer) {
+  window.addEventListener("mousemove", (e) => {
+    const rect = heroEl.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    mouseWorld.set(mouse.x * 18, mouse.y * 10, 0);
+  });
+} else {
+  /* Mobile — autoplay loop drives the repulsion point instead of hover */
+  let autoplayStart = null;
+
+  function autoplayRepulsion(ts) {
+    if (autoplayStart === null) autoplayStart = ts;
+    const elapsed = (ts - autoplayStart) / 1000;
+
+    const angle = elapsed * 0.4;
+    mouseWorld.set(Math.cos(angle) * 14, Math.sin(angle * 0.7) * 8, 0);
+
+    requestAnimationFrame(autoplayRepulsion);
+  }
+  requestAnimationFrame(autoplayRepulsion);
+
+  /* Still let a real touch briefly take over */
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+      const t = e.touches[0];
+      const rect = heroEl.getBoundingClientRect();
+      const tx = ((t.clientX - rect.left) / rect.width) * 2 - 1;
+      const ty = -((t.clientY - rect.top) / rect.height) * 2 + 1;
+      mouseWorld.set(tx * 18, ty * 10, 0);
+    },
+    { passive: true },
+  );
+}
 
 /* Resize */
 window.addEventListener("resize", () => {

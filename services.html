@@ -12,6 +12,12 @@
       type="image/x-icon"
     />
     <link
+      rel="preload"
+      as="image"
+      href="image/studymate1.webp"
+      fetchpriority="high"
+    />
+    <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
@@ -391,14 +397,15 @@
         position: absolute;
         inset: 0;
         background-size: cover;
+        background: #111; /* placeholder while loading */
         background-position: center;
         filter: grayscale(30%) brightness(0.5);
         opacity: 0;
-        transition: opacity 1s ease;
+        transition: opacity 0.5s ease;
         will-change: opacity;
       }
 
-      .case-bg-layer.active {
+      .case-bg-layer.active.loaded {
         opacity: 1;
       }
 
@@ -1051,6 +1058,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- SMOOTH SCROLL (Lenis) -->
+    <script>
+      (() => {
+        if (typeof Lenis === "undefined" || typeof gsap === "undefined") return;
+
+        const lenis = new Lenis({
+          duration: 1.4,
+          easing: (t) => 1 - Math.pow(1 - t, 4),
+        });
+
+        lenis.on("scroll", ScrollTrigger.update);
+
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+
+        window.__lenis = lenis;
+      })();
+    </script>
 
     <!-- CURSOR -->
     <script>
@@ -1453,7 +1481,7 @@
         }
 
         /* flatten every project that actually has imagery, in service order —
-           this is what drives the case scrubber (StudyMate, ABP Industries, etc.) */
+       this is what drives the case scrubber (StudyMate, ABP Industries, etc.) */
         const cases = [];
         servicesData.forEach((service) => {
           service.projects.forEach((project) => {
@@ -1477,40 +1505,68 @@
 
         wrapper.style.setProperty("--n", cases.length);
 
-        /* build background layers + filmstrip thumbs */
+        /* build background layers + filmstrip thumbs (image loading deferred) */
         cases.forEach((c, i) => {
           const bg = document.createElement("div");
           bg.className = "case-bg-layer" + (i === 0 ? " active" : "");
-          bg.style.backgroundImage = `url("${c.project.images[0]}")`;
+          bg.dataset.src = c.project.images[0]; // stash URL, don't load yet
           bgRoot.appendChild(bg);
           c.bgEl = bg;
 
           const thumb = document.createElement("div");
           thumb.className = "case-thumb" + (i === 0 ? " active" : "");
-          thumb.innerHTML = `<img src="${escapeHTML(c.project.images[0])}" alt="" loading="lazy" />`;
+          const isFirst = i === 0;
+          thumb.innerHTML = `<img src="${escapeHTML(c.project.images[0])}" alt="" ${isFirst ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} />`;
           thumb.addEventListener("click", () => jumpTo(i));
           track.appendChild(thumb);
           c.thumbEl = thumb;
         });
+
+        function ensureLoaded(i) {
+          const c = cases[i];
+          if (!c || !c.bgEl.dataset.src) return;
+          c.bgEl.style.backgroundImage = `url("${c.bgEl.dataset.src}")`;
+          delete c.bgEl.dataset.src;
+        }
+
+        // Load the first case + one ahead immediately
+        ensureLoaded(0);
+        function ensureLoaded(i) {
+          const c = cases[i];
+          if (!c || !c.bgEl.dataset.src) return;
+          const url = c.bgEl.dataset.src;
+          const img = new Image();
+          img.onload = () => {
+            c.bgEl.style.backgroundImage = `url("${url}")`;
+            c.bgEl.classList.add("loaded");
+          };
+          img.src = url;
+          delete c.bgEl.dataset.src;
+        }
+        ensureLoaded(1);
 
         function jumpTo(i) {
           const rect = wrapper.getBoundingClientRect();
           const total = rect.height - window.innerHeight;
           const targetProgress = cases.length > 1 ? i / (cases.length - 1) : 0;
           const targetY = window.scrollY + rect.top + targetProgress * total;
-          window.scrollTo({ top: targetY, behavior: "smooth" });
+
+          if (window.__lenis) {
+            window.__lenis.scrollTo(targetY, { duration: 1.2 });
+          } else {
+            window.scrollTo({ top: targetY, behavior: "smooth" });
+          }
         }
 
         function fadeSwap(el, apply) {
+          el.style.transition = "opacity 0.35s ease, transform 0.35s ease";
           el.style.opacity = "0";
-          el.style.transform = "translateY(6px)";
-          setTimeout(() => {
+          el.style.transform = "translateY(4px)";
+          requestAnimationFrame(() => {
             apply();
-            requestAnimationFrame(() => {
-              el.style.opacity = "1";
-              el.style.transform = "translateY(0)";
-            });
-          }, 220);
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+          });
         }
 
         let lastActive = -1;
@@ -1518,6 +1574,9 @@
           if (i === lastActive) return;
           lastActive = i;
           const c = cases[i];
+
+          ensureLoaded(i);
+          ensureLoaded(i + 1); // preload the next one just ahead of time
 
           cases.forEach((cc, idx) => {
             cc.bgEl.classList.toggle("active", idx === i);

@@ -981,23 +981,6 @@
           flex-direction: column;
         }
 
-        #hero-canvas {
-          width: 100vw;
-          height: 100vh;
-          object-fit: contain;
-          object-position: center top;
-        }
-
-        #hero-section {
-          position: relative;
-          overflow: hidden;
-        }
-
-        #hero-canvas {
-          position: absolute;
-          inset: 0;
-        }
-
         /* Footer */
 
         footer {
@@ -1673,7 +1656,11 @@
           canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         if (!gl) return;
 
-        const IMAGE_SRC = "image/david-werbrouck-5GwLlb-_UYk-unsplash.jpg";
+        const DESKTOP_IMAGE_SRC =
+          "image/david-werbrouck-5GwLlb-_UYk-unsplash.jpg";
+        const MOBILE_IMAGE_SRC = "image/herombil.png";
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const IMAGE_SRC = isMobile ? MOBILE_IMAGE_SRC : DESKTOP_IMAGE_SRC;
         let W, H;
         let mouse = { x: 0.5, y: 0.5 },
           targetMouse = { x: 0.5, y: 0.5 };
@@ -1695,32 +1682,48 @@
 
         const hero = document.getElementById("hero-section");
 
-        /* Mouse (desktop) */
-        hero.addEventListener("mousemove", (e) => {
-          const r = hero.getBoundingClientRect();
-          targetMouse.x = (e.clientX - r.left) / r.width;
-          targetMouse.y = 1.0 - (e.clientY - r.top) / r.height;
-          targetGlitch = 1.0;
-        });
-        hero.addEventListener("mouseleave", () => {
-          targetGlitch = 0.0;
-        });
+        const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
 
-        /* Touch (mobile) — gentle glitch on tap */
-        hero.addEventListener(
-          "touchmove",
-          (e) => {
-            const t = e.touches[0];
+        if (hasFinePointer) {
+          /* Desktop — unchanged mouse behavior */
+          hero.addEventListener("mousemove", (e) => {
             const r = hero.getBoundingClientRect();
-            targetMouse.x = (t.clientX - r.left) / r.width;
-            targetMouse.y = 1.0 - (t.clientY - r.top) / r.height;
-            targetGlitch = 0.6;
-          },
-          { passive: true },
-        );
-        hero.addEventListener("touchend", () => {
-          targetGlitch = 0.0;
-        });
+            targetMouse.x = (e.clientX - r.left) / r.width;
+            targetMouse.y = 1.0 - (e.clientY - r.top) / r.height;
+            targetGlitch = 1.0;
+          });
+          hero.addEventListener("mouseleave", () => {
+            targetGlitch = 0.0;
+          });
+        } else {
+          /* Mobile — autoplay loop instead of relying on hover */
+          let autoplayStart = null;
+
+          function autoplayTick(ts) {
+            if (autoplayStart === null) autoplayStart = ts;
+            const elapsed = (ts - autoplayStart) / 1000;
+
+            const angle = elapsed * 0.35;
+            targetMouse.x = 0.5 + Math.cos(angle) * 0.32;
+            targetMouse.y = 0.5 + Math.sin(angle * 0.8) * 0.28;
+            targetGlitch = 0.35 + Math.sin(elapsed * 0.6) * 0.25;
+
+            requestAnimationFrame(autoplayTick);
+          }
+          requestAnimationFrame(autoplayTick);
+
+          hero.addEventListener(
+            "touchmove",
+            (e) => {
+              const t = e.touches[0];
+              const r = hero.getBoundingClientRect();
+              targetMouse.x = (t.clientX - r.left) / r.width;
+              targetMouse.y = 1.0 - (t.clientY - r.top) / r.height;
+              targetGlitch = 0.7;
+            },
+            { passive: true },
+          );
+        }
 
         const vsSource = `
     attribute vec2 a_pos;
@@ -1752,10 +1755,10 @@
       vec2 uv = v_uv;
       float ca = u_res.x / u_res.y;
       float ia = u_texRes.x / u_texRes.y;
-      vec2 sc  = vec2(1.0);
-      if(ca > ia) sc.y = ia/ca; else sc.x = ca/ia;
-      uv = (uv - 0.5)/sc + 0.5;
-      vec2 mUV = (u_mouse - 0.5)/sc + 0.5;
+      vec2 sc = vec2(1.0);
+      if (ca < ia) sc.y = ca / ia; else sc.x = ia / ca;
+      uv = (uv - 0.5) * sc + 0.5;
+      vec2 mUV = (u_mouse - 0.5) * sc + 0.5;
       float distToMouse = distance(uv, mUV);
       float zone = u_glitch * (1.0 - smoothstep(0.08, 0.18, distToMouse));
       float pull = u_glitch * 0.10 * (1.0 - smoothstep(0.0, 0.65, distToMouse));

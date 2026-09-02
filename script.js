@@ -17,7 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
    LENIS SMOOTH SCROLL  (registered once)
 ───────────────────────────────────────────── */
 const lenis = new Lenis({
-  duration: 1.6,
+  duration: 0.7,
   easing: (t) => 1 - Math.pow(1 - t, 4),
 });
 
@@ -67,7 +67,10 @@ const revealObserver = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.1 },
+  {
+    threshold: 0,
+    rootMargin: "0px 0px 120px 0px",
+  },
 );
 document
   .querySelectorAll("[data-reveal]")
@@ -92,7 +95,7 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true,
   alpha: true,
 });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setClearColor(0x000000, 0);
 
@@ -597,7 +600,7 @@ document.querySelectorAll(".project").forEach((project) => {
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: project,
-      start: "top 80%",
+      start: "top 95%",
       onEnter: () => project.classList.add("revealed"),
     },
   });
@@ -606,45 +609,48 @@ document.querySelectorAll(".project").forEach((project) => {
     tl.from(
       number,
       {
-        y: 60,
+        y: 30,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.45,
         ease: "power3.out",
         clearProps: "all",
       },
       0,
     );
+
   if (title)
     tl.from(
       title,
       {
-        y: 60,
+        y: 30,
         opacity: 0,
-        duration: 0.9,
+        duration: 0.5,
         ease: "power3.out",
         clearProps: "all",
       },
-      0.1,
+      0,
     );
+
   if (desc)
     tl.from(
       desc,
       {
-        y: 60,
+        y: 25,
         opacity: 0,
-        duration: 0.9,
+        duration: 0.5,
         ease: "power3.out",
         clearProps: "all",
       },
-      0.2,
+      0,
     );
+
   if (bgNum)
     tl.from(
       bgNum,
       {
-        scale: 0.7,
+        scale: 0.85,
         opacity: 0,
-        duration: 1.4,
+        duration: 0.7,
         ease: "power4.out",
         clearProps: "all",
       },
@@ -827,26 +833,18 @@ document.querySelectorAll(".project").forEach((project) => {
 // This block is the sole owner of .project-tags and .project-link animation.
 // clearProps:"all" ensures opacity/transform inline styles are cleaned up
 // after the tween so nothing stays invisible if ScrollTrigger mis-fires.
-document.querySelectorAll(".project-tags").forEach((tags) => {
-  gsap.from(tags.children, {
-    opacity: 0,
-    y: 30,
-    stagger: 0.08,
-    duration: 0.1,
-    ease: "power3.out",
-    clearProps: "all",
-    scrollTrigger: { trigger: tags, start: "top 90%" },
-  });
-});
 
 document.querySelectorAll(".project-link").forEach((link) => {
   gsap.from(link, {
     opacity: 0,
-    y: 20,
-    duration: 0.8,
-    ease: "power3.out",
+    y: 10,
+    duration: 0.4,
+    ease: "power2.out",
     clearProps: "all",
-    scrollTrigger: { trigger: link, start: "top 95%" },
+    scrollTrigger: {
+      trigger: link,
+      start: "top 90%",
+    },
   });
 });
 

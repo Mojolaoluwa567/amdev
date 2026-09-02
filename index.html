@@ -195,8 +195,6 @@
          PROJECT 01
     ========================== -->
           <article class="project">
-            <div class="project-bg-num">01</div>
-
             <a
               href="https://faisalbidmos.com/"
               target="_blank"
@@ -239,8 +237,6 @@
          PROJECT 02
     ========================== -->
           <article class="project">
-            <div class="project-bg-num">02</div>
-
             <a
               href="https://urbanhive-4der.onrender.com"
               target="_blank"
@@ -288,8 +284,6 @@
          PROJECT 03
     ========================== -->
           <article class="project">
-            <div class="project-bg-num">03</div>
-
             <a
               href="https://abpindustries.netlify.app/"
               target="_blank"
@@ -336,8 +330,6 @@
          PROJECT 04
     ========================== -->
           <article class="project">
-            <div class="project-bg-num">04</div>
-
             <a
               href="https://qpat.netlify.app/"
               target="_blank"
@@ -382,8 +374,6 @@
     ========================== -->
 
           <article class="project">
-            <div class="project-bg-num">05</div>
-
             <a
               href="https://smooth-transit.vercel.app"
               target="_blank"
@@ -440,8 +430,6 @@
     ========================== -->
 
           <article class="project">
-            <div class="project-bg-num">06</div>
-
             <a
               href="https://comingsoon-check-back.vercel.app"
               target="_blank"
@@ -603,62 +591,103 @@
     </footer>
 
     <script>
-      const mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      /* =========================================
+   SERVICES — MAGNETIC PHYSICS
+   Only runs while Services is visible
+========================================= */
 
-      window.addEventListener("mousemove", (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-      });
+      const servicesSection = document.querySelector(".services");
+      const serviceItems = document.querySelectorAll(".service");
 
-      const items = document.querySelectorAll(".service");
+      const mouse = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2,
+      };
 
       const state = [];
 
-      items.forEach((el) => {
+      serviceItems.forEach((el) => {
+        const baseX = parseFloat(el.dataset.x) || 0;
+        const baseY = parseFloat(el.dataset.y) || 0;
+
         state.push({
           el,
-          baseX: parseFloat(el.dataset.x),
-          baseY: parseFloat(el.dataset.y),
-          x: parseFloat(el.dataset.x),
-          y: parseFloat(el.dataset.y),
+          baseX,
+          baseY,
+          x: baseX,
+          y: baseY,
           vx: 0,
           vy: 0,
         });
       });
 
-      function animate() {
+      /* Track mouse position */
+      window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      /* Animation state */
+      let servicesVisible = false;
+      let servicesRAF = null;
+
+      /* Physics loop */
+      function animateServices() {
+        if (!servicesVisible) {
+          servicesRAF = null;
+          return;
+        }
+
         state.forEach((obj) => {
           const dx = mouse.x - obj.x;
           const dy = mouse.y - obj.y;
 
-          // subtle attraction (not too strong = premium feel)
-          const forceX = dx * 0.015;
-          const forceY = dy * 0.015;
+          /* Magnetic attraction */
+          obj.vx += dx * 0.015;
+          obj.vy += dy * 0.015;
 
-          obj.vx += forceX;
-          obj.vy += forceY;
-
-          // damping
+          /* Damping */
           obj.vx *= 0.86;
           obj.vy *= 0.86;
 
-          // return-to-layout force (important for structure)
+          /* Return to original layout */
           obj.vx += (obj.baseX - obj.x) * 0.04;
           obj.vy += (obj.baseY - obj.y) * 0.04;
 
+          /* Extra damping */
           obj.vx *= 0.92;
           obj.vy *= 0.92;
 
+          /* Update position */
           obj.x += obj.vx;
           obj.y += obj.vy;
 
-          obj.el.style.transform = `translate(${obj.x}px, ${obj.y}px)`;
+          /* GPU-friendly transform */
+          obj.el.style.transform = `translate3d(${obj.x}px, ${obj.y}px, 0)`;
         });
 
-        requestAnimationFrame(animate);
+        servicesRAF = requestAnimationFrame(animateServices);
       }
 
-      animate();
+      /* Start / stop animation based on visibility */
+      if (servicesSection) {
+        const servicesObserver = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0];
+
+            servicesVisible = entry.isIntersecting;
+
+            if (servicesVisible && !servicesRAF) {
+              servicesRAF = requestAnimationFrame(animateServices);
+            }
+          },
+          {
+            threshold: 0.05,
+          },
+        );
+
+        servicesObserver.observe(servicesSection);
+      }
     </script>
 
     <!-- Scripts -->
