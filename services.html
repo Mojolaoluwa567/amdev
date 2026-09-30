@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>A·M — Services</title>
-
+    <title>A·M — Works</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       rel="shortcut icon"
@@ -12,16 +11,9 @@
       type="image/x-icon"
     />
     <link
-      rel="preload"
-      as="image"
-      href="image/studymate1.webp"
-      fetchpriority="high"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
-
     <style>
       :root {
         --black: #060606;
@@ -29,14 +21,10 @@
         --mono: "DM Mono", monospace;
         --display: "Bebas Neue", sans-serif;
         --serif: "Cormorant Garamond", serif;
-        --accent: rgba(236, 233, 227, 0.06);
         --border: rgba(236, 233, 227, 0.07);
         --green: #4ade80;
-        --text-body: rgba(236, 233, 227, 0.94);
-        --text-muted: rgba(236, 233, 227, 0.75);
-        --text-label: rgba(236, 233, 227, 0.7);
+        --body: rgba(236, 233, 227, 0.94);
       }
-
       *,
       *::before,
       *::after {
@@ -44,12 +32,9 @@
         padding: 0;
         box-sizing: border-box;
       }
-
       html {
-        scroll-behavior: auto;
         background: var(--black);
       }
-
       body {
         background: var(--black);
         color: var(--white);
@@ -57,31 +42,14 @@
         overflow-x: hidden;
         cursor: none;
       }
-
       body::-webkit-scrollbar {
         display: none;
       }
-
-      body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9997;
-      }
-
       a,
       button {
         -webkit-tap-highlight-color: transparent;
       }
-
-      img,
-      video {
-        max-width: 100%;
-      }
-
-      /* ───────────────────────── CURSOR ───────────────────────── */
+      /* cursor */
       #cursor {
         position: fixed;
         top: 0;
@@ -89,22 +57,16 @@
         pointer-events: none;
         z-index: 9999;
       }
-
-      #cursor .c-dot {
+      .c-dot {
         width: 6px;
         height: 6px;
-        background: var(--white);
+        background: #fff;
         border-radius: 50%;
         position: absolute;
         transform: translate(-50%, -50%);
-        transition:
-          background 0.3s,
-          width 0.3s,
-          height 0.3s,
-          opacity 0.3s;
+        transition: opacity 0.3s;
       }
-
-      #cursor .c-ring {
+      .c-ring {
         width: 32px;
         height: 32px;
         border: 1px solid rgba(236, 233, 227, 0.4);
@@ -112,35 +74,19 @@
         position: absolute;
         transform: translate(-50%, -50%);
         transition:
-          width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          border-color 0.3s,
-          background 0.3s,
-          opacity 0.3s;
+          width 0.35s,
+          height 0.35s,
+          border-color 0.3s;
       }
-
-      body.cursor-hover #cursor .c-dot {
+      body.cursor-hover .c-dot {
         opacity: 0;
       }
-
-      body.cursor-hover #cursor .c-ring {
+      body.cursor-hover .c-ring {
         width: 52px;
         height: 52px;
-        border-color: rgba(236, 233, 227, 0.9);
-        background: rgba(0, 0, 0, 0.3);
+        border-color: #fff;
       }
-
-      body.cursor-text #cursor .c-ring {
-        width: 80px;
-        height: 80px;
-        border-color: rgba(236, 233, 227, 0.5);
-      }
-
-      body.cursor-text #cursor .c-dot {
-        opacity: 0;
-      }
-
-      /* ───────────────────────── HEADER ───────────────────────── */
+      /* header */
       #site-header {
         position: fixed;
         top: 0;
@@ -151,35 +97,22 @@
         justify-content: space-between;
         align-items: center;
         z-index: 200;
-        transition:
-          transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 0.4s;
       }
-
-      #site-header.hidden {
-        transform: translateY(-100%);
-      }
-
       .logo {
         font-family: var(--serif);
         font-weight: 300;
         font-style: italic;
         font-size: 1.4rem;
         letter-spacing: 0.1em;
-        color: var(--white);
       }
-
       .logo-dot {
         color: rgba(236, 233, 227, 0.55);
       }
-
       .site-nav {
         display: flex;
-        align-items: center;
-        gap: 0.25rem;
         flex-direction: column;
+        align-items: flex-end;
       }
-
       .avail-pill {
         display: flex;
         align-items: center;
@@ -191,36 +124,26 @@
         text-transform: uppercase;
         font-family: var(--display);
         transition: color 0.2s;
+        mix-blend-mode: difference;
       }
-
       .avail-pill:hover,
       .avail-pill.active {
         color: var(--green);
       }
-
-      .avail-pill .pulse {
+      .pulse {
         width: 6px;
         height: 6px;
         border-radius: 50%;
         background: var(--green);
         animation: blink 2.2s infinite ease-in-out;
       }
-
       @keyframes blink {
-        0%,
-        100% {
-          opacity: 1;
-        }
         50% {
           opacity: 0.15;
         }
       }
-
-      /* ───────────────────────── MOBILE TOGGLE ───────────────────────── */
       .menu-toggle {
         display: none;
-        position: relative;
-        z-index: 300;
         width: 44px;
         height: 44px;
         background: none;
@@ -230,532 +153,215 @@
         align-items: center;
         justify-content: center;
         gap: 6px;
+        z-index: 300;
       }
-
-      .menu-toggle .bar {
+      .bar {
         display: block;
         width: 24px;
         height: 1px;
-        background: var(--white);
+        background: #fff;
         transition:
-          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 0.3s ease;
+          transform 0.4s,
+          opacity 0.3s;
       }
-
-      body.menu-open .menu-toggle .bar:nth-child(1) {
+      body.menu-open .bar:nth-child(1) {
         transform: translateY(7px) rotate(45deg);
       }
-
-      body.menu-open .menu-toggle .bar:nth-child(2) {
+      body.menu-open .bar:nth-child(2) {
         opacity: 0;
       }
-
-      body.menu-open .menu-toggle .bar:nth-child(3) {
+      body.menu-open .bar:nth-child(3) {
         transform: translateY(-7px) rotate(-45deg);
       }
-
-      /* ───────────────────────── MOBILE NAV ───────────────────────── */
       #mobile-nav {
         position: fixed;
         inset: 0;
         z-index: 250;
         background: rgba(6, 6, 6, 0.98);
-        backdrop-filter: blur(20px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         padding: 0 3rem;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.45s ease;
+        transition: opacity 0.45s;
       }
-
-      .mobile-close {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        width: 48px;
-        height: 48px;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        z-index: 260;
-      }
-
-      .mobile-close span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 28px;
-        height: 1px;
-        background: var(--white);
-        transform-origin: center;
-      }
-
-      .mobile-close span:first-child {
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
-
-      .mobile-close span:last-child {
-        transform: translate(-50%, -50%) rotate(-45deg);
-      }
-
-      .mobile-close:hover {
-        transform: rotate(90deg);
-        transition: transform 0.35s ease;
-      }
-
       body.menu-open #mobile-nav {
         opacity: 1;
         pointer-events: auto;
       }
-
       .mobile-nav-list {
         list-style: none;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
       }
-
       .mobile-nav-list li {
         overflow: hidden;
       }
-
       .mobile-nav-list a {
         display: inline-block;
         font-family: var(--display);
         font-size: clamp(2.4rem, 10vw, 4rem);
-        letter-spacing: 0.02em;
         text-transform: uppercase;
         color: var(--white);
         text-decoration: none;
         transform: translateY(110%);
         transition:
           transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-          color 0.3s ease;
+          color 0.3s;
         padding: 0.4rem 0;
       }
-
       body.menu-open .mobile-nav-list a {
-        transform: translateY(0);
+        transform: none;
       }
-
-      .mobile-nav-list li:nth-child(1) a {
-        transition-delay: 0.05s;
-      }
-      .mobile-nav-list li:nth-child(2) a {
-        transition-delay: 0.1s;
-      }
-      .mobile-nav-list li:nth-child(3) a {
-        transition-delay: 0.15s;
-      }
-      .mobile-nav-list li:nth-child(4) a {
-        transition-delay: 0.2s;
-      }
-
-      .mobile-nav-list a:hover,
-      .mobile-nav-list a:focus,
-      .mobile-nav-list a:active {
+      .mobile-nav-list a:hover {
         color: var(--green);
       }
-
-      .mobile-nav-foot {
-        margin-top: 4rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.55);
-      }
-
-      .mobile-nav-foot a {
-        color: rgba(236, 233, 227, 0.8);
-        text-decoration: none;
-      }
-
-      /* ═══════════════════════ CASE SCRUBBER ═══════════════════════ */
-      #case-wrapper {
+      /* works stage */
+      #works {
         position: relative;
-        height: calc(var(--n, 9) * 100vh);
       }
-
-      #case-pin {
+      #stage {
         position: sticky;
         top: 0;
         height: 100vh;
         height: 100svh;
-        min-height: 640px;
         overflow: hidden;
-        background: var(--black);
-        border-bottom: 1px solid var(--border);
+        background: #000;
         isolation: isolate;
       }
-
-      .case-bg-layer {
+      .bg {
         position: absolute;
         inset: 0;
         background-size: cover;
-
         background-position: center;
-        filter: grayscale(30%) brightness(0.5);
+        filter: grayscale(1) contrast(1.15) brightness(0.85);
         opacity: 0;
-        transition: opacity 0.5s ease;
-        will-change: opacity;
       }
-
-      .case-bg-layer.active.loaded {
-        opacity: 1;
-      }
-
-      .case-bg-overlay {
+      #tint {
         position: absolute;
         inset: 0;
         z-index: 1;
-        background: linear-gradient(
-          180deg,
-          rgba(6, 6, 6, 0.55) 0%,
-          rgba(6, 6, 6, 0.28) 30%,
-          rgba(6, 6, 6, 0.4) 62%,
-          rgba(6, 6, 6, 0.85) 100%
-        );
-        pointer-events: none;
+        mix-blend-mode: multiply;
+        background: #1f3fe0;
       }
-
-      .case-top {
+      #shade {
         position: absolute;
-        top: 128px;
-        left: 0;
-        right: 0;
-        z-index: 5;
-        text-align: center;
-        padding: 0 24px;
-      }
-
-      .case-kicker {
-        display: inline-block;
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.6);
-        margin-bottom: 16px;
-      }
-
-      .case-title {
-        font-family: var(--display);
-        font-size: clamp(2.6rem, 7vw, 6rem);
-        line-height: 0.95;
-        text-transform: uppercase;
-        color: var(--white);
-        letter-spacing: 0.005em;
-        opacity: 1;
-        transform: translateY(0);
-        transition:
-          opacity 0.32s ease,
-          transform 0.32s ease;
-      }
-
-      .case-meta {
-        margin-top: 14px;
-        font-family: var(--mono);
-        font-size: 0.66rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: var(--green);
-        opacity: 1;
-        transition:
-          opacity 0.32s ease,
-          transform 0.32s ease;
-      }
-
-      .case-filmstrip-wrap {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        right: 0;
-        transform: translateY(-50%);
-        height: 92px;
-        z-index: 4;
-        overflow: hidden;
-        -webkit-mask-image: linear-gradient(
-          90deg,
-          transparent 0%,
-          black 14%,
-          black 86%,
-          transparent 100%
-        );
-        mask-image: linear-gradient(
-          90deg,
-          transparent 0%,
-          black 14%,
-          black 86%,
-          transparent 100%
+        inset: 0;
+        z-index: 2;
+        background: radial-gradient(
+          ellipse at center,
+          transparent 35%,
+          rgba(0, 0, 0, 0.55)
         );
       }
-
-      .case-filmstrip-track {
+      #card {
         position: absolute;
-        top: 50%;
+        z-index: 3;
         left: 50%;
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        will-change: transform;
-      }
-
-      .case-thumb {
-        flex-shrink: 0;
-        width: 104px;
-        height: 72px;
-        border: 1px solid var(--border);
+        top: 50%;
+        width: min(90vw, 1100px);
+        height: min(74vh, 580px);
+        transform: translate(-50%, -46%);
+        background: #fff;
+        color: #0a0a0a;
         overflow: hidden;
-        cursor: pointer;
-        filter: grayscale(85%) brightness(0.5);
-        opacity: 0.55;
-        transform: scale(1);
-        transition:
-          filter 0.4s ease,
-          opacity 0.4s ease,
-          transform 0.4s ease,
-          border-color 0.4s ease;
+        font-family: "Archivo", sans-serif;
       }
-
-      .case-thumb img {
+      #card > * {
+        position: absolute;
+      }
+      .tw {
+        overflow: hidden;
+        padding-bottom: 0.08em;
+      }
+      #ttl {
+        display: block;
+        font-weight: 900;
+        font-size: clamp(2rem, 6.4vw, 6rem);
+        line-height: 0.88;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+      }
+      #meta {
+        left: 3%;
+        top: 4%;
+        font: 400 0.62rem var(--mono);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #555;
+      }
+      #idx {
+        right: 3%;
+        top: 4%;
+        font: 400 0.62rem var(--mono);
+        letter-spacing: 0.18em;
+        color: #555;
+      }
+      #inset {
+        overflow: hidden;
+        background: #111;
+      }
+      #inset img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
       }
-
-      .case-thumb.active {
-        filter: grayscale(0%) brightness(1);
-        opacity: 1;
-        transform: scale(1.14);
-        border-color: rgba(236, 233, 227, 0.5);
+      #dsc p {
+        font-weight: 800;
+        font-size: 0.86rem;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
-
-      .case-bottom {
-        position: absolute;
-        bottom: 108px;
-        left: 0;
-        right: 0;
-        z-index: 5;
-        text-align: center;
-        padding: 0 24px;
+      #dsc a {
+        display: inline-block;
+        margin-top: 0.8rem;
+        font: 400 0.64rem var(--mono);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #0a0a0a;
+        text-decoration: none;
+        border-bottom: 1px solid #0a0a0a;
+        padding-bottom: 2px;
       }
-
-      .case-desc {
-        max-width: 560px;
-        margin: 0 auto;
-        font-family: var(--serif);
-        font-size: 1.05rem;
-        line-height: 1.62;
-        color: var(--text-body);
-        opacity: 1;
-        transition:
-          opacity 0.32s ease,
-          transform 0.32s ease;
+      #dsc a:hover {
+        color: #0f8f4a;
+        border-color: #0f8f4a;
       }
-
-      .case-tags {
+      #tags {
         display: flex;
-        justify-content: center;
         flex-wrap: wrap;
-        gap: 7px;
-        margin-top: 16px;
-        opacity: 1;
-        transition: opacity 0.32s ease;
+        gap: 6px;
+        align-content: flex-start;
       }
-
-      .case-tag {
-        font-family: var(--mono);
-        font-size: 0.58rem;
+      #tags span {
+        font: 400 0.56rem var(--mono);
         letter-spacing: 0.06em;
         text-transform: uppercase;
-        color: var(--text-body);
-        border: 1px solid rgba(236, 233, 227, 0.2);
-        padding: 5px 11px;
+        border: 1px solid #0a0a0a;
+        padding: 4px 9px;
         white-space: nowrap;
       }
-
-      .case-view {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        margin-top: 20px;
-        font-family: var(--mono);
-        font-size: 0.62rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--white);
-        text-decoration: none;
-        border-bottom: 1px solid rgba(236, 233, 227, 0.3);
-        padding-bottom: 3px;
-        transition:
-          color 0.3s ease,
-          border-color 0.3s ease;
-      }
-
-      .case-view:hover {
-        color: var(--green);
-        border-color: var(--green);
-      }
-
-      .case-footer-row {
+      #bar {
         position: absolute;
-        bottom: 40px;
-        left: 40px;
-        right: 40px;
-        z-index: 5;
-        display: flex;
-        align-items: center;
-        gap: 20px;
-      }
-
-      .case-index {
-        font-family: var(--mono);
-        font-size: 0.62rem;
-        letter-spacing: 0.14em;
-        color: rgba(236, 233, 227, 0.55);
-        white-space: nowrap;
-      }
-
-      .case-progress {
-        flex: 1;
+        z-index: 4;
+        left: 5vw;
+        right: 5vw;
+        bottom: 3.2vh;
         height: 1px;
-        background: var(--border);
-        position: relative;
+        background: rgba(255, 255, 255, 0.25);
       }
-
-      .case-progress-fill {
-        position: absolute;
-        top: 0;
-        left: 0;
+      #fill {
         height: 100%;
-        width: 0%;
+        width: 0;
         background: var(--green);
       }
-
-      .case-scrollhint {
-        position: absolute;
-        bottom: 76px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 5;
-        font-family: var(--mono);
-        font-size: 0.58rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.5);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: opacity 0.4s ease;
-      }
-
-      .case-scrollhint::after {
-        content: "↓";
-      }
-
-      /* ═══════════════════ MORE SERVICES (no imagery) ═══════════════════ */
-      #more-services {
-        padding: clamp(70px, 9vw, 110px) clamp(1.2rem, 5vw, 40px);
-        border-top: 1px solid var(--border);
-      }
-
-      .more-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        border-bottom: 1px solid rgba(236, 233, 227, 0.16);
-        padding-bottom: 20px;
-        margin-bottom: 4px;
-      }
-
-      .more-header-label {
-        font-family: var(--mono);
-        font-size: 0.68rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--white);
-      }
-
-      .more-header-hint {
-        font-family: var(--mono);
-        font-size: 0.6rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--text-label);
-      }
-
-      .more-row {
-        display: grid;
-        grid-template-columns: 90px 1.3fr 1fr;
-        gap: 32px;
-        align-items: center;
-        padding: 30px 0;
-        border-bottom: 1px solid var(--border);
-      }
-
-      .more-num {
-        font-family: var(--mono);
-        font-size: 0.85rem;
-        color: var(--green);
-      }
-
-      .more-title-wrap {
-        display: flex;
-        align-items: baseline;
-        gap: 16px;
-        flex-wrap: wrap;
-      }
-
-      .more-title {
-        font-family: var(--display);
-        font-size: clamp(1.5rem, 2.3vw, 2.1rem);
-        text-transform: uppercase;
-        color: var(--white);
-        line-height: 1;
-      }
-
-      .more-badge {
-        font-family: var(--mono);
-        font-size: 0.55rem;
-        letter-spacing: 0.16em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.55);
-        border: 1px solid var(--border);
-        padding: 4px 9px;
-      }
-
-      .more-desc {
-        font-family: var(--serif);
-        font-size: 0.98rem;
-        line-height: 1.6;
-        color: var(--text-body);
-        margin-top: 8px;
-      }
-
-      .more-pills {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
-
-      .more-pill {
-        font-family: var(--mono);
-        font-size: 0.58rem;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--text-body);
-        border: 1px solid rgba(236, 233, 227, 0.18);
-        padding: 5px 10px;
-        white-space: nowrap;
-      }
-
-      /* ═══════════════════════ RESPONSIVE ═══════════════════════ */
       @media (max-width: 900px) {
         #site-header {
           padding: 1.4rem 2rem;
@@ -766,76 +372,30 @@
         .menu-toggle {
           display: flex;
         }
-        .case-top {
-          top: 112px;
-        }
-        .case-bottom {
-          bottom: 96px;
-        }
-        .more-row {
-          grid-template-columns: 50px 1fr;
-        }
-        .more-row .more-desc-col {
-          grid-column: 2 / 3;
-        }
       }
-
-      @media (max-width: 640px) {
-        #site-header {
-          padding: 1.2rem 1.2rem;
-        }
+      @media (max-width: 700px) {
         body {
           cursor: auto;
         }
         #cursor {
           display: none;
         }
-        .case-top {
-          top: 100px;
+        #site-header {
+          padding: 1.2rem;
         }
-        .case-kicker {
-          font-size: 0.6rem;
-          margin-bottom: 10px;
+        #card {
+          width: 92vw;
+          height: 78svh;
         }
-        .case-meta {
-          font-size: 0.58rem;
+        #ttl {
+          font-size: clamp(1.8rem, 10vw, 3rem);
         }
-        .case-filmstrip-wrap {
-          height: 68px;
-        }
-        .case-thumb {
-          width: 76px;
-          height: 54px;
-        }
-        .case-bottom {
-          bottom: 88px;
-        }
-        .case-desc {
-          font-size: 0.95rem;
-          line-height: 1.5;
-        }
-        .case-footer-row {
-          left: 20px;
-          right: 20px;
-          bottom: 24px;
-        }
-        .case-scrollhint {
-          bottom: 58px;
-        }
-        .more-row {
-          grid-template-columns: 1fr;
-          gap: 10px;
-        }
-        .more-title-wrap {
-          gap: 10px;
-        }
-        footer {
-          text-align: center;
-          justify-content: center;
+        #dsc p {
+          font-size: 0.78rem;
+          -webkit-line-clamp: 3;
         }
       }
-
-      /* ───────────────────────── CTA ───────────────────────── */
+      /* CTA */
       #services-cta {
         position: relative;
         min-height: 80vh;
@@ -843,19 +403,16 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        background-color: #000000;
+        background: #000;
         border-top: 1px solid rgba(236, 233, 227, 0.08);
       }
-
       #cta-canvas {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 0;
       }
-
       .scta-inner {
         position: relative;
         z-index: 2;
@@ -866,33 +423,28 @@
         gap: 2rem;
         padding: 0 clamp(1.2rem, 6vw, 24px);
       }
-
       .section-label {
         font-size: 0.65rem;
         letter-spacing: 0.42em;
         text-transform: uppercase;
         color: var(--green);
       }
-
       .scta-headline {
         font-family: var(--serif);
         font-weight: 300;
         font-size: clamp(2.2rem, 8vw, 7rem);
         line-height: 1.02;
-        color: var(--white);
       }
-
       .scta-headline em {
         font-style: italic;
         color: rgba(236, 233, 227, 0.55);
       }
-
       .scta-btn {
         display: inline-flex;
         align-items: center;
         gap: 1rem;
         padding: clamp(0.9rem, 3vw, 1.2rem) clamp(1.6rem, 5vw, 2.8rem);
-        border: 1px solid rgb(255, 255, 255);
+        border: 1px solid #fff;
         color: var(--white);
         text-decoration: none;
         font-family: var(--display);
@@ -904,24 +456,17 @@
           color 0.4s,
           border-color 0.4s;
       }
-
       .scta-btn:hover {
         background: var(--green);
-        color: black;
-        border: 1px solid rgba(255, 255, 255, 0);
+        color: #000;
+        border-color: transparent;
       }
-
       .scta-arrow {
-        font-size: 1.2rem;
-        display: inline-block;
-        transition: transform 0.4s ease;
+        transition: transform 0.4s;
       }
-
       .scta-btn:hover .scta-arrow {
         transform: translate(3px, -3px);
       }
-
-      /* ───────────────────────── FOOTER ───────────────────────── */
       footer {
         position: relative;
         z-index: 2;
@@ -938,9 +483,14 @@
         color: rgba(236, 233, 227, 0.75);
         background: var(--black);
       }
+      @media (max-width: 640px) {
+        footer {
+          text-align: center;
+          justify-content: center;
+        }
+      }
     </style>
   </head>
-
   <body>
     <div id="cursor">
       <div class="c-ring"></div>
@@ -949,907 +499,491 @@
 
     <header id="site-header">
       <div class="logo">A<span class="logo-dot">·</span>M</div>
-
       <nav class="site-nav">
-        <a href="index.html" class="avail-pill">
-          <span class="pulse"></span>Home
-        </a>
-        <a href="about.html" class="avail-pill">
-          <span class="pulse"></span>About
-        </a>
-        <a href="services.html" class="avail-pill active">
-          <span class="pulse"></span>Services
-        </a>
-        <a href="contact.html" class="avail-pill">
-          <span class="pulse"></span>Get Started
-        </a>
+        <a href="index.html" class="avail-pill"
+          ><span class="pulse"></span>Home</a
+        >
+        <a href="about.html" class="avail-pill"
+          ><span class="pulse"></span>About</a
+        >
+        <a href="works.html" class="avail-pill active"
+          ><span class="pulse"></span>Works</a
+        >
+        <a href="contact.html" class="avail-pill"
+          ><span class="pulse"></span>Get Started</a
+        >
       </nav>
-
       <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
+        <span class="bar"></span><span class="bar"></span
+        ><span class="bar"></span>
       </button>
     </header>
 
     <nav id="mobile-nav" aria-hidden="true">
-      <button class="mobile-close" id="mobile-close" aria-label="Close menu">
-        <span></span><span></span>
-      </button>
-
       <ul class="mobile-nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Services</a></li>
+        <li><a href="works.html">Works</a></li>
         <li><a href="contact.html">Get Started</a></li>
       </ul>
     </nav>
 
-    <!-- CASE SCRUBBER -->
-    <section id="case-wrapper">
-      <div id="case-pin">
-        <div id="case-bg"></div>
-        <div class="case-bg-overlay"></div>
-
-        <div class="case-top">
-          <span class="case-kicker">Selected Work / 2026</span>
-          <h2 class="case-title" id="case-title">—</h2>
-          <div class="case-meta" id="case-meta">—</div>
-        </div>
-
-        <div class="case-filmstrip-wrap">
-          <div class="case-filmstrip-track" id="case-track"></div>
-        </div>
-
-        <div class="case-bottom">
-          <p class="case-desc" id="case-desc">—</p>
-          <div class="case-tags" id="case-tags"></div>
-          <a class="case-view" id="case-view" href="#">
-            <span>View Project</span><span>↗</span>
-          </a>
-        </div>
-
-        <div class="case-footer-row">
-          <span class="case-index" id="case-index">01 / 01</span>
-          <div class="case-progress">
-            <div class="case-progress-fill" id="case-progress-fill"></div>
+    <section id="works">
+      <div id="stage">
+        <div id="bgs"></div>
+        <div id="tint"></div>
+        <div id="shade"></div>
+        <div id="card">
+          <div id="meta"></div>
+          <div id="idx"></div>
+          <div id="inset"><img id="insImg" alt="" /></div>
+          <div class="tw" id="tw"><h2 id="ttl"></h2></div>
+          <div id="dsc">
+            <p id="dtxt"></p>
+            <a id="view" href="#">View Project ↗</a>
           </div>
+          <div id="tags"></div>
         </div>
-
-        <div class="case-scrollhint" id="case-scrollhint">
-          Scroll to explore
-        </div>
+        <div id="bar"><div id="fill"></div></div>
       </div>
     </section>
 
-    <!-- MORE SERVICES (no case imagery yet) -->
-    <section id="more-services">
-      <div class="more-header">
-        <span class="more-header-label">Index / Also Available</span>
-        <span class="more-header-hint">Three capabilities · 2026</span>
-      </div>
-      <div id="more-list"></div>
-    </section>
-
-    <!-- CTA -->
     <section id="services-cta">
       <div class="scta-inner">
         <p class="section-label" data-reveal>Ready to build?</p>
-
         <h2 class="scta-headline" data-reveal>
           Let's make<br /><em>something</em><br />remarkable.
         </h2>
-
-        <a class="scta-btn" href="contact.html" data-reveal>
-          <span>Start a Project</span>
-          <span class="scta-arrow">↗</span>
-        </a>
+        <a class="scta-btn" href="contact.html" data-reveal
+          ><span>Start a Project</span><span class="scta-arrow">↗</span></a
+        >
       </div>
-
       <canvas id="cta-canvas"></canvas>
     </section>
 
     <footer>
-      <span>© 2026 Portfolio</span>
-      <span>Built with precision</span>
-      <span>By Adeogun Mojola</span>
+      <span>© 2026 Portfolio</span><span>Built with precision</span
+      ><span>By Adeogun Mojola</span>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    <!-- SMOOTH SCROLL (Lenis) -->
     <script>
-      (() => {
-        if (typeof Lenis === "undefined" || typeof gsap === "undefined") return;
+      gsap.registerPlugin(ScrollTrigger);
 
+      /* smooth scroll */
+      if (typeof Lenis !== "undefined") {
         const lenis = new Lenis({
           duration: 1.4,
           easing: (t) => 1 - Math.pow(1 - t, 4),
         });
-
         lenis.on("scroll", ScrollTrigger.update);
-
-        gsap.ticker.add((time) => {
-          lenis.raf(time * 1000);
-        });
+        gsap.ticker.add((t) => lenis.raf(t * 1000));
         gsap.ticker.lagSmoothing(0);
+      }
 
-        window.__lenis = lenis;
-      })();
-    </script>
-
-    <!-- CURSOR -->
-    <script>
+      /* cursor */
       (() => {
-        const curEl = document.getElementById("cursor");
-
-        if (!curEl || !window.matchMedia("(pointer: fine)").matches) {
-          if (curEl) curEl.style.display = "none";
-          return;
-        }
-
-        const cd = curEl.querySelector(".c-dot");
-        const cr = curEl.querySelector(".c-ring");
-
-        let rx = 0;
-        let ry = 0;
-        let dx = window.innerWidth / 2;
-        let dy = window.innerHeight / 2;
-
-        document.addEventListener("mousemove", (e) => {
+        const el = document.getElementById("cursor");
+        if (!matchMedia("(pointer: fine)").matches) return;
+        const d = el.querySelector(".c-dot"),
+          r = el.querySelector(".c-ring");
+        let rx = 0,
+          ry = 0,
+          dx = innerWidth / 2,
+          dy = innerHeight / 2;
+        addEventListener("mousemove", (e) => {
           dx = e.clientX;
           dy = e.clientY;
         });
-
-        function bindHoverCursor(el) {
-          if (!el || el.dataset.cursorBound === "true") return;
-          el.dataset.cursorBound = "true";
-
-          el.addEventListener("mouseenter", () =>
+        document.querySelectorAll("a,button").forEach((n) => {
+          n.addEventListener("mouseenter", () =>
             document.body.classList.add("cursor-hover"),
           );
-          el.addEventListener("mouseleave", () =>
+          n.addEventListener("mouseleave", () =>
             document.body.classList.remove("cursor-hover"),
           );
-        }
-
-        function bindAllHoverables(root = document) {
-          root.querySelectorAll("a, button").forEach(bindHoverCursor);
-        }
-
-        bindAllHoverables();
-        window.__bindCustomCursorHoverables = bindAllHoverables;
-
-        function tick() {
+        });
+        (function tick() {
           rx += (dx - rx) * 0.1;
           ry += (dy - ry) * 0.1;
-
-          cd.style.left = dx + "px";
-          cd.style.top = dy + "px";
-          cr.style.left = rx + "px";
-          cr.style.top = ry + "px";
-
+          d.style.left = dx + "px";
+          d.style.top = dy + "px";
+          r.style.left = rx + "px";
+          r.style.top = ry + "px";
           requestAnimationFrame(tick);
-        }
-
-        tick();
+        })();
       })();
-    </script>
 
-    <!-- MOBILE NAV -->
-    <script>
+      /* mobile nav */
       (() => {
-        const menuToggle = document.getElementById("menu-toggle");
-        const mobileClose = document.getElementById("mobile-close");
-        const mobileNav = document.getElementById("mobile-nav");
-        const mobileLinks = document.querySelectorAll(".mobile-nav-list a");
-
-        function openMenu() {
-          document.body.classList.add("menu-open");
-          mobileNav?.setAttribute("aria-hidden", "false");
-        }
-
-        function closeMenu() {
-          document.body.classList.remove("menu-open");
-          mobileNav?.setAttribute("aria-hidden", "true");
-        }
-
-        function toggleMenu() {
-          if (document.body.classList.contains("menu-open")) closeMenu();
-          else openMenu();
-        }
-
-        menuToggle?.addEventListener("click", toggleMenu);
-        mobileClose?.addEventListener("click", closeMenu);
-
-        mobileLinks.forEach((link) => {
-          link.addEventListener("click", closeMenu);
-        });
-
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") closeMenu();
-        });
+        const b = document.body,
+          n = document.getElementById("mobile-nav");
+        const set = (o) => {
+          b.classList.toggle("menu-open", o);
+          n.setAttribute("aria-hidden", !o);
+        };
+        document.getElementById("menu-toggle").onclick = () =>
+          set(!b.classList.contains("menu-open"));
+        n.querySelectorAll("a").forEach((a) => (a.onclick = () => set(false)));
+        addEventListener("keydown", (e) => e.key === "Escape" && set(false));
       })();
-    </script>
 
-    <!-- SERVICES DATA -->
-    <script>
-      const servicesData = [
+      /* ───────── WORKS — website projects only ───────── */
+      const P = [
         {
-          num: "01",
-          tier: "Core",
-          category: "Full-Stack",
-          title: "Full Stack Development",
-          desc: "Web apps, dashboards, systems that solve real problems with scalable architecture.",
-          caps: [
-            "Web Applications",
-            "Dashboard Systems",
-            "REST / GraphQL APIs",
-            "Database Design",
-            "Auth & Security",
-            "Deployment & CI",
-          ],
-          projects: [
-            {
-              title: "StudyMate",
-              year: "2026",
-              desc: "An AI-powered quiz and study platform built with Flask and React/Vite,multi-format content ingestion, teacher and student roles, gamification, and AI study aids, deployed across Railway and Vercel.",
-              tags: ["Flask", "React", "SQLAlchemy", "Render"],
-              images: ["image/studymate1.webp"],
-              link: "https://comingsoon-check-back.vercel.app",
-            },
-            {
-              title: "URBANHIVE",
-              year: "2025",
-              desc: "An affordable luxury fashion store where timeless style meets everyday elegance. Browse curated clothing, shop your favorites, and enjoy a seamless experience from discovery to checkout.",
-              tags: [
-                "Node.js",
-                "PostgreSQL",
-                "HTML/CSS",
-                "VANILLA JAVASCRIPT",
-                "EXPRESS.JS",
-              ],
-              images: [
-                "image/urbanhive.jpg",
-                "image/3urban.png",
-                "image/4urban.png",
-              ],
-              link: "https://urbanhive-4der.onrender.com",
-            },
-            {
-              title: "C-CONVERTER",
-              year: "2025",
-              desc: "A fast, intuitive currency conversion platform that lets you convert between currencies from around the world with accurate exchange rates simple, seamless, and built for everyday use.",
-              tags: ["Node.js", "PostgreSQL"],
-              images: ["image/ccconverter.jpg", "image/cc-2.png"],
-              link: "https://comingsoon-check-back.vercel.app",
-            },
-          ],
+          t: "STUDYMATE",
+          y: "2026",
+          d: "An AI-powered quiz and study platform built with Flask and React/Vite — multi-format content ingestion, teacher and student roles, gamification, and AI study aids.",
+          g: ["Flask", "React", "SQLAlchemy", "Render"],
+          i: ["image/studymate1.webp"],
+          l: "https://comingsoon-check-back.vercel.app",
         },
         {
-          num: "02",
-          tier: "Core",
-          category: "Frontend",
-          title: "Frontend Development",
-          desc: "High-impact landing pages with Three.js, WebGL, physics and immersive UI systems.",
-          caps: [
-            "Three.js / WebGL",
-            "GSAP Animation",
-            "Smooth Scroll (Lenis)",
-            "Responsive UI",
-            "Shader Effects",
-            "Performance Tuning",
-          ],
-          projects: [
-            {
-              title: "GAMEFOLIO",
-              year: "2026",
-              desc: "This is a creative 2D game-inspired portfolio landing page built as an experimental personal project. Instead of using a traditional portfolio layout, I wanted to design something that felt more playful and interactive almost like a mini side-scrolling game experience",
-              tags: ["Vanilla JS", "HTML", "CSS3", "Lenis"],
-              images: ["image/game.jpg", "image/2.png", "image/3.png"],
-              link: "https://amdev2.vercel.app/",
-            },
-            {
-              title: "HELIOS",
-              year: "2026",
-              desc: "Helios is an experimental Three.js-powered 3D portfolio experience built as a solar-system-inspired project archive.",
-              tags: ["Three.js", "GSAP", "WebGL", "Lenis", "Vanilla JS"],
-              images: ["image/helios.jpg", "image/5.png"],
-              link: "https://solarsystem-two.vercel.app/",
-            },
-            {
-              title: "ABP INDUSTRIES",
-              year: "2024",
-              desc: "ABP Industries is a corporate website built for an agricultural company focused on the cultivation, processing, packaging, and sale of staple food products. The goal of the project was to create a clean, modern digital presence for a brand operating within Nigeria's agriculture and food production space.",
-              tags: ["Three.js", "GSAP", "WebGL", "Lenis", "HTML/CSS"],
-              images: ["image/abpind.jpg", "image/7.png", "image/8.png"],
-              link: "https://abpindustries.netlify.app/",
-            },
-            {
-              title: "SMOOTH TRANSIT",
-              year: "2025",
-              desc: "Smooth Transit Global Services is a dark editorial-style aviation consulting website designed as a premium digital experience for a firm specializing in international and domestic travel services, logistics, and VIP aviation support.",
-              tags: ["javascript", "GSAP", "HTML/CSS"],
-              images: [
-                "image/smoothtransit.jpg",
-                "image/smm2.png",
-                "image/smm3.png",
-                "image/smm4.png",
-              ],
-              link: "https://smooth-transit.vercel.app",
-            },
-            {
-              title: "PALM & KELL",
-              year: "2024",
-              desc: "Palm & Kell is a fully horizontal-scrolling luxury hotel website built as a single-page experience. Instead of scrolling vertically, the entire site from the hero to the footer lives on one horizontal axis.",
-              tags: ["HTML/CSS", "JAVASCRIPT", "GSAP", "Lenis"],
-              images: [
-                "image/palmkell.jpg",
-                "image/palm2.png",
-                "image/palm3.png",
-              ],
-              link: "https://comingsoon-check-back.vercel.app",
-            },
-            {
-              title: "QPAT SOLUTIONS DEMO",
-              year: "2025",
-              desc: "QPAT Solutions is an education and consulting platform dedicated to guiding students through their academic journey with clarity, structure, and purpose. The organization provides end-to-end support from initial enquiry through to final placement, ensuring every student receives intentional guidance and meaningful direction.",
-              tags: ["HTML/CSS", "JAVASCRIPT", "WebGL", "LENIS"],
-              images: ["image/qpat.jpg", "image/10.png", "image/11.png"],
-              link: "https://qpat.netlify.app/",
-            },
-          ],
+          t: "URBANHIVE",
+          y: "2025",
+          d: "An affordable luxury fashion store where timeless style meets everyday elegance. Browse curated clothing and enjoy a seamless path from discovery to checkout.",
+          g: ["Node.js", "PostgreSQL", "Express.js", "Vanilla JS"],
+          i: ["image/urbanhive.jpg", "image/3urban.png", "image/4urban.png"],
+          l: "https://urbanhive-4der.onrender.com",
         },
         {
-          num: "03",
-          tier: "Creative",
-          category: "Branding",
-          title: "Graphics Design",
-          desc: "Brand identity, logos, packaging, mockups and social media visuals.",
-          caps: [
-            "Brand Identity",
-            "Logo Design",
-            "Packaging",
-            "Social Media Kits",
-            "Merchandise Mockups",
-            "Ad Campaigns",
-          ],
-          projects: [
-            {
-              title: "BRAND IDENTITY",
-              year: "2025",
-              desc: "A full identity build spanning logo, packaging mockups, and a layout system designed for a consistent editorial voice across formats.",
-              tags: ["Branding", "Packaging"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "PACKAGE DESIGN",
-              year: "2025",
-              desc: "A full identity build spanning logo, packaging mockups, and a layout system.",
-              tags: ["Branding", "Packaging"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "MERCHANDISE MOCKUP",
-              year: "2025",
-              desc: "A full identity build spanning logo, packaging mockups, and a layout system.",
-              tags: ["Branding", "Packaging"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "SOCIAL MEDIA MANAGEMENT & AD CAMPAIGN",
-              year: "2025",
-              desc: "A full identity build spanning logo, packaging mockups, and a layout system.",
-              tags: ["Branding", "Packaging"],
-              images: [],
-              link: "#",
-            },
-          ],
+          t: "C-CONVERTER",
+          y: "2025",
+          d: "A fast, intuitive currency conversion platform with accurate exchange rates — simple, seamless, and built for everyday use.",
+          g: ["Node.js", "PostgreSQL"],
+          i: ["image/ccconverter.jpg", "image/cc-2.png"],
+          l: "https://comingsoon-check-back.vercel.app",
         },
         {
-          num: "04",
-          tier: "Creative",
-          category: "Motion",
-          title: "Motion Graphics",
-          desc: "Product promos, launch videos and animated brand storytelling.",
-          caps: [
-            "Product Launch Reels",
-            "Animated Promos",
-            "Brand Storytelling",
-            "Type-Led Motion",
-            "After Effects",
-            "Video Editing",
-          ],
-          projects: [
-            {
-              title: "Product Launch Reel For StudyMate",
-              year: "2025",
-              desc: "A short-form animated promo built to introduce a product line with rhythm-driven motion and type-led storytelling.",
-              tags: ["Motion", "After Effects"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "Launch Reel For CCONVERTER",
-              year: "2025",
-              desc: "A short-form animated promo built with rhythm-driven motion and type-led storytelling.",
-              tags: ["Motion", "After Effects"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "VIDEO PROMO FOR URBANHIVE",
-              year: "2025",
-              desc: "A short-form animated promo built with rhythm-driven motion and type-led storytelling.",
-              tags: ["Motion", "After Effects"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "LAUNCH PROMO FOR LUX PROPERTY",
-              year: "2025",
-              desc: "A short-form animated promo built with rhythm-driven motion and type-led storytelling.",
-              tags: ["Motion", "After Effects"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "LAUNCH PROMO FOR ANTON & PEARL",
-              year: "2025",
-              desc: "A short-form animated promo built with rhythm-driven motion and type-led storytelling.",
-              tags: ["Motion", "After Effects"],
-              images: [],
-              link: "#",
-            },
-          ],
+          t: "GAMEFOLIO",
+          y: "2026",
+          d: "A creative 2D game-inspired portfolio landing page — an experimental, playful take on the portfolio, like a mini side-scrolling game.",
+          g: ["Vanilla JS", "HTML", "CSS3", "Lenis"],
+          i: ["image/game.jpg", "image/2.png", "image/3.png"],
+          l: "https://amdev2.vercel.app/",
         },
         {
-          num: "05",
-          tier: "Support",
-          category: "Operations",
-          title: "Virtual Assistance",
-          desc: "Docs, Excel, Word, presentations, admin systems and business support.",
-          caps: [
-            "Document Design",
-            "Excel & Data",
-            "PowerPoint",
-            "Email Templates",
-            "Content Calendars",
-            "Admin Systems",
+          t: "HELIOS",
+          y: "2026",
+          d: "An experimental Three.js-powered 3D portfolio experience built as a solar-system-inspired project archive.",
+          g: ["Three.js", "GSAP", "WebGL", "Lenis"],
+          i: ["image/helios.jpg", "image/5.png"],
+          l: "https://solarsystem-two.vercel.app/",
+        },
+        {
+          t: "ABP INDUSTRIES",
+          y: "2024",
+          d: "A corporate website for an agricultural company focused on cultivating, processing, packaging and selling staple food products in Nigeria.",
+          g: ["Three.js", "GSAP", "WebGL", "Lenis"],
+          i: ["image/abpind.jpg", "image/7.png", "image/8.png"],
+          l: "https://abpindustries.netlify.app/",
+        },
+        {
+          t: "SMOOTH TRANSIT",
+          y: "2025",
+          d: "A dark editorial-style aviation consulting website — a premium digital experience for international travel, logistics and VIP aviation support.",
+          g: ["JavaScript", "GSAP", "HTML/CSS"],
+          i: [
+            "image/smoothtransit.jpg",
+            "image/smm2.png",
+            "image/smm3.png",
+            "image/smm4.png",
           ],
-          projects: [
-            {
-              title: "EMAIL DESIGN",
-              year: "2025",
-              desc: "Formal resume and document formatting for a creative/operations background, delivered as polished, presentation-ready files.",
-              tags: ["Word", "Docs", "Admin"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "OFFICIAL DOCUMENT IDENTITY",
-              year: "2025",
-              desc: "Formal resume and document formatting, delivered as polished, presentation-ready files.",
-              tags: ["Word", "Docs", "Admin"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "EXCEL DATA ANALYSIS",
-              year: "2025",
-              desc: "Formal resume and document formatting, delivered as polished, presentation-ready files.",
-              tags: ["Word", "Docs", "Admin"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "POWERPOINT PRESENTATION DESIGN",
-              year: "2025",
-              desc: "Formal resume and document formatting, delivered as polished, presentation-ready files.",
-              tags: ["Word", "Docs", "Admin"],
-              images: [],
-              link: "#",
-            },
-            {
-              title: "SOCIAL MEDIA CALENDAR & CONTENT SYSTEM",
-              year: "2025",
-              desc: "Formal resume and document formatting, delivered as polished, presentation-ready files.",
-              tags: ["Word", "Docs", "Admin"],
-              images: [],
-              link: "#",
-            },
-          ],
+          l: "https://smooth-transit.vercel.app",
+        },
+        {
+          t: "PALM & KELL",
+          y: "2024",
+          d: "A fully horizontal-scrolling luxury hotel website built as a single-page experience — hero to footer on one horizontal axis.",
+          g: ["HTML/CSS", "JavaScript", "GSAP", "Lenis"],
+          i: ["image/palmkell.jpg", "image/palm2.png", "image/palm3.png"],
+          l: "https://comingsoon-check-back.vercel.app",
+        },
+        {
+          t: "QPAT SOLUTIONS",
+          y: "2025",
+          d: "An education and consulting platform guiding students from first enquiry through to final placement with clarity, structure and purpose.",
+          g: ["HTML/CSS", "JavaScript", "WebGL", "Lenis"],
+          i: ["image/qpat.jpg", "image/10.png", "image/11.png"],
+          l: "https://qpat.netlify.app/",
         },
       ];
-    </script>
+      const N = P.length;
+      const COL = [
+        "#1f3fe0",
+        "#e3171b",
+        "#0e8f77",
+        "#2458e0",
+        "#e3171b",
+        "#0e8f77",
+        "#1f3fe0",
+        "#e3171b",
+        "#0e8f77",
+      ];
+      /* layouts in % of card: t=[x,y,w] i=[x,y,w,h] d=[x,y,w] g=[x,y,w] */
+      const LD = [
+        { t: [3, 12, 56], i: [62, 6, 35, 54], d: [3, 62, 38], g: [3, 88, 56] },
+        {
+          t: [38, 10, 58],
+          i: [4, 7, 30, 62],
+          d: [38, 56, 44],
+          g: [38, 88, 58],
+        },
+        { t: [3, 46, 94], i: [33, 6, 34, 38], d: [3, 68, 44], g: [52, 72, 45] },
+      ];
+      const LM = {
+        t: [5, 37, 90],
+        i: [5, 9, 90, 26],
+        d: [5, 62, 90],
+        g: [5, 89, 90],
+      };
 
-    <!-- CASE SCRUBBER ENGINE -->
-    <script>
-      (() => {
-        function escapeHTML(str = "") {
-          return str
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
+      const $ = (id) => document.getElementById(id);
+      const bgs = $("bgs");
+      P.forEach((p, k) => {
+        const b = document.createElement("div");
+        b.className = "bg";
+        if (k < 2) b.style.backgroundImage = `url("${p.i[0]}")`;
+        bgs.appendChild(b);
+        p.bg = b;
+      });
+      const load = (k) => {
+        const p = P[k];
+        if (p && !p.bg.style.backgroundImage)
+          p.bg.style.backgroundImage = `url("${p.i[0]}")`;
+      };
+
+      function place(el, a, dur) {
+        const v = { left: a[0] + "%", top: a[1] + "%", width: a[2] + "%" };
+        if (a[3]) v.height = a[3] + "%";
+        dur
+          ? gsap.to(el, { ...v, duration: dur, ease: "expo.inOut" })
+          : gsap.set(el, v);
+      }
+
+      let cur = -1,
+        busy = false,
+        queued = null;
+      function show(k, anim) {
+        if (k === cur) return;
+        if (busy) {
+          queued = k;
+          return;
         }
+        const prev = cur;
+        cur = k;
+        const p = P[k],
+          mob = matchMedia("(max-width:700px)").matches;
+        const L = mob ? LM : LD[k % 3];
+        load(k);
+        load(k + 1);
 
-        /* flatten every project that actually has imagery, in service order —
-       this is what drives the case scrubber (StudyMate, ABP Industries, etc.) */
-        const cases = [];
-        servicesData.forEach((service) => {
-          service.projects.forEach((project) => {
-            if (project.images && project.images.length > 0) {
-              cases.push({ service, project });
-            }
-          });
-        });
+        const fill = () => {
+          $("ttl").textContent = p.t;
+          $("meta").textContent = `Website · ${p.y}`;
+          $("idx").textContent =
+            `${String(k + 1).padStart(2, "0")} / ${String(N).padStart(2, "0")}`;
+          $("dtxt").textContent = p.d;
+          const v = $("view");
+          v.href = p.l;
+          v.target = "_blank";
+          v.rel = "noopener noreferrer";
+          $("tags").innerHTML = p.g.map((t) => `<span>${t}</span>`).join("");
+          $("insImg").src = p.i[1] || p.i[0];
+        };
 
-        const wrapper = document.getElementById("case-wrapper");
-        const bgRoot = document.getElementById("case-bg");
-        const track = document.getElementById("case-track");
-        const titleEl = document.getElementById("case-title");
-        const metaEl = document.getElementById("case-meta");
-        const descEl = document.getElementById("case-desc");
-        const tagsEl = document.getElementById("case-tags");
-        const viewEl = document.getElementById("case-view");
-        const indexEl = document.getElementById("case-index");
-        const progressFill = document.getElementById("case-progress-fill");
-        const scrollHint = document.getElementById("case-scrollhint");
-
-        wrapper.style.setProperty("--n", cases.length);
-
-        /* build background layers + filmstrip thumbs (image loading deferred) */
-        cases.forEach((c, i) => {
-          const bg = document.createElement("div");
-          bg.className = "case-bg-layer" + (i === 0 ? " active" : "");
-          bg.dataset.src = c.project.images[0]; // stash URL, don't load yet
-          bgRoot.appendChild(bg);
-          c.bgEl = bg;
-
-          const thumb = document.createElement("div");
-          thumb.className = "case-thumb" + (i === 0 ? " active" : "");
-          const isFirst = i === 0;
-          thumb.innerHTML = `<img src="${escapeHTML(c.project.images[0])}" alt="" ${isFirst ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} />`;
-          thumb.addEventListener("click", () => jumpTo(i));
-          track.appendChild(thumb);
-          c.thumbEl = thumb;
-        });
-
-        function ensureLoaded(i) {
-          const c = cases[i];
-          if (!c || !c.bgEl.dataset.src) return;
-          c.bgEl.style.backgroundImage = `url("${c.bgEl.dataset.src}")`;
-          delete c.bgEl.dataset.src;
-        }
-
-        // Load the first case + one ahead immediately
-        ensureLoaded(0);
-        function ensureLoaded(i) {
-          const c = cases[i];
-          if (!c || !c.bgEl.dataset.src) return;
-          const url = c.bgEl.dataset.src;
-          const img = new Image();
-          img.onload = () => {
-            c.bgEl.style.backgroundImage = `url("${url}")`;
-            c.bgEl.classList.add("loaded");
-          };
-          img.src = url;
-          delete c.bgEl.dataset.src;
-        }
-        ensureLoaded(1);
-
-        function jumpTo(i) {
-          const rect = wrapper.getBoundingClientRect();
-          const total = rect.height - window.innerHeight;
-          const targetProgress = cases.length > 1 ? i / (cases.length - 1) : 0;
-          const targetY = window.scrollY + rect.top + targetProgress * total;
-
-          if (window.__lenis) {
-            window.__lenis.scrollTo(targetY, { duration: 1.2 });
-          } else {
-            window.scrollTo({ top: targetY, behavior: "smooth" });
-          }
-        }
-
-        function fadeSwap(el, apply) {
-          el.style.transition = "opacity 0.35s ease, transform 0.35s ease";
-          el.style.opacity = "0";
-          el.style.transform = "translateY(4px)";
-          requestAnimationFrame(() => {
-            apply();
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-          });
-        }
-
-        let lastActive = -1;
-        function setActive(i) {
-          if (i === lastActive) return;
-          lastActive = i;
-          const c = cases[i];
-
-          ensureLoaded(i);
-          ensureLoaded(i + 1); // preload the next one just ahead of time
-
-          cases.forEach((cc, idx) => {
-            cc.bgEl.classList.toggle("active", idx === i);
-            cc.thumbEl.classList.toggle("active", idx === i);
-          });
-
-          fadeSwap(titleEl, () => {
-            titleEl.textContent = c.project.title;
-          });
-          fadeSwap(metaEl, () => {
-            metaEl.textContent = `${c.service.num} · ${c.service.category} · ${c.project.year}`;
-          });
-          fadeSwap(descEl, () => {
-            descEl.textContent = c.project.desc;
-          });
-          fadeSwap(tagsEl, () => {
-            tagsEl.innerHTML = (c.project.tags || [])
-              .map((t) => `<span class="case-tag">${escapeHTML(t)}</span>`)
-              .join("");
-          });
-
-          const isExternal =
-            c.project.link &&
-            c.project.link !== "#" &&
-            /^https?:\/\//i.test(c.project.link.trim());
-          viewEl.href = c.project.link || "#";
-          if (isExternal) {
-            viewEl.target = "_blank";
-            viewEl.rel = "noopener noreferrer";
-          } else {
-            viewEl.removeAttribute("target");
-            viewEl.removeAttribute("rel");
-          }
-
-          indexEl.textContent = `${String(i + 1).padStart(2, "0")} / ${String(cases.length).padStart(2, "0")}`;
-        }
-
-        let trackMetrics = { thumbW: 104, gap: 14 };
-        function measureTrack() {
-          if (!track.children.length) return;
-          const first = track.children[0];
-          const cs = getComputedStyle(track);
-          trackMetrics.thumbW = first.getBoundingClientRect().width;
-          trackMetrics.gap = parseFloat(cs.gap || cs.columnGap || 14);
-        }
-        measureTrack();
-
-        let ticking = false;
-        function update() {
-          ticking = false;
-          const rect = wrapper.getBoundingClientRect();
-          const total = rect.height - window.innerHeight;
-          const scrolled = -rect.top;
-          const progress =
-            total > 0 ? Math.min(1, Math.max(0, scrolled / total)) : 0;
-
-          const rawIndex = cases.length > 1 ? progress * (cases.length - 1) : 0;
-          const activeIndex = Math.round(rawIndex);
-
-          const step = trackMetrics.thumbW + trackMetrics.gap;
-          const centerX = trackMetrics.thumbW / 2 + rawIndex * step;
-          track.style.transform = `translate(${-centerX}px, -50%)`;
-
-          progressFill.style.width = progress * 100 + "%";
-          scrollHint.style.opacity = progress < 0.03 ? "1" : "0";
-
-          setActive(activeIndex);
-        }
-
-        function onScroll() {
-          if (!ticking) {
-            ticking = true;
-            requestAnimationFrame(update);
-          }
-        }
-
-        if (cases.length > 0) {
-          setActive(0);
-          window.addEventListener("scroll", onScroll, { passive: true });
-          window.addEventListener("resize", () => {
-            measureTrack();
-            onScroll();
-          });
-          update();
-        }
-      })();
-    </script>
-
-    <!-- MORE SERVICES (non-image capabilities) -->
-    <script>
-      (() => {
-        function escapeHTML(str = "") {
-          return str
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-        }
-
-        const noImageServices = servicesData.filter((s) =>
-          s.projects.every((p) => !p.images || p.images.length === 0),
+        /* background: duotone tint swap + crossfade + slow zoom */
+        P.forEach((q, j) =>
+          gsap.to(q.bg, {
+            opacity: j === k ? 1 : 0,
+            duration: anim ? 0.9 : 0,
+            ease: "power2.inOut",
+          }),
         );
+        gsap.fromTo(
+          p.bg,
+          { scale: 1.14 },
+          { scale: 1, duration: 1.6, ease: "expo.out" },
+        );
+        gsap.to("#tint", {
+          backgroundColor: COL[k % COL.length],
+          duration: anim ? 0.9 : 0,
+        });
 
-        const list = document.getElementById("more-list");
-
-        list.innerHTML = noImageServices
-          .map((s) => {
-            const pills = s.caps
-              .map((c) => `<span class="more-pill">${escapeHTML(c)}</span>`)
-              .join("");
-            return `
-              <div class="more-row">
-                <span class="more-num">${escapeHTML(s.num)}</span>
-                <div>
-                  <div class="more-title-wrap">
-                    <h3 class="more-title">${escapeHTML(s.title)}</h3>
-                    <span class="more-badge">Coming Soon</span>
-                  </div>
-                  <p class="more-desc">${escapeHTML(s.desc)}</p>
-                </div>
-                <div class="more-pills">${pills}</div>
-              </div>
-            `;
-          })
-          .join("");
-
-        if (typeof window.__bindCustomCursorHoverables === "function") {
-          window.__bindCustomCursorHoverables(list);
+        if (!anim) {
+          fill();
+          place("#tw", L.t);
+          place("#inset", L.i);
+          place("#dsc", L.d);
+          place("#tags", L.g);
+          gsap.set("#ttl", { yPercent: 0 });
+          return;
         }
-      })();
-    </script>
 
-    <!-- CTA PARTICLE SPHERE -->
-    <script>
+        busy = true;
+        const tl = gsap.timeline({
+          onComplete: () => {
+            busy = false;
+            if (queued !== null) {
+              const q = queued;
+              queued = null;
+              show(q, true);
+            }
+          },
+        });
+        tl.to("#ttl", {
+          yPercent: -110,
+          skewY: -4,
+          duration: 0.35,
+          ease: "power3.in",
+        })
+          .to(
+            ["#meta", "#idx", "#dsc", "#tags"],
+            { opacity: 0, duration: 0.25 },
+            0,
+          )
+          .to(
+            "#inset",
+            { scale: 0.88, opacity: 0, duration: 0.3, ease: "power2.in" },
+            0,
+          )
+          .add(() => {
+            fill();
+            gsap.set("#ttl", { yPercent: 110, skewY: 4 });
+            place("#tw", L.t, 0.9);
+            place("#dsc", L.d, 0.9);
+            place("#tags", L.g, 0.9);
+            place("#inset", L.i, 0.9);
+          })
+          .to(
+            "#ttl",
+            { yPercent: 0, skewY: 0, duration: 0.8, ease: "expo.out" },
+            "+=0.05",
+          )
+          .to(
+            "#inset",
+            { scale: 1, opacity: 1, duration: 0.8, ease: "expo.out" },
+            "<",
+          )
+          .to(
+            ["#meta", "#idx", "#dsc", "#tags"],
+            { opacity: 1, duration: 0.5, stagger: 0.06 },
+            "<0.15",
+          );
+      }
+
+      $("works").style.height = N * 100 + "vh";
+      show(0, false);
+      ScrollTrigger.create({
+        trigger: "#works",
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: (s) => {
+          $("fill").style.width = s.progress * 100 + "%";
+          show(Math.min(N - 1, Math.floor(s.progress * N)), true);
+        },
+      });
+      addEventListener("resize", () => {
+        const k = cur;
+        cur = -1;
+        show(k, false);
+      });
+
+      /* ───────── CTA particle sphere ───────── */
       (() => {
-        if (typeof gsap === "undefined" || typeof THREE === "undefined") return;
-        gsap.registerPlugin(ScrollTrigger);
-
-        function initCtaScene() {
-          const canvas = document.getElementById("cta-canvas");
-          const section = document.getElementById("services-cta");
-
-          if (!canvas || !section) return;
-
-          const scene = new THREE.Scene();
-          const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-          camera.position.z = 9;
-
-          const renderer = new THREE.WebGLRenderer({
-            canvas,
-            alpha: true,
-            antialias: true,
-          });
-
-          renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-          function resize() {
-            const { width, height } = section.getBoundingClientRect();
-            renderer.setSize(width, height, false);
-            camera.aspect = width / height || 1;
-            camera.updateProjectionMatrix();
-          }
-
-          resize();
-          window.addEventListener("resize", resize);
-
-          const COUNT = window.innerWidth < 640 ? 500 : 900;
-          const radius = 3.2;
-          const positions = new Float32Array(COUNT * 3);
-          const basePositions = new Float32Array(COUNT * 3);
-          const scatter = new Float32Array(COUNT * 3);
-
-          for (let i = 0; i < COUNT; i++) {
-            const phi = Math.acos(-1 + (2 * i) / COUNT);
-            const theta = Math.sqrt(COUNT * Math.PI) * phi;
-
-            const x = radius * Math.cos(theta) * Math.sin(phi);
-            const y = radius * Math.sin(theta) * Math.sin(phi);
-            const z = radius * Math.cos(phi);
-
-            positions.set([x, y, z], i * 3);
-            basePositions.set([x, y, z], i * 3);
-          }
-
-          for (let i = 0; i < COUNT * 3; i++) {
-            scatter[i] = (Math.random() - 0.5) * 16;
-          }
-
-          const geo = new THREE.BufferGeometry();
-          geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-
-          const mat = new THREE.PointsMaterial({
+        const canvas = $("cta-canvas"),
+          section = $("services-cta");
+        const scene = new THREE.Scene();
+        const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+        cam.position.z = 9;
+        const ren = new THREE.WebGLRenderer({
+          canvas,
+          alpha: true,
+          antialias: true,
+        });
+        ren.setPixelRatio(Math.min(devicePixelRatio, 2));
+        const size = () => {
+          const r = section.getBoundingClientRect();
+          ren.setSize(r.width, r.height, false);
+          cam.aspect = r.width / r.height || 1;
+          cam.updateProjectionMatrix();
+        };
+        size();
+        addEventListener("resize", size);
+        const C = innerWidth < 640 ? 500 : 900,
+          R = 3.2;
+        const pos = new Float32Array(C * 3),
+          base = new Float32Array(C * 3),
+          sc = new Float32Array(C * 3);
+        for (let i = 0; i < C; i++) {
+          const ph = Math.acos(-1 + (2 * i) / C),
+            th = Math.sqrt(C * Math.PI) * ph;
+          base.set(
+            [
+              R * Math.cos(th) * Math.sin(ph),
+              R * Math.sin(th) * Math.sin(ph),
+              R * Math.cos(ph),
+            ],
+            i * 3,
+          );
+        }
+        for (let i = 0; i < C * 3; i++) sc[i] = (Math.random() - 0.5) * 16;
+        const geo = new THREE.BufferGeometry();
+        geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+        const pts = new THREE.Points(
+          geo,
+          new THREE.PointsMaterial({
             color: 0xffffff,
             size: 0.035,
             transparent: true,
             opacity: 0.75,
             depthWrite: false,
-          });
-
-          const points = new THREE.Points(geo, mat);
-          scene.add(points);
-
-          let mx = 0;
-          let my = 0;
-          let cmx = 0;
-          let cmy = 0;
-
-          section.addEventListener("mousemove", (e) => {
-            const r = section.getBoundingClientRect();
-            mx = (e.clientX - r.left) / r.width - 0.5;
-            my = (e.clientY - r.top) / r.height - 0.5;
-          });
-
-          let formProgress = 0;
-
-          ScrollTrigger.create({
-            trigger: section,
-            start: "top 90%",
-            end: "top 30%",
-            scrub: 1,
-            onUpdate: (self) => {
-              formProgress = self.progress;
-            },
-          });
-
-          const clock = new THREE.Clock();
-
-          function animate() {
-            requestAnimationFrame(animate);
-
-            const t = clock.getElapsedTime();
-            cmx += (mx - cmx) * 0.05;
-            cmy += (my - cmy) * 0.05;
-
-            const pos = geo.attributes.position.array;
-
-            for (let i = 0; i < COUNT; i++) {
-              const ix = i * 3;
-              const wobble = Math.sin(t * 0.6 + i) * 0.06;
-
-              pos[ix] = THREE.MathUtils.lerp(
-                scatter[ix],
-                basePositions[ix] + wobble,
-                formProgress,
-              );
-
-              pos[ix + 1] = THREE.MathUtils.lerp(
-                scatter[ix + 1],
-                basePositions[ix + 1] + wobble,
-                formProgress,
-              );
-
-              pos[ix + 2] = THREE.MathUtils.lerp(
-                scatter[ix + 2],
-                basePositions[ix + 2],
-                formProgress,
-              );
-            }
-
-            geo.attributes.position.needsUpdate = true;
-            points.rotation.y = t * 0.08 + cmx * 0.6;
-            points.rotation.x = cmy * 0.4;
-
-            renderer.render(scene, camera);
+          }),
+        );
+        scene.add(pts);
+        let mx = 0,
+          my = 0,
+          cx = 0,
+          cy = 0,
+          form = 0;
+        section.addEventListener("mousemove", (e) => {
+          const r = section.getBoundingClientRect();
+          mx = (e.clientX - r.left) / r.width - 0.5;
+          my = (e.clientY - r.top) / r.height - 0.5;
+        });
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top 90%",
+          end: "top 30%",
+          scrub: 1,
+          onUpdate: (s) => (form = s.progress),
+        });
+        const clock = new THREE.Clock();
+        (function loop() {
+          requestAnimationFrame(loop);
+          const t = clock.getElapsedTime();
+          cx += (mx - cx) * 0.05;
+          cy += (my - cy) * 0.05;
+          for (let i = 0; i < C; i++) {
+            const k = i * 3,
+              w = Math.sin(t * 0.6 + i) * 0.06;
+            pos[k] = THREE.MathUtils.lerp(sc[k], base[k] + w, form);
+            pos[k + 1] = THREE.MathUtils.lerp(sc[k + 1], base[k + 1] + w, form);
+            pos[k + 2] = THREE.MathUtils.lerp(sc[k + 2], base[k + 2], form);
           }
+          geo.attributes.position.needsUpdate = true;
+          pts.rotation.y = t * 0.08 + cx * 0.6;
+          pts.rotation.x = cy * 0.4;
+          ren.render(scene, cam);
+        })();
+      })();
 
-          animate();
-        }
-
-        initCtaScene();
-
-        gsap.utils.toArray("[data-reveal]").forEach((el, i) => {
+      gsap.utils
+        .toArray("[data-reveal]")
+        .forEach((el, i) =>
           gsap.fromTo(
             el,
             { opacity: 0, y: 30 },
@@ -1859,14 +993,10 @@
               duration: 1,
               delay: i * 0.1,
               ease: "power3.out",
-              scrollTrigger: {
-                trigger: el,
-                start: "top 85%",
-              },
+              scrollTrigger: { trigger: el, start: "top 85%" },
             },
-          );
-        });
-      })();
+          ),
+        );
     </script>
   </body>
 </html>
