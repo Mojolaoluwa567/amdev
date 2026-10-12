@@ -7,53 +7,85 @@ window.addEventListener("pageshow", (e) => {
 });
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js";
-import Lenis from "https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.mjs";
 import { gsap } from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js";
 import ScrollTrigger from "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js";
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 /* ─────────────────────────────────────────────
-   LENIS SMOOTH SCROLL  (registered once)
+   NATIVE SCROLL
+   Lenis removed: its duration/easing kept the page gliding after the wheel
+   stopped, which is what felt "slower than my scroll". Native scrolling
+   follows the wheel / trackpad / touch exactly, and everything below reads
+   the real scroll position.
 ───────────────────────────────────────────── */
-const lenis = new Lenis({
-  duration: 0.7,
-  easing: (t) => 1 - Math.pow(1 - t, 4),
-});
-
-lenis.on("scroll", ScrollTrigger.update);
-gsap.ticker.add((time) => lenis.raf(time * 1000));
-gsap.ticker.lagSmoothing(0);
+document.documentElement.style.scrollBehavior = "auto";
 
 /* ─────────────────────────────────────────────
    UTILITIES
 ───────────────────────────────────────────── */
 const lerp = (a, b, t) => a + (b - a) * t;
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 
 /* ─────────────────────────────────────────────
-   SCROLL PROGRESS — drives the entire scene
+   SCROLL METRICS (cached — never read layout inside a scroll frame)
 ───────────────────────────────────────────── */
 const heroName = document.querySelector(".hero-name");
 const heroEyebrow = document.querySelector(".hero-eyebrow");
 const heroMeta = document.querySelector(".hero-meta");
 
+const marqueeEl = document.querySelector(".marquee-wrap");
+
 let scrollProgress = 0;
+let maxScroll = 1;
+let vh = window.innerHeight;
+/* The WebGL canvas only shows over the hero + marquee. Everything below is
+   opaque, so once that is scrolled past we stop drawing the 3D scene. */
+let canvasHideY = Infinity;
 
-lenis.on("scroll", ({ scroll }) => {
-  const totalHeight = document.body.scrollHeight - window.innerHeight;
-  scrollProgress = totalHeight > 0 ? scroll / totalHeight : 0;
+const measure = () => {
+  vh = window.innerHeight;
+  maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
+  if (marqueeEl) {
+    canvasHideY = marqueeEl.getBoundingClientRect().bottom + window.scrollY;
+  }
+};
+measure();
 
-  const vh = window.innerHeight;
-  if (scroll < vh) {
-    const t = scroll / vh;
+/* bumps whenever cached element rects may be stale */
+let layoutStamp = 0;
+const bumpLayoutStamp = () => layoutStamp++;
+window.addEventListener("scroll", bumpLayoutStamp, { passive: true });
+window.addEventListener("resize", bumpLayoutStamp);
+window.addEventListener("resize", measure);
+window.addEventListener("load", measure);
+ScrollTrigger.addEventListener("refresh", measure);
+
+let lastSY = 0;
+let heroSettled = false;
+
+function updateHero(sy) {
+  if (sy < vh) {
+    const t = sy / vh;
     if (heroName) {
       heroName.style.transform = `translateY(${t * 70}px)`;
       heroName.style.opacity = String(Math.max(0, 1 - t * 1.3));
     }
     if (heroEyebrow) heroEyebrow.style.opacity = String(Math.max(0, 1 - t * 2));
     if (heroMeta) heroMeta.style.opacity = String(Math.max(0, 1 - t * 2.2));
+    heroSettled = false;
+  } else if (!heroSettled) {
+    /* past the hero: lock the final state once (fast scrolls skip frames) */
+    if (heroName) {
+      heroName.style.transform = "translateY(70px)";
+      heroName.style.opacity = "0";
+    }
+    if (heroEyebrow) heroEyebrow.style.opacity = "0";
+    if (heroMeta) heroMeta.style.opacity = "0";
+    heroSettled = true;
   }
-});
+}
 
 /* ─────────────────────────────────────────────
    SCROLL REVEAL
@@ -77,14 +109,17 @@ document
   .forEach((el) => revealObserver.observe(el));
 
 /* Dark cursor when over the white Works section */
-new IntersectionObserver(
-  (entries) => {
-    entries.forEach((e) =>
-      document.body.classList.toggle("cursor-dark", e.isIntersecting),
-    );
-  },
-  { threshold: 0.2 },
-).observe(document.getElementById("works"));
+const worksEl = document.getElementById("works");
+if (worksEl) {
+  new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) =>
+        document.body.classList.toggle("cursor-dark", e.isIntersecting),
+      );
+    },
+    { threshold: 0.2 },
+  ).observe(worksEl);
+}
 
 /* ─────────────────────────────────────────────
    THREE.JS — PERSISTENT FULL-PAGE SCENE
@@ -94,6 +129,7 @@ const renderer = new THREE.WebGLRenderer({
   canvas,
   antialias: true,
   alpha: true,
+  powerPreference: "high-performance" /* use the real GPU on laptops */,
 });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -108,32 +144,23 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(0, 0, 7);
 
-/* ── BACKGROUND GRID ── */
+/* ── BACKGROUND GRID (one draw call instead of ~46) ── */
 const gridMat = new THREE.LineBasicMaterial({
   color: 0xffffff,
   opacity: 1,
   transparent: true,
 });
+const gridPts = [];
 for (let i = -22; i <= 22; i += 1.8) {
-  scene.add(
-    new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(-22, i, -4),
-        new THREE.Vector3(22, i, -4),
-      ]),
-      gridMat,
-    ),
-  );
-  scene.add(
-    new THREE.Line(
-      new THREE.BufferGeometry().setFromPoints([
-        new THREE.Vector3(i, -22, -4),
-        new THREE.Vector3(i, 22, -4),
-      ]),
-      gridMat,
-    ),
-  );
+  gridPts.push(new THREE.Vector3(-22, i, -4), new THREE.Vector3(22, i, -4));
+  gridPts.push(new THREE.Vector3(i, -22, -4), new THREE.Vector3(i, 22, -4));
 }
+scene.add(
+  new THREE.LineSegments(
+    new THREE.BufferGeometry().setFromPoints(gridPts),
+    gridMat,
+  ),
+);
 
 /* ── MAIN WIREFRAME CUBE ── */
 const mainBox = new THREE.LineSegments(
@@ -238,10 +265,14 @@ let targetMX = 0,
 let hoverSpeed = 1,
   targetHoverSpeed = 1;
 
-window.addEventListener("mousemove", (e) => {
-  targetMX = (e.clientX / window.innerWidth - 0.5) * 2;
-  targetMY = -(e.clientY / window.innerHeight - 0.5) * 2;
-});
+window.addEventListener(
+  "mousemove",
+  (e) => {
+    targetMX = (e.clientX / window.innerWidth - 0.5) * 2;
+    targetMY = -(e.clientY / window.innerHeight - 0.5) * 2;
+  },
+  { passive: true },
+);
 
 const heroSection = document.getElementById("hero");
 if (heroSection) {
@@ -320,7 +351,9 @@ function getPhaseValues(p) {
 }
 
 /* ─────────────────────────────────────────────
-   SMOOTH SCENE STATE
+   SCENE STATE
+   Follows the scroll closely (0.18 per frame ≈ settles in ~15 frames).
+   It used to be 0.035, which trailed the page by a full second or more.
 ───────────────────────────────────────────── */
 let state = {
   cubeScale: 1.0,
@@ -334,11 +367,32 @@ let state = {
   camZ: 7.0,
 };
 
+const SCENE_FOLLOW = 0.18;
+
 /* ─────────────────────────────────────────────
    ANIMATION LOOP
 ───────────────────────────────────────────── */
+let canvasCovered = false;
+
 (function animate() {
   requestAnimationFrame(animate);
+
+  /* read the real scroll position once per frame (no layout reads) */
+  const sy = window.scrollY;
+  if (sy !== lastSY) {
+    lastSY = sy;
+    scrollProgress = clamp(sy / maxScroll, 0, 1);
+    updateHero(sy);
+  }
+
+  /* Past the hero + marquee the canvas is fully covered by opaque sections:
+     hide it and skip every bit of 3D / particle work until we scroll back. */
+  const covered = sy >= canvasHideY;
+  if (covered !== canvasCovered) {
+    canvasCovered = covered;
+    canvas.style.visibility = covered ? "hidden" : "visible";
+  }
+  if (covered) return;
 
   currentMX += (targetMX - currentMX) * 0.12;
   currentMY += (targetMY - currentMY) * 0.12;
@@ -350,10 +404,9 @@ let state = {
   innerBox.position.y = currentMY * 0.25;
 
   const target = getPhaseValues(scrollProgress);
-  const e = 0.035;
   for (const key in state) {
     if (target[key] !== undefined) {
-      state[key] += (target[key] - state[key]) * e;
+      state[key] += (target[key] - state[key]) * SCENE_FOLLOW;
     }
   }
 
@@ -378,6 +431,7 @@ let state = {
   pMesh.material.opacity = state.particleOpacity;
   const spread = 1 + expand * 3;
   const pos = pGeo.attributes.position.array;
+  const repulseStrength = Math.max(0, 1 - scrollProgress * 1.4);
 
   for (let i = 0; i < pN; i++) {
     pos[i * 3] += pVel[i].x;
@@ -391,27 +445,27 @@ let state = {
     if (Math.abs(pos[i * 3 + 1]) > by) pVel[i].y *= -1;
     if (Math.abs(pos[i * 3 + 2]) > bz) pVel[i].z *= -1;
 
-    const repulseStrength = Math.max(0, 1 - scrollProgress * 1.4);
-    const dx = pos[i * 3] - currentMX * 5;
-    const dy = pos[i * 3 + 1] - currentMY * 3.5;
-    const d = Math.sqrt(dx * dx + dy * dy);
-    if (d > 0.001 && d < 3 && repulseStrength > 0) {
-      const force = ((3 - d) / 3) * 0.08 * hoverSpeed * repulseStrength;
-      pos[i * 3] += (dx / d) * force;
-      pos[i * 3 + 1] += (dy / d) * force;
+    if (repulseStrength > 0) {
+      const dx = pos[i * 3] - currentMX * 5;
+      const dy = pos[i * 3 + 1] - currentMY * 3.5;
+      const d = Math.sqrt(dx * dx + dy * dy);
+      if (d > 0.001 && d < 3) {
+        const force = ((3 - d) / 3) * 0.08 * hoverSpeed * repulseStrength;
+        pos[i * 3] += (dx / d) * force;
+        pos[i * 3 + 1] += (dy / d) * force;
+      }
     }
   }
 
   pGeo.attributes.position.needsUpdate = true;
   pMesh.rotation.y += 0.0004 * (1 + scrollProgress * 0.5);
 
-  camera.position.z += (state.camZ - camera.position.z) * 0.04;
+  camera.position.z += (state.camZ - camera.position.z) * SCENE_FOLLOW;
   camera.position.x +=
     (currentMX * 2.55 * (7 / Math.max(7, state.camZ)) - camera.position.x) *
-    0.045;
+    0.1;
   camera.position.y +=
-    (currentMY * 1.8 * (7 / Math.max(7, state.camZ)) - camera.position.y) *
-    0.045;
+    (currentMY * 1.8 * (7 / Math.max(7, state.camZ)) - camera.position.y) * 0.1;
   camera.lookAt(0, 0, 0);
 
   scene.rotation.y = currentMX * 0.12;
@@ -422,6 +476,8 @@ let state = {
 
 /* ─────────────────────────────────────────────
    CUSTOM CURSOR + VIEW SERVICES
+   Moved with transforms (no layout work) and the loop sleeps when the
+   mouse is still, instead of running every frame forever.
 ───────────────────────────────────────────── */
 const cursorEl = document.getElementById("cursor");
 
@@ -430,30 +486,42 @@ if (cursorEl) {
   const cRing = cursorEl.querySelector(".c-ring");
   const cText = cursorEl.querySelector(".c-text");
 
-  let mouseX = 0;
-  let mouseY = 0;
-  let ringX = 0;
-  let ringY = 0;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let ringX = mouseX;
+  let ringY = mouseY;
+  let cursorRunning = false;
 
-  document.addEventListener("mousemove", (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
+  const putCursor = () => {
+    cDot.style.transform = `translate3d(${mouseX}px,${mouseY}px,0) translate(-50%,-50%)`;
+    cRing.style.transform = `translate3d(${ringX}px,${ringY}px,0) translate(-50%,-50%)`;
+  };
 
   function cursorTick() {
     ringX += (mouseX - ringX) * 0.15;
     ringY += (mouseY - ringY) * 0.15;
-
-    cDot.style.left = `${mouseX}px`;
-    cDot.style.top = `${mouseY}px`;
-
-    cRing.style.left = `${ringX}px`;
-    cRing.style.top = `${ringY}px`;
-
-    requestAnimationFrame(cursorTick);
+    putCursor();
+    if (Math.abs(mouseX - ringX) > 0.1 || Math.abs(mouseY - ringY) > 0.1) {
+      requestAnimationFrame(cursorTick);
+    } else {
+      cursorRunning = false;
+    }
   }
 
-  cursorTick();
+  document.addEventListener(
+    "mousemove",
+    (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      if (!cursorRunning) {
+        cursorRunning = true;
+        requestAnimationFrame(cursorTick);
+      }
+    },
+    { passive: true },
+  );
+
+  putCursor();
 
   document.querySelectorAll(".service").forEach((card) => {
     const title = card.querySelector("h3");
@@ -660,16 +728,20 @@ document.querySelectorAll(".project").forEach((project) => {
 
 /* ── Parallax Images ── */
 document.querySelectorAll(".project-image img").forEach((img) => {
-  gsap.to(img, {
-    yPercent: -15,
-    ease: "none",
-    scrollTrigger: {
-      trigger: img.parentElement,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: true,
+  gsap.fromTo(
+    img,
+    { yPercent: 7 },
+    {
+      yPercent: -7,
+      ease: "none",
+      scrollTrigger: {
+        trigger: img.parentElement,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      },
     },
-  });
+  );
 });
 
 /* ── Project Hover ── */
@@ -803,29 +875,45 @@ gsap.from(".works-heading h2", {
   scrollTrigger: { trigger: ".works-heading", start: "top 80%" },
 });
 
-/* ── Image Tilt ── */
+/* ── Image Tilt (quickTo reuses one tween instead of creating a new one
+      on every mousemove event) ── */
 document.querySelectorAll(".project").forEach((project) => {
   const imageWrap = project.querySelector(".project-image");
-  project.addEventListener("mousemove", (e) => {
-    const rect = imageWrap.getBoundingClientRect();
-    const rotateY = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
-    const rotateX = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
-    gsap.to(imageWrap, {
-      rotateX,
-      rotateY,
-      transformPerspective: 1000,
-      transformOrigin: "center",
-      duration: 0.5,
-      ease: "power2.out",
-    });
+  if (!imageWrap) return;
+
+  gsap.set(imageWrap, {
+    transformPerspective: 1000,
+    transformOrigin: "center",
   });
+  const tiltX = gsap.quickTo(imageWrap, "rotateX", {
+    duration: 0.5,
+    ease: "power2.out",
+  });
+  const tiltY = gsap.quickTo(imageWrap, "rotateY", {
+    duration: 0.5,
+    ease: "power2.out",
+  });
+
+  let rect = null;
+  let rectStamp = -1;
+
+  project.addEventListener(
+    "mousemove",
+    (e) => {
+      /* only re-measure after a scroll / resize, not on every mouse event */
+      if (!rect || rectStamp !== layoutStamp) {
+        rect = imageWrap.getBoundingClientRect();
+        rectStamp = layoutStamp;
+      }
+      tiltY(((e.clientX - rect.left) / rect.width - 0.5) * 8);
+      tiltX(((e.clientY - rect.top) / rect.height - 0.5) * -8);
+    },
+    { passive: true },
+  );
   project.addEventListener("mouseleave", () => {
-    gsap.to(imageWrap, {
-      rotateX: 0,
-      rotateY: 0,
-      duration: 1,
-      ease: "power4.out",
-    });
+    rect = null;
+    tiltX(0);
+    tiltY(0);
   });
 });
 
