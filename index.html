@@ -12,10 +12,11 @@
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Playfair+Display:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="particles.css" />
   </head>
   <body>
     <!-- ── CUSTOM CURSOR ── -->
@@ -131,7 +132,11 @@
       </div>
 
       <!-- ABOUT -->
-      <section id="about">
+      <section
+        id="about"
+        data-pfx="terrain"
+        data-pfx-obstacles=".about-headline, .about-stats > div, .project-btn"
+      >
         <div class="about-left">
           <p class="section-label" data-reveal>00 / About</p>
           <h2 class="about-headline" data-reveal="slow">
@@ -176,6 +181,8 @@
           </a>
         </div>
       </section>
+
+    
       <!-- ─────────────────────────────────────────────
      WORKS SECTION — replace your existing
      <section id="works"> ... </section> with this
@@ -201,12 +208,14 @@
               rel="noopener"
               class="project-image"
             >
-              <img
-                src="image/faisal.webp"
-                alt="Faisal Bidmos Website"
-                loading="lazy"
-                decoding="async"
-              />
+              <video
+                src="video/faisal-bidmos.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+              ></video>
             </a>
 
             <div class="project-content">
@@ -248,12 +257,14 @@
               rel="noopener"
               class="project-image"
             >
-              <img
-                src="image/Urban.webp"
-                alt="UrbanHive Project"
-                loading="lazy"
-                decoding="async"
-              />
+              <video
+                src="video/urban-shoot.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+              ></video>
             </a>
 
             <div class="project-content">
@@ -300,12 +311,14 @@
               rel="noopener"
               class="project-image"
             >
-              <img
-                src="image/ABP.webp"
-                alt="ABP Industries Website"
-                loading="lazy"
-                decoding="async"
-              />
+              <video
+                src="video/abp.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+              ></video>
             </a>
 
             <div class="project-content">
@@ -351,12 +364,14 @@
               rel="noopener"
               class="project-image"
             >
-              <img
-                src="image/qpat.webp"
-                alt="QPAT Solution Website"
-                loading="lazy"
-                decoding="async"
-              />
+              <video
+                src="video/qpat.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                preload="auto"
+              ></video>
             </a>
 
             <div class="project-content">
@@ -497,7 +512,7 @@
       </section>
 
       <!-- CONTACT -->
-      <section id="contact">
+      <section id="contact" data-pfx="spring">
         <p class="section-label" data-reveal>03 / Get In Touch</p>
         <h2 class="contact-big" data-reveal="slow">
           Let's build<br />something<br /><em>great.</em>
@@ -532,107 +547,30 @@
     </footer>
 
     <script>
-      /* =========================================
-   SERVICES — MAGNETIC PHYSICS
-   Only runs while Services is visible
-========================================= */
+      document.querySelectorAll(".project-image video").forEach((video) => {
+        video.muted = true;
+        video.playsInline = true;
 
-      const servicesSection = document.querySelector(".services");
-      const serviceItems = document.querySelectorAll(".service");
-
-      const mouse = {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-      };
-
-      const state = [];
-
-      serviceItems.forEach((el) => {
-        const baseX = parseFloat(el.dataset.x) || 0;
-        const baseY = parseFloat(el.dataset.y) || 0;
-
-        state.push({
-          el,
-          baseX,
-          baseY,
-          x: baseX,
-          y: baseY,
-          vx: 0,
-          vy: 0,
-        });
-      });
-
-      /* Track mouse position */
-      window.addEventListener("mousemove", (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-      });
-
-      /* Animation state */
-      let servicesVisible = false;
-      let servicesRAF = null;
-
-      /* Physics loop */
-      function animateServices() {
-        if (!servicesVisible) {
-          servicesRAF = null;
-          return;
-        }
-
-        state.forEach((obj) => {
-          const dx = mouse.x - obj.x;
-          const dy = mouse.y - obj.y;
-
-          /* Magnetic attraction */
-          obj.vx += dx * 0.015;
-          obj.vy += dy * 0.015;
-
-          /* Damping */
-          obj.vx *= 0.86;
-          obj.vy *= 0.86;
-
-          /* Return to original layout */
-          obj.vx += (obj.baseX - obj.x) * 0.04;
-          obj.vy += (obj.baseY - obj.y) * 0.04;
-
-          /* Extra damping */
-          obj.vx *= 0.92;
-          obj.vy *= 0.92;
-
-          /* Update position */
-          obj.x += obj.vx;
-          obj.y += obj.vy;
-
-          /* GPU-friendly transform */
-          obj.el.style.transform = `translate3d(${obj.x}px, ${obj.y}px, 0)`;
-        });
-
-        servicesRAF = requestAnimationFrame(animateServices);
-      }
-
-      /* Start / stop animation based on visibility */
-      if (servicesSection) {
-        const servicesObserver = new IntersectionObserver(
-          (entries) => {
-            const entry = entries[0];
-
-            servicesVisible = entry.isIntersecting;
-
-            if (servicesVisible && !servicesRAF) {
-              servicesRAF = requestAnimationFrame(animateServices);
+        const io = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              video
+                .play()
+                .catch((err) => console.warn("Video play blocked:", err));
+            } else {
+              video.pause();
             }
           },
-          {
-            threshold: 0.05,
-          },
+          { threshold: 0.25 },
         );
 
-        servicesObserver.observe(servicesSection);
-      }
+        io.observe(video);
+      });
     </script>
 
     <!-- Scripts -->
     <!-- Lenis + duplicate GSAP tags removed: GSAP is imported as a module in script.js -->
     <script type="module" src="script.js"></script>
+    <script src="particles.js" defer></script>
   </body>
 </html>

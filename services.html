@@ -1,132 +1,115 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#060606" />
+    <meta
+      name="description"
+      content="Selected digital works by Adeogun Mojola."
+    />
     <title>A·M — Works</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       rel="shortcut icon"
       href="image/Untitled design (1).png"
       type="image/x-icon"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@800;900&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
     <style>
       :root {
         --black: #060606;
         --white: #ece9e3;
         --mono: "DM Mono", monospace;
-        --display: "Bebas Neue", sans-serif;
-        --serif: "Cormorant Garamond", serif;
-        --border: rgba(236, 233, 227, 0.07);
+        --display: "Bebas Neue", "Arial Narrow", sans-serif;
+        --serif: "Cormorant Garamond", Georgia, serif;
+        --archivo: "Archivo", Arial, sans-serif;
         --green: #4ade80;
-        --body: rgba(236, 233, 227, 0.94);
       }
       *,
       *::before,
       *::after {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
       }
       html {
-        background: var(--black);
+        background: #060606;
+        scroll-behavior: auto;
+      }
+      /* Lenis recommended base styles */
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
       }
       body {
-        background: var(--black);
+        margin: 0;
+        background: #060606;
         color: var(--white);
         font-family: var(--mono);
         overflow-x: hidden;
-        cursor: none;
+        -webkit-font-smoothing: antialiased;
       }
-      body::-webkit-scrollbar {
-        display: none;
+      a {
+        color: inherit;
+        text-decoration: none;
       }
-      a,
       button {
+        font: inherit;
+        color: inherit;
+        cursor: pointer;
+      }
+      button,
+      a {
         -webkit-tap-highlight-color: transparent;
       }
-      /* cursor (moved with transforms only) */
-      #cursor {
-        position: fixed;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        z-index: 9999;
+      ::selection {
+        background: var(--green);
+        color: #060606;
       }
-      .c-dot,
-      .c-ring {
-        position: absolute;
-        top: 0;
-        left: 0;
-        border-radius: 50%;
-        will-change: transform;
-      }
-      .c-dot {
-        width: 6px;
-        height: 6px;
-        background: #fff;
-        transition: opacity 0.3s;
-      }
-      .c-ring {
-        width: 32px;
-        height: 32px;
-        border: 1px solid rgba(236, 233, 227, 0.4);
-        transition:
-          width 0.35s,
-          height 0.35s,
-          border-color 0.3s;
-      }
-      body.cursor-hover .c-dot {
-        opacity: 0;
-      }
-      body.cursor-hover .c-ring {
-        width: 52px;
-        height: 52px;
-        border-color: var(--green);
-      }
-      /* header */
       #site-header {
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        padding: 1.6rem 3rem;
+        inset: 0 0 auto;
+        z-index: 110;
+        padding: 1.6rem 3rem 2.1rem;
         display: flex;
+        align-items: flex-start;
         justify-content: space-between;
-        align-items: center;
-        z-index: 200;
+        pointer-events: none;
+        background: linear-gradient(#060606d9, #06060600);
+      }
+      #site-header > * {
+        pointer-events: auto;
       }
       .logo {
-        font-family: var(--serif);
-        font-weight: 300;
-        font-style: italic;
-        font-size: 1.4rem;
+        font: italic 300 1.4rem var(--serif);
         letter-spacing: 0.1em;
       }
       .logo-dot {
-        color: rgba(236, 233, 227, 0.55);
+        color: #ece9e388;
       }
       .site-nav {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
       }
-      /* mix-blend-mode removed: it forced the whole page to be re-blended
-         under the fixed header on every scroll frame */
       .avail-pill {
         display: flex;
         align-items: center;
         gap: 0.6rem;
-        padding: 8px 14px;
+        padding: 8px 0;
         color: #ddd;
-        text-decoration: none;
-        font-size: 1rem;
+        font: 400 1rem var(--display);
         text-transform: uppercase;
-        font-family: var(--display);
         transition: color 0.2s;
       }
       .avail-pill:hover,
@@ -136,9 +119,9 @@
       .pulse {
         width: 6px;
         height: 6px;
-        border-radius: 50%;
         background: var(--green);
-        animation: blink 2.2s infinite ease-in-out;
+        border-radius: 50%;
+        animation: blink 2.2s ease-in-out infinite;
       }
       @keyframes blink {
         50% {
@@ -147,16 +130,15 @@
       }
       .menu-toggle {
         display: none;
+        border: 0;
+        background: none;
         width: 44px;
         height: 44px;
-        background: none;
-        border: none;
-        cursor: pointer;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 6px;
-        z-index: 300;
+        z-index: 150;
       }
       .bar {
         display: block;
@@ -164,215 +146,508 @@
         height: 1px;
         background: #fff;
         transition:
-          transform 0.4s,
-          opacity 0.3s;
-      }
-      body.menu-open .bar:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-      }
-      body.menu-open .bar:nth-child(2) {
-        opacity: 0;
-      }
-      body.menu-open .bar:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
+          transform 0.35s,
+          opacity 0.25s;
       }
       #mobile-nav {
         position: fixed;
         inset: 0;
-        z-index: 250;
-        background: rgba(6, 6, 6, 0.98);
+        z-index: 105;
+        background: #060606fc;
         display: flex;
-        flex-direction: column;
+        align-items: center;
         justify-content: center;
-        padding: 0 3rem;
         opacity: 0;
         pointer-events: none;
-        transition: opacity 0.45s;
+        transition: opacity 0.3s;
+      }
+      .mobile-nav-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      .mobile-nav-list a {
+        display: block;
+        font: 400 clamp(3rem, 13vw, 6rem)/1.16 var(--display);
+        padding: 4px 0;
+      }
+      .mobile-nav-list a:hover {
+        color: var(--green);
       }
       body.menu-open #mobile-nav {
         opacity: 1;
         pointer-events: auto;
       }
-      .mobile-nav-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+      body.menu-open .bar:first-child {
+        transform: translateY(7px) rotate(45deg);
       }
-      .mobile-nav-list li {
-        overflow: hidden;
+      body.menu-open .bar:nth-child(2) {
+        opacity: 0;
       }
-      .mobile-nav-list a {
-        display: inline-block;
-        font-family: var(--display);
-        font-size: clamp(2.4rem, 10vw, 4rem);
-        text-transform: uppercase;
-        color: var(--white);
-        text-decoration: none;
-        transform: translateY(110%);
-        transition:
-          transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-          color 0.3s;
-        padding: 0.4rem 0;
+      body.menu-open .bar:last-child {
+        transform: translateY(-7px) rotate(-45deg);
       }
-      body.menu-open .mobile-nav-list a {
-        transform: none;
-      }
-      .mobile-nav-list a:hover {
-        color: var(--green);
-      }
-      /* works stage */
+
       #works {
         position: relative;
+        height: 740svh;
+        background: #060606;
       }
-      #stage {
+      .stage {
         position: sticky;
         top: 0;
-        height: 100vh;
         height: 100svh;
+        max-width: 1750px;
+        margin: auto;
         overflow: hidden;
-        background: #000;
         isolation: isolate;
       }
-      #bgs {
+      .stage:after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0;
+        height: 46px;
+        background: linear-gradient(transparent, #060606);
+        z-index: 40;
+        pointer-events: none;
+      }
+      #particle-canvas {
         position: absolute;
         inset: 0;
-      }
-      /* Backgrounds are pre-processed (grayscale + colour tint baked into the
-         image by JS), so there is NO runtime filter and NO blend mode.
-         Only the 1–2 layers currently visible are displayed. */
-      .bg {
-        position: absolute;
-        inset: 0;
-        display: none;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        will-change: transform, opacity;
-      }
-      /* fallback if the browser blocks canvas processing (e.g. file://) */
-      .bg.raw {
-        filter: grayscale(1) contrast(1.15) brightness(0.85);
-      }
-      #shade {
-        position: absolute;
-        inset: 0;
+        width: 100%;
+        height: 100%;
         z-index: 2;
-        background: radial-gradient(
-          ellipse at center,
-          transparent 35%,
-          rgba(0, 0, 0, 0.55)
-        );
+        pointer-events: none;
       }
-      #card {
+      .work-topline {
+        position: absolute;
+        top: 155px;
+        left: 3rem;
+        z-index: 30;
+        color: #9d9b95;
+        font: 0.58rem/1.7 var(--mono);
+        letter-spacing: 0.29em;
+        text-transform: uppercase;
+      }
+      .work-topline:before {
+        content: "";
+        display: block;
+        width: 29px;
+        height: 1px;
+        background: #aaa69d;
+        margin-bottom: 16px;
+      }
+      .work-edition {
+        position: absolute;
+        top: 156px;
+        right: 3.2rem;
+        z-index: 70;
+        pointer-events: none;
+        text-align: right;
+        color: #8c8983;
+        font: 0.57rem/1.8 var(--mono);
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      #reel {
+        position: absolute;
+        z-index: 5;
+        right: 3%;
+        top: 0;
+        height: 100%;
+        width: 65%;
+        outline: none;
+        cursor: default;
+        touch-action: pan-y;
+        user-select: none;
+        overflow: hidden;
+        clip-path: inset(0 0 0 0);
+      }
+      #reel:before,
+      #reel:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 8%;
+        z-index: 50;
+        pointer-events: none;
+      }
+      #reel:before {
+        top: 0;
+        background: linear-gradient(#060606dd, transparent);
+      }
+      #reel:after {
+        bottom: 0;
+        background: linear-gradient(transparent, #060606dd);
+      }
+      .cards {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        perspective: 1250px;
+        perspective-origin: 57% 50%;
+      }
+      .project-card {
+        position: absolute;
+        left: 55%;
+        top: 50%;
+        width: min(45vw, 630px);
+        aspect-ratio: 1.82;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #151515;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        isolation: isolate;
+        box-shadow:
+          0 25px 50px rgba(0, 0, 0, 0.82),
+          0 8px 16px rgba(0, 0, 0, 0.6);
+        display: block;
+        pointer-events: auto;
+        cursor: pointer;
+        transform-origin: 50% 50%;
+        backface-visibility: hidden;
+        will-change: transform, opacity;
+        contain: layout style;
+        transition:
+          border-color 0.16s,
+          box-shadow 0.16s;
+      }
+      .project-card.active {
+        border-color: rgba(255, 255, 255, 0.55);
+        box-shadow:
+          0 30px 65px #000e,
+          0 0 0 1px #ffffff13;
+      }
+      .project-card:focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 4px;
+      }
+      .project-card .fallback {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        background: var(--poster);
+      }
+      .browser-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 11%;
+        padding: 0 4%;
+        display: flex;
+        align-items: center;
+        gap: 1.5%;
+        background: #090a0bcc;
+        border-bottom: 1px solid #ffffff22;
+      }
+      .browser-dot {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #ffffff70;
+      }
+      .browser-address {
+        margin-left: 5%;
+        width: 44%;
+        max-width: 200px;
+        height: 4px;
+        border-radius: 8px;
+        background: #ffffff20;
+      }
+      .browser-brand {
+        position: absolute;
+        top: 17%;
+        left: 7%;
+        color: white;
+        font: 900 clamp(10px, 1.2vw, 19px) var(--archivo);
+        letter-spacing: -0.04em;
+      }
+      .browser-mini-nav {
+        position: absolute;
+        top: 18%;
+        right: 8%;
+        font: 0.43rem var(--mono);
+        color: #ffffff9c;
+        letter-spacing: 0.15em;
+      }
+      .mini-kicker {
+        position: absolute;
+        left: 7%;
+        top: 41%;
+        color: #ffffffae;
+        font: 0.47rem var(--mono);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+      }
+      .mini-title {
+        position: absolute;
+        left: 7%;
+        top: 49%;
+        font: 900 clamp(27px, 3.8vw, 64px)/0.86 var(--archivo);
+        letter-spacing: -0.065em;
+        color: #fff;
+        text-transform: uppercase;
+        max-width: 65%;
+        text-shadow: 0 1px 12px #0003;
+      }
+      .mini-button {
+        position: absolute;
+        left: 7%;
+        bottom: 11%;
+        padding: 8px 13px;
+        background: #f4f2ed;
+        color: #0c0c0c;
+        text-transform: uppercase;
+        font: 0.5rem var(--mono);
+        letter-spacing: 0.04em;
+      }
+      .mini-art {
+        position: absolute;
+        top: 26%;
+        right: 6%;
+        width: 26%;
+        height: 58%;
+        border: 1px solid #ffffff6a;
+        border-radius: 48% 48% 3% 3%;
+        transform: rotate(15deg);
+        box-shadow:
+          -20px 14px 0 #ffffff17,
+          -38px 27px 0 #ffffff0f;
+      }
+      .mini-art:after {
+        content: "";
+        position: absolute;
+        inset: 18%;
+        border: 1px solid #ffffff70;
+        border-radius: inherit;
+      }
+      .project-card:nth-child(2n) .mini-art {
+        border-radius: 50%;
+        transform: rotate(-20deg);
+      }
+      .project-card:nth-child(3n) .mini-art {
+        border-radius: 4px;
+        transform: rotate(8deg);
+      }
+      .project-card img {
         position: absolute;
         z-index: 3;
-        left: 50%;
-        top: 50%;
-        width: min(90vw, 1100px);
-        height: min(74vh, 580px);
-        transform: translate(-50%, -46%);
-        background: transparent;
-        color: #fff;
-        overflow: visible;
-        font-family: "Archivo", sans-serif;
-      }
-      #card > * {
-        position: absolute;
-      }
-      /* text column + inset are positioned with transforms (no layout work
-         while scrolling); their size only changes while hidden */
-      #txt {
-        left: 0;
-        top: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: clamp(1.1rem, 3vh, 1.9rem);
-        will-change: transform;
-      }
-      #inset {
-        left: 0;
-        top: 0;
-        overflow: hidden;
-        background: #111;
-        will-change: transform, opacity;
-      }
-      .tw {
-        overflow: visible;
-      }
-      #ttl {
-        display: block;
-        font-weight: 900;
-        font-size: clamp(2rem, 6.4vw, 6rem);
-        line-height: 0.94;
-        letter-spacing: -0.05em;
-        text-transform: uppercase;
-      }
-      #meta {
-        left: 3%;
-        top: 4%;
-        font: 400 0.62rem var(--mono);
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.7);
-      }
-      #idx {
-        right: 3%;
-        top: 4%;
-        font: 400 0.62rem var(--mono);
-        letter-spacing: 0.18em;
-        color: rgba(255, 255, 255, 0.7);
-      }
-      #inset img {
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
+        opacity: 0;
+        transition: opacity 0.4s;
+        pointer-events: none;
       }
-      #dsc p {
-        font-weight: 700;
-        font-size: 0.9rem;
-        line-height: 1.55;
-        max-width: 46ch;
-        letter-spacing: -0.01em;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+      .project-card img.loaded {
+        opacity: 1;
       }
-      #dsc a {
-        display: inline-block;
-        margin-top: 1.1rem;
-        font: 400 0.64rem var(--mono);
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
+      .project-card .card-cover-layer {
+        position: absolute;
+        z-index: 4;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          transparent 76%,
+          rgba(0, 0, 0, 0.68)
+        );
+      }
+      .card-footer {
+        position: absolute;
+        z-index: 5;
+        left: 5%;
+        right: 5%;
+        bottom: 5%;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
         color: #fff;
-        text-decoration: none;
-        border-bottom: 1px solid #fff;
-        padding-bottom: 2px;
+        text-shadow: 0 1px 4px #0009;
+        font: 0.54rem var(--mono);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
       }
-      #dsc a:hover {
+      .card-footer b {
+        font: 400 1.4rem var(--display);
+      }
+      .project-details {
+        position: absolute;
+        left: 3rem;
+        top: 48%;
+        transform: translateY(-28%);
+        width: min(31vw, 440px);
+        z-index: 60;
+        pointer-events: none;
+      }
+      .project-details a {
+        pointer-events: auto;
+      }
+      .project-overline {
+        font: 0.59rem var(--mono);
+        letter-spacing: 0.28em;
+        color: var(--green);
+        text-transform: uppercase;
+      }
+      .current-number {
+        font: 400 clamp(6.6rem, 11vw, 11rem)/0.79 var(--display);
+        letter-spacing: -0.055em;
+        margin: 24px 0 17px;
+      }
+      .number-line {
+        width: 43px;
+        height: 1px;
+        background: #ece9e3bb;
+        margin: 0 0 24px;
+      }
+      .project-details h1 {
+        font: 400 clamp(3.9rem, 5.8vw, 6.7rem)/0.84 var(--display);
+        text-transform: uppercase;
+        letter-spacing: -0.016em;
+        margin: 0;
+        max-width: 440px;
+      }
+      .project-category {
+        margin: 24px 0 12px;
+        color: #96938d;
+        font: 0.59rem/1.75 var(--mono);
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+      }
+      .project-copy {
+        margin: 0;
+        color: #aaa69f;
+        max-width: 335px;
+        font: 0.68rem/1.83 var(--mono);
+      }
+      .detail-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 27px;
+        margin-top: 27px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #ffffffa0;
+        font: 0.62rem var(--mono);
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        transition:
+          color 0.2s,
+          border-color 0.2s;
+      }
+      .detail-link:hover {
         color: var(--green);
         border-color: var(--green);
       }
-      #tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-content: flex-start;
-      }
-      #tags span {
-        font: 400 0.56rem var(--mono);
-        letter-spacing: 0.06em;
+      .reel-caption {
+        position: absolute;
+        bottom: 35px;
+        left: 3rem;
+        color: #85837e;
+        z-index: 55;
+        font: 0.55rem var(--mono);
+        letter-spacing: 0.13em;
         text-transform: uppercase;
-        border: 1px solid rgba(255, 255, 255, 0.75);
-        padding: 5px 11px;
-        white-space: nowrap;
+      }
+      .reel-controls {
+        position: absolute;
+        right: 3rem;
+        bottom: 35px;
+        z-index: 75;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: #06060670;
+        padding: 8px;
+        border-radius: 40px;
+        backdrop-filter: blur(6px);
+      }
+      .reel-arrow {
+        height: 40px;
+        width: 40px;
+        background: transparent;
+        border: 1px solid #ffffff72;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 1.1rem;
+        transition:
+          background 0.2s,
+          color 0.2s;
+      }
+      .reel-arrow:hover {
+        background: #ece9e3;
+        color: #060606;
+      }
+      .reel-arrow:disabled {
+        opacity: 0.23;
+        cursor: default;
+        pointer-events: none;
+      }
+      .reel-counter {
+        min-width: 78px;
+        text-align: center;
+        font: 0.61rem var(--mono);
+        letter-spacing: 0.14em;
+        color: #e2dfd8;
+      }
+      .scroll-track {
+        position: absolute;
+        right: 3rem;
+        top: 31%;
+        height: 31%;
+        width: 2px;
+        background: #ffffff29;
+        z-index: 66;
+        pointer-events: none;
+      }
+      #scroll-track-progress {
+        position: absolute;
+        inset: 0 0 auto;
+        height: 0;
+        background: var(--green);
+        box-shadow: 0 0 16px #4ade8055;
+      }
+      footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        padding: 2rem clamp(1.2rem, 5vw, 3rem);
+        color: #a6a39d;
+        border-top: 1px solid #ffffff16;
+        font-size: 0.7rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+      }
+      @media (max-width: 1150px) {
+        .project-details {
+          left: 2.2rem;
+          width: 33vw;
+        }
+        .work-topline,
+        .reel-caption {
+          left: 2.2rem;
+        }
+        #reel {
+          width: 68%;
+          right: 1%;
+        }
+        .project-card {
+          width: min(52vw, 610px);
+        }
+        .project-details h1 {
+          font-size: clamp(3.8rem, 6vw, 6rem);
+        }
       }
       @media (max-width: 900px) {
         #site-header {
-          padding: 1.4rem 2rem;
+          padding: 1.4rem 2rem 2.1rem;
         }
         .site-nav {
           display: none;
@@ -380,154 +655,224 @@
         .menu-toggle {
           display: flex;
         }
-      }
-      @media (max-width: 700px) {
-        body {
-          cursor: auto;
-        }
-        #cursor {
+        .work-edition {
           display: none;
         }
+        .project-details {
+          left: 2rem;
+          top: 54%;
+          width: 34vw;
+          z-index: 61;
+        }
+        .project-details h1 {
+          font-size: clamp(3.5rem, 7vw, 5.5rem);
+        }
+        .project-copy {
+          display: none;
+        }
+        #reel {
+          width: 69%;
+          right: -3%;
+        }
+        .project-card {
+          width: 61vw;
+        }
+        .reel-controls {
+          right: 1.4rem;
+        }
+        .scroll-track {
+          right: 1.5rem;
+        }
+      }
+      @media (max-width: 700px) {
         #site-header {
-          padding: 1.2rem;
+          padding: 1.15rem 1.15rem 2.1rem;
         }
-        #card {
-          width: 92vw;
-          height: 78svh;
+        .work-topline {
+          top: 84px;
+          left: 1.25rem;
+          font-size: 0.48rem;
         }
-        #ttl {
-          font-size: clamp(1.8rem, 10vw, 3rem);
+        #particle-canvas {
+          opacity: 0.55;
         }
-        #dsc p {
-          font-size: 0.78rem;
-          -webkit-line-clamp: 3;
+        #reel {
+          top: 15svh;
+          height: 58svh;
+          left: 0;
+          right: 0;
+          width: 100%;
+          touch-action: pan-y;
         }
-      }
-      /* CTA */
-      #services-cta {
-        position: relative;
-        min-height: 80vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        background: #000;
-        border-top: 1px solid rgba(236, 233, 227, 0.08);
-      }
-      #cta-canvas {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-      }
-      .scta-inner {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-        padding: 0 clamp(1.2rem, 6vw, 24px);
-      }
-      .section-label {
-        font-size: 0.65rem;
-        letter-spacing: 0.42em;
-        text-transform: uppercase;
-        color: var(--green);
-      }
-      .scta-headline {
-        font-family: var(--serif);
-        font-weight: 300;
-        font-size: clamp(2.2rem, 8vw, 7rem);
-        line-height: 1.02;
-      }
-      .scta-headline em {
-        font-style: italic;
-        color: rgba(236, 233, 227, 0.55);
-      }
-      .scta-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        padding: clamp(0.9rem, 3vw, 1.2rem) clamp(1.6rem, 5vw, 2.8rem);
-        border: 1px solid #fff;
-        color: var(--white);
-        text-decoration: none;
-        font-family: var(--display);
-        font-size: clamp(0.9rem, 2vw, 1.1rem);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        transition:
-          background 0.4s,
-          color 0.4s,
-          border-color 0.4s;
-      }
-      .scta-btn:hover {
-        background: var(--green);
-        color: #000;
-        border-color: transparent;
-      }
-      .scta-arrow {
-        transition: transform 0.4s;
-      }
-      .scta-btn:hover .scta-arrow {
-        transform: translate(3px, -3px);
-      }
-      footer {
-        position: relative;
-        z-index: 2;
-        padding: 2rem clamp(1.2rem, 5vw, 3rem);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        border-top: 1px solid rgba(236, 233, 227, 0.04);
-        font-size: 0.7rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.75);
-        background: var(--black);
-      }
-      @media (max-width: 640px) {
+        .cards {
+          perspective: 950px;
+          perspective-origin: 50% 50%;
+        }
+        .project-card {
+          left: 50%;
+          width: min(84vw, 470px);
+          border-radius: 9px;
+          aspect-ratio: 1.7;
+        }
+        .browser-brand {
+          font-size: 11px;
+        }
+        .browser-mini-nav {
+          font-size: 0.3rem;
+        }
+        .mini-title {
+          font-size: clamp(24px, 6.5vw, 42px);
+        }
+        .mini-button {
+          font-size: 0.37rem;
+          padding: 5px 8px;
+        }
+        .browser-top {
+          height: 14%;
+        }
+        .project-details {
+          left: 1.2rem;
+          right: 1.2rem;
+          top: 72svh;
+          transform: none;
+          width: auto;
+          display: grid;
+          grid-template-columns: 70px minmax(0, 1fr);
+          gap: 5px 13px;
+        }
+        .project-overline {
+          grid-column: 1/-1;
+          font-size: 0.5rem;
+          letter-spacing: 0.2em;
+        }
+        .current-number {
+          grid-column: 1;
+          grid-row: 2/4;
+          font-size: 4.75rem;
+          margin: 7px 0 0;
+        }
+        .number-line {
+          display: none;
+        }
+        .project-details h1 {
+          grid-column: 2;
+          grid-row: 2;
+          font-size: clamp(2.25rem, 9vw, 3.6rem);
+          line-height: 0.8;
+          margin-top: 10px;
+          word-break: normal;
+          overflow-wrap: normal;
+        }
+        .project-category {
+          grid-column: 2;
+          grid-row: 3;
+          margin: 8px 0 0;
+          font-size: 0.5rem;
+          letter-spacing: 0.15em;
+        }
+        .detail-link {
+          grid-column: 2;
+          grid-row: 4;
+          margin-top: 12px;
+          font-size: 0.53rem;
+          justify-self: start;
+        }
+        .reel-caption {
+          bottom: 11px;
+          left: 1.2rem;
+          font-size: 0.43rem;
+          max-width: 150px;
+          line-height: 1.4;
+        }
+        .reel-controls {
+          bottom: 9px;
+          right: 1.05rem;
+          gap: 4px;
+          padding: 3px;
+        }
+        .reel-arrow {
+          height: 34px;
+          width: 34px;
+        }
+        .reel-counter {
+          font-size: 0.52rem;
+          min-width: 65px;
+        }
+        .project-card .card-footer {
+          font-size: 0.43rem;
+        }
+        .scroll-track {
+          top: 26%;
+          right: 0.65rem;
+          height: 30%;
+        }
         footer {
-          text-align: center;
           justify-content: center;
+          text-align: center;
+          font-size: 0.55rem;
+        }
+      }
+      @media (max-width: 380px) {
+        #reel {
+          top: 14svh;
+          height: 56svh;
+        }
+        .project-details {
+          top: 72svh;
+          grid-template-columns: 61px minmax(0, 1fr);
+        }
+        .project-details h1 {
+          font-size: clamp(2.1rem, 9vw, 2.6rem);
+        }
+        .current-number {
+          font-size: 4.25rem;
+        }
+        .reel-caption {
+          max-width: 126px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *:before,
+        *:after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
   <body>
-    <div id="cursor">
-      <div class="c-ring"></div>
-      <div class="c-dot"></div>
-    </div>
-
     <header id="site-header">
-      <div class="logo">A<span class="logo-dot">·</span>M</div>
-      <nav class="site-nav">
+      <a class="logo" href="index.html" aria-label="Home"
+        >A<span class="logo-dot">·</span>M</a
+      >
+      <nav class="site-nav" aria-label="Main navigation">
         <a href="index.html" class="avail-pill"
-          ><span class="pulse"></span>Home</a
+          ><span class="pulse" aria-hidden="true"></span>Home</a
         >
         <a href="about.html" class="avail-pill"
-          ><span class="pulse"></span>About</a
+          ><span class="pulse" aria-hidden="true"></span>About</a
         >
-        <a href="works.html" class="avail-pill active"
-          ><span class="pulse"></span>Works</a
+        <a href="works.html" class="avail-pill active" aria-current="page"
+          ><span class="pulse" aria-hidden="true"></span>Works</a
         >
         <a href="contact.html" class="avail-pill"
-          ><span class="pulse"></span>Get Started</a
+          ><span class="pulse" aria-hidden="true"></span>Get Started</a
         >
       </nav>
-      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+      <button
+        id="menu-toggle"
+        class="menu-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+      >
         <span class="bar"></span><span class="bar"></span
         ><span class="bar"></span>
       </button>
     </header>
-
-    <nav id="mobile-nav" aria-hidden="true">
+    <nav id="mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
       <ul class="mobile-nav-list">
         <li><a href="index.html">Home</a></li>
         <li><a href="about.html">About</a></li>
@@ -535,608 +880,522 @@
         <li><a href="contact.html">Get Started</a></li>
       </ul>
     </nav>
-
-    <section id="works">
-      <div id="stage">
-        <div id="bgs"></div>
-        <div id="shade"></div>
-        <div id="card">
-          <div id="meta"></div>
-          <div id="idx"></div>
-          <div id="inset"><img id="insImg" alt="" /></div>
-          <div id="txt">
-            <div class="tw" id="tw"><h2 id="ttl"></h2></div>
-            <div id="dsc">
-              <p id="dtxt"></p>
-              <a id="view" href="#">View Project ↗</a>
+    <main>
+      <section
+        id="works"
+        aria-label="Selected works — scroll-controlled curved project gallery"
+      >
+        <div class="stage" id="stage">
+          <div class="work-topline">
+            DESIGN / DEVELOPMENT<br />SELECTED WORKS · 2024—26
+          </div>
+          <div class="work-edition">A·M INDEX<br />09 ENTRIES</div>
+          <canvas id="particle-canvas" aria-hidden="true"></canvas>
+          <div
+            id="reel"
+            tabindex="0"
+            role="region"
+            aria-label="Nine projects in a scroll-driven semicircular gallery. Scroll down to project nine and back up to project one."
+          >
+            <div id="cards" class="cards"></div>
+          </div>
+          <div class="project-details" aria-live="polite" aria-atomic="true">
+            <div class="project-overline">
+              PROJECT <span id="serial">01 / 09</span>
             </div>
-            <div id="tags"></div>
+            <div class="current-number" id="number">01</div>
+            <div class="number-line"></div>
+            <h1 id="detail-title">STUDYMATE</h1>
+            <p class="project-category" id="detail-category">WEB APP / 2026</p>
+            <p class="project-copy" id="detail-copy"></p>
+            <a
+              class="detail-link"
+              id="view-project"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              >View project <span aria-hidden="true">↗</span></a
+            >
+          </div>
+          <div class="reel-caption">01—09 · SCROLL TO EXPLORE</div>
+          <div class="scroll-track" aria-hidden="true">
+            <div id="scroll-track-progress"></div>
+          </div>
+          <div class="reel-controls">
+            <button
+              class="reel-arrow"
+              id="previous"
+              aria-label="Previous project"
+            >
+              ↑
+            </button>
+            <span class="reel-counter" id="counter">01 / 09</span>
+            <button class="reel-arrow" id="next" aria-label="Next project">
+              ↓
+            </button>
           </div>
         </div>
-      </div>
-    </section>
-
-    <section id="services-cta">
-      <div class="scta-inner">
-        <p class="section-label" data-reveal>Ready to build?</p>
-        <h2 class="scta-headline" data-reveal>
-          Let's make<br /><em>something</em><br />remarkable.
-        </h2>
-        <a class="scta-btn" href="contact.html" data-reveal
-          ><span>Start a Project</span><span class="scta-arrow">↗</span></a
-        >
-      </div>
-      <canvas id="cta-canvas"></canvas>
-    </section>
-
+      </section>
+    </main>
     <footer>
       <span>© 2026 Portfolio</span><span>Built with precision</span
       ><span>By Adeogun Mojola</span>
     </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
-      gsap.registerPlugin(ScrollTrigger);
-      ScrollTrigger.config({ ignoreMobileResize: true });
-
-      /* Native scrolling (no smooth-scroll library): everything is tied 1:1
-         to the scroll position. */
-
-      /* cursor — transforms only, loop sleeps when the cursor is still */
-      (() => {
-        const el = document.getElementById("cursor");
-        if (!matchMedia("(pointer: fine)").matches) return;
-        const d = el.querySelector(".c-dot"),
-          r = el.querySelector(".c-ring");
-        let rx = innerWidth / 2,
-          ry = innerHeight / 2,
-          dx = rx,
-          dy = ry,
-          running = false;
-        const put = () => {
-          d.style.transform = `translate3d(${dx}px,${dy}px,0) translate(-50%,-50%)`;
-          r.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
-        };
-        const tick = () => {
-          rx += (dx - rx) * 0.15;
-          ry += (dy - ry) * 0.15;
-          put();
-          if (Math.abs(dx - rx) > 0.1 || Math.abs(dy - ry) > 0.1)
-            requestAnimationFrame(tick);
-          else running = false;
-        };
-        addEventListener(
-          "mousemove",
-          (e) => {
-            dx = e.clientX;
-            dy = e.clientY;
-            if (!running) {
-              running = true;
-              requestAnimationFrame(tick);
-            }
-          },
-          { passive: true },
-        );
-        document.querySelectorAll("a,button").forEach((n) => {
-          n.addEventListener("mouseenter", () =>
-            document.body.classList.add("cursor-hover"),
-          );
-          n.addEventListener("mouseleave", () =>
-            document.body.classList.remove("cursor-hover"),
-          );
-        });
-        put();
-      })();
-
-      /* mobile nav */
-      (() => {
-        const b = document.body,
-          n = document.getElementById("mobile-nav");
-        const set = (o) => {
-          b.classList.toggle("menu-open", o);
-          n.setAttribute("aria-hidden", !o);
-        };
-        document.getElementById("menu-toggle").onclick = () =>
-          set(!b.classList.contains("menu-open"));
-        n.querySelectorAll("a").forEach((a) => (a.onclick = () => set(false)));
-        addEventListener("keydown", (e) => e.key === "Escape" && set(false));
-      })();
-
-      /* ───────── WORKS — fully scroll-driven ───────── */
-      const P = [
+      const PROJECTS = [
         {
           t: "STUDYMATE",
           y: "2026",
           d: "An AI-powered quiz and study platform built with Flask and React/Vite — multi-format content ingestion, teacher and student roles, gamification, and AI study aids.",
           g: ["Flask", "React", "SQLAlchemy", "Render"],
-          i: ["image/studymate1.webp"],
+          i: "image/studymate1.webp",
           l: "https://comingsoon-check-back.vercel.app",
+          type: "Web app",
+          group: "web apps",
+          color: "#1f3fe0",
+          poster: "linear-gradient(145deg,#101538,#173bb9 55%,#7895d8)",
+          mark: "STUDY<br>MATE",
         },
         {
           t: "URBANHIVE",
           y: "2025",
           d: "An affordable luxury fashion store where timeless style meets everyday elegance. Browse curated clothing and enjoy a seamless path from discovery to checkout.",
           g: ["Node.js", "PostgreSQL", "Express.js", "Vanilla JS"],
-          i: ["image/urbanhive.jpg", "image/3urban.png", "image/4urban.png"],
+          i: "image/urbanhive.jpg",
           l: "https://urbanhive-4der.onrender.com",
+          type: "E-commerce",
+          group: "ecommerce",
+          color: "#e3171b",
+          poster: "linear-gradient(145deg,#321418,#842c32 55%,#cb867a)",
+          mark: "URBAN<br>HIVE",
         },
         {
           t: "C-CONVERTER",
           y: "2025",
           d: "A fast, intuitive currency conversion platform with accurate exchange rates — simple, seamless, and built for everyday use.",
           g: ["Node.js", "PostgreSQL"],
-          i: ["image/ccconverter.jpg", "image/cc-2.png"],
+          i: "image/ccconverter.jpg",
           l: "https://comingsoon-check-back.vercel.app",
+          type: "Web app",
+          group: "web apps",
+          color: "#0e8f77",
+          poster: "linear-gradient(145deg,#072a2e,#0a5f66 55%,#61b19f)",
+          mark: "C-<br>CONVERTER",
         },
         {
           t: "GAMEFOLIO",
           y: "2026",
           d: "A creative 2D game-inspired portfolio landing page — an experimental, playful take on the portfolio, like a mini side-scrolling game.",
           g: ["Vanilla JS", "HTML", "CSS3", "Lenis"],
-          i: ["image/game.jpg", "image/2.png", "image/3.png"],
+          i: "image/game.jpg",
           l: "https://amdev2.vercel.app/",
+          type: "Interactive",
+          group: "interactive",
+          color: "#2458e0",
+          poster: "linear-gradient(145deg,#181735,#62509a 60%,#be789d)",
+          mark: "GAME<br>FOLIO",
         },
         {
           t: "HELIOS",
           y: "2026",
           d: "An experimental Three.js-powered 3D portfolio experience built as a solar-system-inspired project archive.",
           g: ["Three.js", "GSAP", "WebGL", "Lenis"],
-          i: ["image/helios.jpg", "image/5.png"],
+          i: "image/helios.jpg",
           l: "https://solarsystem-two.vercel.app/",
+          type: "Interactive",
+          group: "interactive",
+          color: "#e3171b",
+          poster: "linear-gradient(145deg,#15142a,#473d86 60%,#8a8fc3)",
+          mark: "HEL<br>IOS",
         },
         {
           t: "ABP INDUSTRIES",
           y: "2024",
           d: "A corporate website for an agricultural company focused on cultivating, processing, packaging and selling staple food products in Nigeria.",
           g: ["Three.js", "GSAP", "WebGL", "Lenis"],
-          i: ["image/abpind.jpg", "image/7.png", "image/8.png"],
+          i: "image/abpind.jpg",
           l: "https://abpindustries.netlify.app/",
+          type: "Website",
+          group: "websites",
+          color: "#0e8f77",
+          poster: "linear-gradient(145deg,#132317,#3f7743 60%,#92a875)",
+          mark: "ABP<br>INDUSTRIES",
         },
         {
           t: "SMOOTH TRANSIT",
           y: "2025",
           d: "A dark editorial-style aviation consulting website — a premium digital experience for international travel, logistics and VIP aviation support.",
           g: ["JavaScript", "GSAP", "HTML/CSS"],
-          i: [
-            "image/smoothtransit.jpg",
-            "image/smm2.png",
-            "image/smm3.png",
-            "image/smm4.png",
-          ],
+          i: "image/smoothtransit.jpg",
           l: "https://smooth-transit.vercel.app",
+          type: "Website",
+          group: "websites",
+          color: "#1f3fe0",
+          poster: "linear-gradient(145deg,#121d30,#2b5670 60%,#6997a7)",
+          mark: "SMOOTH<br>TRANSIT",
         },
         {
           t: "PALM & KELL",
           y: "2024",
           d: "A fully horizontal-scrolling luxury hotel website built as a single-page experience — hero to footer on one horizontal axis.",
           g: ["HTML/CSS", "JavaScript", "GSAP", "Lenis"],
-          i: ["image/palmkell.jpg", "image/palm2.png", "image/palm3.png"],
+          i: "image/palmkell.jpg",
           l: "https://comingsoon-check-back.vercel.app",
+          type: "Website",
+          group: "websites",
+          color: "#e3171b",
+          poster: "linear-gradient(145deg,#2a241a,#706047 60%,#baa28a)",
+          mark: "PALM<br>& KELL",
         },
         {
           t: "QPAT SOLUTIONS",
           y: "2025",
           d: "An education and consulting platform guiding students from first enquiry through to final placement with clarity, structure and purpose.",
           g: ["HTML/CSS", "JavaScript", "WebGL", "Lenis"],
-          i: ["image/qpat.jpg", "image/10.png", "image/11.png"],
+          i: "image/qpat.jpg",
           l: "https://qpat.netlify.app/",
+          type: "Website",
+          group: "websites",
+          color: "#0e8f77",
+          poster: "linear-gradient(145deg,#062425,#095753 60%,#3b9e8c)",
+          mark: "QPAT<br>SOLUTIONS",
         },
       ];
-      const N = P.length;
-      const COL = [
-        "#1f3fe0",
-        "#e3171b",
-        "#0e8f77",
-        "#2458e0",
-        "#e3171b",
-        "#0e8f77",
-        "#1f3fe0",
-        "#e3171b",
-        "#0e8f77",
-      ];
-      /* layouts in % of card: x=[left, top, width] of the text column,
-         i=[left, top, width, height] of the inset image */
-      const LD = [
-        { x: [3, 14, 50], i: [60, 9, 37, 56] }, // text left,  image right
-        { x: [40, 14, 56], i: [3, 9, 32, 64] }, // image left, text right
-        { x: [3, 52, 94], i: [30, 9, 40, 34] }, // image top,  text below
-      ];
-      const LM = { x: [5, 31, 90], i: [5, 9, 90, 19] };
-
-      /* TUNING
-         VH_PER_PROJECT : scrolling each project takes (vh)
-         H              : half-width of the transition between two projects
-                          (0.3 = transition is 60% of a project's scroll) */
-      const VH_PER_PROJECT = 90;
-      const H = 0.3;
 
       const $ = (id) => document.getElementById(id);
-      const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
-      const lerp = (a, b, t) => a + (b - a) * t;
-      const mix = (A, B, t) => A.map((v, i) => lerp(v, B[i], t));
+      const works = $("works"),
+        stage = $("stage"),
+        reel = $("reel"),
+        cards = $("cards");
+      const N = PROJECTS.length;
+      const reduced = matchMedia("(prefers-reduced-motion:reduce)").matches;
+      let position = 0,
+        target = 0,
+        current = -1,
+        raf = 0,
+        last = 0;
+      let stageWidth = 1,
+        stageHeight = 1,
+        deviceScale = 1;
 
-      const bgs = $("bgs");
-      P.forEach((p) => {
-        const b = document.createElement("div");
-        b.className = "bg";
-        bgs.appendChild(b);
-        p.bg = b;
-        p.lo = 0; /* last opacity written */
-        p.lz = -1; /* last scale written   */
-      });
-
-      /* ── image preparation ──────────────────────────────────────────────
-         Each background is downscaled (max 1600px) and the grayscale /
-         contrast / brightness / colour tint is baked in ONCE with a canvas.
-         Result: no CSS filter, no mix-blend-mode and much smaller textures
-         to move around while scrolling. Insets are downscaled too. */
-      const loadImg = (src) =>
-        new Promise((res, rej) => {
-          const im = new Image();
-          im.decoding = "async";
-          im.onload = () => res(im);
-          im.onerror = rej;
-          im.src = src;
-        });
-      const toUrl = (c, type, q) =>
-        new Promise((res) =>
-          c.toBlob((b) => res(URL.createObjectURL(b)), type, q),
-        );
-      const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
-      const scaled = (im, maxW) => {
-        const w = Math.min(maxW, im.naturalWidth),
-          h = Math.round((w * im.naturalHeight) / im.naturalWidth);
-        const c = document.createElement("canvas");
-        c.width = w;
-        c.height = h;
-        const x = c.getContext("2d", { willReadFrequently: true });
-        x.drawImage(im, 0, 0, w, h);
-        return { c, x, w, h };
-      };
-
-      async function prepare(k) {
-        const p = P[k];
-        if (!p || p.prep) return p && p.prep;
-        p.prep = (async () => {
-          try {
-            const [bgImg, inImg] = await Promise.all([
-              loadImg(p.i[0]),
-              p.i[1] ? loadImg(p.i[1]) : null,
-            ]);
-            /* inset: downscale only */
-            const ins = scaled(inImg || bgImg, 1000);
-            p.insetUrl = await toUrl(ins.c, "image/jpeg", 0.88);
-            if (shown === k) $("insImg").src = p.insetUrl;
-            /* background: grayscale + contrast + brightness + tint, baked */
-            const bgc = scaled(bgImg, 1600);
-            const data = bgc.x.getImageData(0, 0, bgc.w, bgc.h);
-            const px = data.data,
-              col = hex(COL[k % COL.length]);
-            for (let i = 0; i < px.length; i += 4) {
-              let g = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2];
-              g = ((g - 128) * 1.15 + 128) * 0.85;
-              g = g < 0 ? 0 : g > 255 ? 255 : g;
-              g /= 255;
-              px[i] = g * col[0];
-              px[i + 1] = g * col[1];
-              px[i + 2] = g * col[2];
-            }
-            bgc.x.putImageData(data, 0, 0);
-            p.bgUrl = await toUrl(bgc.c, "image/jpeg", 0.82);
-            p.bg.style.backgroundImage = `url("${p.bgUrl}")`;
-          } catch (e) {
-            /* canvas blocked (e.g. opened from file://): use originals */
-            p.bg.classList.add("raw");
-            p.bg.style.backgroundImage = `url("${p.i[0]}")`;
-          }
-        })();
-        return p.prep;
-      }
-      const load = (k) => {
-        prepare(k);
-        prepare(k + 1);
-      };
-      /* prepare the rest quietly in the background */
-      (async () => {
-        await prepare(0);
-        await prepare(1);
-        const idle = window.requestIdleCallback || ((f) => setTimeout(f, 200));
-        for (let k = 2; k < N; k++) {
-          await new Promise((r) => idle(r));
-          await prepare(k);
-        }
-      })();
-
-      const el = {
-        txt: $("txt"),
-        ttl: $("ttl"),
-        inset: $("inset"),
-        dsc: $("dsc"),
-        tags: $("tags"),
-        meta: $("meta"),
-        idx: $("idx"),
-      };
-
-      /* cached measurements */
-      let cw = 0,
-        ch = 0,
-        mob = false;
-      const measure = () => {
-        const card = $("card");
-        cw = card.offsetWidth;
-        ch = card.offsetHeight;
-        mob = matchMedia("(max-width:700px)").matches;
-      };
-
-      let shown = -1,
-        staticKey = -1;
-      function fill(k) {
-        const p = P[k];
-        $("ttl").textContent = p.t;
-        $("meta").textContent = `Website · ${p.y}`;
-        $("idx").textContent =
-          `${String(k + 1).padStart(2, "0")} / ${String(N).padStart(2, "0")}`;
-        $("dtxt").textContent = p.d;
-        const v = $("view");
-        v.href = p.l;
-        v.target = "_blank";
-        v.rel = "noopener noreferrer";
-        $("tags").innerHTML = p.g.map((t) => `<span>${t}</span>`).join("");
-        $("insImg").src = p.insetUrl || p.i[1] || p.i[0];
-      }
-      /* sizes change only here — at the midpoint, while hidden */
-      function applySize(k) {
-        const L = mob ? LM : LD[k % 3];
-        el.txt.style.width = L.x[2] + "%";
-        el.inset.style.width = L.i[2] + "%";
-        el.inset.style.height = L.i[3] + "%";
-      }
-
-      /* u runs 0 → N-1 with the scroll. Project k is "centred" at u = k.
-         Between k and k+1 there is a transition window (t: 0 → 1). */
-      function state(u) {
-        const k = Math.floor(u);
-        const d = u - (k + 0.5);
-        if (k >= 0 && k <= N - 2 && Math.abs(d) < H)
-          return { a: k, b: k + 1, t: (d + H) / (2 * H) };
-        const idx = clamp(d < 0 ? k : k + 1, 0, N - 1);
-        return { a: idx, b: idx, t: 0 };
-      }
-
-      const seg = (x, s0, e0) => clamp((x - s0) / (e0 - s0), 0, 1);
-      const easeIn = (x) => x * x * x;
-      const easeOut = (x) => 1 - Math.pow(1 - x, 3);
-      const smalls = [
-        [el.meta, 0.15, 0.85],
-        [el.idx, 0.15, 0.85],
-        [el.dsc, 0.25, 1],
-        [el.tags, 0.35, 1],
-      ];
-
-      /* Pure function of scroll position: no tweens, no timers. */
-      function render(u) {
-        const { a, b, t } = state(u);
-        const moving = a !== b;
-
-        load(a);
-        load(b);
-        load(b + 1);
-
-        /* backgrounds: only touch what changed; hidden layers are display:none */
-        P.forEach((p, k) => {
-          const o = moving
-            ? k === a
-              ? 1 - t
-              : k === b
-                ? t
-                : 0
-            : k === a
-              ? 1
-              : 0;
-          if (o !== p.lo) {
-            p.bg.style.display = o > 0 ? "block" : "none";
-            p.bg.style.opacity = o;
-            p.lo = o;
-          }
-          if (o > 0) {
-            const z = 1 + 0.1 * clamp(1 - (u - (k - 0.5)), 0, 1);
-            if (z !== p.lz) {
-              p.bg.style.transform = `scale(${z})`;
-              p.lz = z;
-            }
-          }
-        });
-
-        /* content swaps at the midpoint (everything is faded out then) */
-        const s = t < 0.5 ? a : b;
-        if (s !== shown) {
-          fill(s);
-          applySize(s);
-          shown = s;
-        }
-
-        /* nothing else changes while a project is simply "held" */
-        if (!moving) {
-          if (staticKey === a) return;
-          staticKey = a;
-        } else staticKey = -1;
-
-        const LA = mob ? LM : LD[a % 3],
-          LB = mob ? LM : LD[b % 3];
-        const te = t * t * (3 - 2 * t); /* eased, still driven by scroll */
-
-        /* positions glide with transforms only */
-        el.txt.style.transform = `translate3d(${(lerp(LA.x[0], LB.x[0], te) * cw) / 100}px,${(lerp(LA.x[1], LB.x[1], te) * ch) / 100}px,0)`;
-        el.inset.style.transform = `translate3d(${(lerp(LA.i[0], LB.i[0], te) * cw) / 100}px,${(lerp(LA.i[1], LB.i[1], te) * ch) / 100}px,0) scale(${1 - 0.12 * hI(t, moving)})`;
-        el.inset.style.opacity = 1 - hI(t, moving);
-
-        /* title: slides + fades (no skew, no clipping mask) */
-        const dir = t < 0.5 ? -1 : 1; /* leaves upward, arrives from below */
-        const hT = hid(t, moving, 0, 0.75);
-        el.ttl.style.opacity = 1 - hT;
-        el.ttl.style.transform = `translateY(${hT * dir * 45}%)`;
-
-        /* small texts: fade + short rise */
-        for (const [n, s0, e0] of smalls) {
-          const h = hid(t, moving, s0, e0);
-          n.style.opacity = 1 - h;
-          n.style.transform = `translateY(${h * dir * 16}px)`;
-        }
-      }
-      /* h: 0 = fully shown, 1 = fully hidden (staggered per element) */
-      function hid(t, moving, s0, e0) {
-        if (!moving) return 0;
-        const out = clamp(t * 2, 0, 1),
-          inn = clamp(t * 2 - 1, 0, 1);
-        return t < 0.5
-          ? easeIn(seg(out, s0, e0))
-          : 1 - easeOut(seg(inn, s0, e0));
-      }
-      const hI = (t, moving) => hid(t, moving, 0.1, 0.85);
-
-      const works = $("works");
-      works.style.height = (N - 1) * VH_PER_PROJECT + 100 + "vh";
-
-      let lastU = 0;
-      measure();
-      ScrollTrigger.create({
-        trigger: "#works",
-        start: "top top",
-        end: "bottom bottom",
-        onUpdate: (s) => {
-          lastU = s.progress * (N - 1);
-          render(lastU);
-        },
-        onRefresh: (s) => {
-          measure();
-          lastU = s.progress * (N - 1);
-          shown = -1;
-          staticKey = -1;
-          render(lastU);
-        },
-      });
-      render(0);
-
-      /* ───────── CTA particle sphere (scroll-driven) ───────── */
-      (() => {
-        const canvas = $("cta-canvas"),
-          section = $("services-cta");
-        const scene = new THREE.Scene();
-        const cam = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
-        cam.position.z = 9;
-        const ren = new THREE.WebGLRenderer({
-          canvas,
-          alpha: true,
-          antialias: false /* points don't need MSAA; big GPU saving */,
-          powerPreference: "high-performance",
-        });
-        ren.setPixelRatio(Math.min(devicePixelRatio, 1.5));
-        const size = () => {
-          const r = section.getBoundingClientRect();
-          ren.setSize(r.width, r.height, false);
-          cam.aspect = r.width / r.height || 1;
-          cam.updateProjectionMatrix();
-        };
-        size();
-        addEventListener("resize", size);
-        const C = innerWidth < 640 ? 500 : 900,
-          R = 3.2;
-        const pos = new Float32Array(C * 3),
-          base = new Float32Array(C * 3),
-          sc = new Float32Array(C * 3);
-        for (let i = 0; i < C; i++) {
-          const ph = Math.acos(-1 + (2 * i) / C),
-            th = Math.sqrt(C * Math.PI) * ph;
-          base.set(
-            [
-              R * Math.cos(th) * Math.sin(ph),
-              R * Math.sin(th) * Math.sin(ph),
-              R * Math.cos(ph),
-            ],
-            i * 3,
-          );
-        }
-        for (let i = 0; i < C * 3; i++) sc[i] = (Math.random() - 0.5) * 16;
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-        const pts = new THREE.Points(
-          geo,
-          new THREE.PointsMaterial({
-            color: 0xffffff,
-            size: 0.035,
-            transparent: true,
-            opacity: 0.75,
-            depthWrite: false,
-          }),
-        );
-        scene.add(pts);
-        let mx = 0,
-          my = 0,
-          cx = 0,
-          cy = 0,
-          form = 0;
-        section.addEventListener(
-          "mousemove",
-          (e) => {
-            const r = section.getBoundingClientRect();
-            mx = (e.clientX - r.left) / r.width - 0.5;
-            my = (e.clientY - r.top) / r.height - 0.5;
-          },
-          { passive: true },
-        );
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top 90%",
-          end: "top 30%",
-          onUpdate: (s) => (form = s.progress),
-        });
-
-        /* only render while the section is on screen */
-        let visible = false;
-        new IntersectionObserver(([e]) => (visible = e.isIntersecting), {
-          rootMargin: "100px",
-        }).observe(section);
-
-        (function loop() {
+      // ---- Smooth scrolling (Lenis, with graceful fallback) ----
+      let lenis = null;
+      if (!reduced && typeof Lenis !== "undefined") {
+        lenis = new Lenis({ lerp: 0.1 });
+        const loop = (t) => {
+          lenis.raf(t);
           requestAnimationFrame(loop);
-          if (!visible) return;
-          const sy = window.scrollY; /* rotation + wobble follow the scroll */
-          cx += (mx - cx) * 0.05;
-          cy += (my - cy) * 0.05;
-          for (let i = 0; i < C; i++) {
-            const k = i * 3,
-              w = Math.sin(sy * 0.004 + i) * 0.06;
-            pos[k] = THREE.MathUtils.lerp(sc[k], base[k] + w, form);
-            pos[k + 1] = THREE.MathUtils.lerp(sc[k + 1], base[k + 1] + w, form);
-            pos[k + 2] = THREE.MathUtils.lerp(sc[k + 2], base[k + 2], form);
+        };
+        requestAnimationFrame(loop);
+      }
+      // Reel easing speed: lower = floatier, higher = snappier.
+      // Lenis already smooths the scroll, so the reel uses a lighter ease on top.
+      const EASE = lenis ? 14 : 9;
+
+      const bound = (v, min, max) => Math.max(min, Math.min(max, v));
+      function scrollToProject(index) {
+        const i = bound(index, 0, N - 1);
+        const y = window.scrollY + works.getBoundingClientRect().top;
+        const distance = Math.max(1, works.offsetHeight - innerHeight);
+        const top = y + (i / (N - 1)) * distance;
+        if (lenis) lenis.scrollTo(top, { duration: 1.2 });
+        else window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
+      }
+
+      const elements = PROJECTS.map((p, i) => {
+        const el = document.createElement("a");
+        el.className = "project-card";
+        el.href = p.l;
+        el.target = "_blank";
+        el.rel = "noopener noreferrer";
+        el.style.setProperty("--poster", p.poster);
+        el.setAttribute("aria-label", p.t + " — view project");
+        el.setAttribute("draggable", "false");
+        el.innerHTML = `<div class="fallback"><div class="browser-top"><i class="browser-dot"></i><i class="browser-dot"></i><i class="browser-dot"></i><span class="browser-address"></span></div><span class="browser-brand">A·M / ${String(i + 1).padStart(2, "0")}</span><span class="browser-mini-nav">WORK / VIEW / MORE</span><span class="mini-kicker">SELECTED DIGITAL WORK</span><strong class="mini-title"></strong><span class="mini-button">EXPLORE ↗</span><div class="mini-art"></div></div><img alt="${p.t} website preview" loading="lazy"><div class="card-cover-layer"></div><div class="card-footer"><span>${p.type} · ${p.y}</span><b>↗</b></div>`;
+        el.querySelector(".mini-title").innerHTML = p.mark;
+        const img = el.querySelector("img");
+        img.addEventListener("load", () => img.classList.add("loaded"));
+        img.addEventListener("error", () => img.remove());
+        img.src = p.i;
+        el.addEventListener("dragstart", (e) => e.preventDefault());
+        // Off-center cards navigate within the page; center card opens its link.
+        el.addEventListener("click", (e) => {
+          if (Math.abs(i - position) > 0.46) {
+            e.preventDefault();
+            scrollToProject(i);
           }
-          geo.attributes.position.needsUpdate = true;
-          pts.rotation.y = sy * 0.0012 + cx * 0.6;
-          pts.rotation.x = cy * 0.4;
-          ren.render(scene, cam);
-        })();
+        });
+        cards.appendChild(el);
+        return el;
+      });
+
+      function setActive(index) {
+        const idx = bound(index, 0, N - 1);
+        if (idx === current) return;
+        current = idx;
+        const p = PROJECTS[idx],
+          num = String(idx + 1).padStart(2, "0"),
+          tail = " / " + String(N).padStart(2, "0");
+        $("number").textContent = num;
+        $("serial").textContent = num + tail;
+        $("counter").textContent = num + tail;
+        $("detail-title").innerHTML = p.mark;
+        $("detail-category").textContent = p.type + " / " + p.y;
+        $("detail-copy").textContent = p.d;
+        $("view-project").href = p.l;
+        $("view-project").setAttribute(
+          "aria-label",
+          "View " + p.t + " project",
+        );
+        $("previous").disabled = idx === 0;
+        $("next").disabled = idx === N - 1;
+      }
+
+      const CURVE = {
+        BEND_DESKTOP: 56,
+        BEND_MOBILE: 20,
+        ROTATION: 12,
+        OVERLAP: 0.82,
+        RECESS: 43,
+        SCALE_FALLOFF: 0.04,
+      };
+      function cardGeometry(i) {
+        const mob = innerWidth <= 700;
+        const cardWidth = elements[0]?.offsetWidth || 440;
+        const cardHeight = cardWidth / (mob ? 1.7 : 1.82);
+        const d = i - position,
+          a = Math.abs(d);
+        const bend = mob ? CURVE.BEND_MOBILE : CURVE.BEND_DESKTOP;
+        const x = -bend * d * d + d * (mob ? 2 : 7);
+        const y = d * cardHeight * (mob ? 0.8 : CURVE.OVERLAP);
+        const z = -CURVE.RECESS * a * a;
+        const spin = CURVE.ROTATION * d;
+        const pitch = -d * 2.5,
+          yaw = d * 1.7;
+        const scale = Math.max(0.82, 1 - a * CURVE.SCALE_FALLOFF);
+        return {
+          d,
+          a,
+          x,
+          y,
+          z,
+          spin,
+          pitch,
+          yaw,
+          scale,
+          cardWidth,
+          cardHeight,
+          mob,
+        };
+      }
+      function layout() {
+        elements.forEach((el, i) => {
+          const g = cardGeometry(i);
+          const hide = g.a > 3.9;
+          el.style.transform = `translate3d(calc(-50% + ${g.x.toFixed(1)}px),calc(-50% + ${g.y.toFixed(1)}px),${g.z.toFixed(1)}px) rotateZ(${g.spin.toFixed(2)}deg) rotateX(${g.pitch.toFixed(2)}deg) rotateY(${g.yaw.toFixed(2)}deg) scale(${g.scale.toFixed(3)})`;
+          el.style.zIndex = String(50 + Math.round(g.d * 5));
+          el.style.opacity = hide
+            ? "0"
+            : String(bound(1 - Math.max(0, g.a - 2.9) * 0.7, 0, 1));
+          el.style.pointerEvents = hide ? "none" : "auto";
+          el.tabIndex = hide ? -1 : 0;
+          el.classList.toggle("active", g.a < 0.5);
+        });
+        setActive(Math.round(position));
+        $("scroll-track-progress").style.height =
+          ((position / (N - 1)) * 100).toFixed(2) + "%";
+        particles.draw(position);
+      }
+
+      // The reel eases toward the live scroll position each frame (frame-rate independent).
+      function readTarget() {
+        const top = works.getBoundingClientRect().top;
+        const available = Math.max(1, works.offsetHeight - innerHeight);
+        target = bound(-top / available, 0, 1) * (N - 1);
+      }
+      function tick(now) {
+        raf = 0;
+        const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
+        last = now;
+        readTarget();
+        const diff = target - position;
+        if (reduced || Math.abs(diff) < 0.0005) {
+          position = target;
+          layout();
+          return; // settled: stop the loop until the next scroll
+        }
+        position += diff * (1 - Math.exp(-dt * EASE));
+        layout();
+        raf = requestAnimationFrame(tick);
+      }
+      function queueUpdate() {
+        if (!raf) {
+          last = performance.now();
+          raf = requestAnimationFrame(tick);
+        }
+      }
+      window.addEventListener("scroll", queueUpdate, { passive: true });
+      window.addEventListener(
+        "resize",
+        () => {
+          particles.resize();
+          queueUpdate();
+        },
+        { passive: true },
+      );
+      $("previous").addEventListener("click", () =>
+        scrollToProject(current - 1),
+      );
+      $("next").addEventListener("click", () => scrollToProject(current + 1));
+      reel.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+          e.preventDefault();
+          scrollToProject(current + (e.key === "ArrowDown" ? 1 : -1));
+        }
+      });
+
+      const particles = (() => {
+        const canvas = $("particle-canvas"),
+          ctx = canvas.getContext("2d", { alpha: true });
+        const TAU = Math.PI * 2,
+          COUNT = innerWidth < 700 ? 520 : 690;
+        let seed = 20261027;
+        const rand = () => {
+          seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+          return seed / 4294967296;
+        };
+        const shapeFns = [
+          () => {
+            const u = rand() * 2 - 1,
+              a = rand() * TAU,
+              r = Math.sqrt(1 - u * u);
+            return [r * Math.cos(a), u, r * Math.sin(a)];
+          },
+          () => {
+            const a = rand() * TAU,
+              b = rand() * TAU;
+            return [
+              (0.75 + 0.24 * Math.cos(b)) * Math.cos(a),
+              0.5 * Math.sin(b),
+              (0.75 + 0.24 * Math.cos(b)) * Math.sin(a),
+            ];
+          },
+          () => {
+            const q = [rand() * 2 - 1, rand() * 2 - 1, rand() * 2 - 1];
+            q[Math.floor(rand() * 3)] = rand() < 0.5 ? -1 : 1;
+            return q;
+          },
+          () => {
+            const t = (rand() * 2 - 1) * Math.PI * 3;
+            return [Math.cos(t) * 0.77, t / (3 * Math.PI), Math.sin(t) * 0.77];
+          },
+          () => {
+            const r = Math.sqrt(rand()),
+              a = r * TAU * 2;
+            return [r * Math.cos(a), 0.15 * (rand() - 0.5), r * Math.sin(a)];
+          },
+          () => {
+            const x = rand() * 2 - 1,
+              z = rand() * 2 - 1;
+            return [x, Math.sin(x * 4 + z * 2) * 0.4, z];
+          },
+          () => {
+            const a = rand() * TAU;
+            return [Math.cos(a) * 0.85, rand() * 2 - 1, Math.sin(a) * 0.85];
+          },
+          () => {
+            const t = rand() * TAU;
+            return [
+              (Math.sin(t) + 2 * Math.sin(2 * t)) / 3.2,
+              (Math.cos(t) - 2 * Math.cos(2 * t)) / 3.2,
+              -Math.sin(3 * t) / 1.6,
+            ];
+          },
+          () => {
+            const r = (Math.floor(rand() * 6) + 1) / 6,
+              a = rand() * TAU;
+            return [r * Math.cos(a), 0.05 * (rand() - 0.5), r * Math.sin(a)];
+          },
+        ];
+        const points = shapeFns.map((fn) => Array.from({ length: COUNT }, fn));
+        const colors = PROJECTS.map((p) => {
+          const h = p.color.replace("#", "");
+          return [
+            parseInt(h.slice(0, 2), 16),
+            parseInt(h.slice(2, 4), 16),
+            parseInt(h.slice(4, 6), 16),
+          ];
+        });
+        function resize() {
+          stageWidth = stage.clientWidth;
+          stageHeight = stage.clientHeight;
+          deviceScale = Math.min(devicePixelRatio || 1, 1.5);
+          canvas.width = Math.round(stageWidth * deviceScale);
+          canvas.height = Math.round(stageHeight * deviceScale);
+          ctx.setTransform(deviceScale, 0, 0, deviceScale, 0, 0);
+        }
+        function draw(pos) {
+          ctx.clearRect(0, 0, stageWidth, stageHeight);
+          const rr = reel.getBoundingClientRect(),
+            sr = stage.getBoundingClientRect();
+          const baseX =
+            rr.left - sr.left + rr.width * (innerWidth <= 700 ? 0.5 : 0.55);
+          const baseY = rr.top - sr.top + rr.height * 0.5;
+          for (let i = 0; i < N; i++) {
+            const g = cardGeometry(i);
+            if (g.a > 2.65) continue;
+            const perspective = 1250 / (1250 - g.z);
+            const cx = baseX + g.x * perspective,
+              cy = baseY + g.y * perspective;
+            const rx =
+              g.cardWidth * (g.mob ? 0.9 : 0.79) * perspective * g.scale;
+            const ry =
+              g.cardHeight * (g.mob ? 1.06 : 1.1) * perspective * g.scale;
+            const rotate = pos * 0.32 + i * 0.72;
+            const cs = Math.cos(rotate),
+              sn = Math.sin(rotate);
+            const [r, green, b] = colors[i];
+            const visibility = bound(1 - g.a / 3.1, 0, 1);
+            ctx.fillStyle = `rgb(${r},${green},${b})`;
+            for (const [x, y, z] of points[i]) {
+              const xx = x * cs - z * sn,
+                zz = x * sn + z * cs;
+              const sx = cx + xx * rx,
+                sy = cy + (y * 0.83 + zz * 0.18) * ry;
+              ctx.globalAlpha = visibility * (0.27 + 0.58 * (zz + 1) * 0.5);
+              const s = (g.mob ? 1.3 : 1.45) * (1 + 0.1 * zz);
+              ctx.fillRect(sx, sy, s, s);
+            }
+          }
+          ctx.globalAlpha = 1;
+        }
+        resize();
+        return { resize, draw };
       })();
 
-      /* reveal: scrubbed to scroll (no timed animation) */
-      gsap.utils.toArray("[data-reveal]").forEach((n) =>
-        gsap.fromTo(
-          n,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: "none",
-            scrollTrigger: {
-              trigger: n,
-              start: "top 95%",
-              end: "top 70%",
-              scrub: true,
-            },
-          },
-        ),
+      const menu = $("menu-toggle"),
+        mobileNav = $("mobile-nav");
+      function setMenu(open) {
+        document.body.classList.toggle("menu-open", open);
+        menu.setAttribute("aria-expanded", String(open));
+        mobileNav.setAttribute("aria-hidden", String(!open));
+        if (lenis) open ? lenis.stop() : lenis.start();
+      }
+      menu.addEventListener("click", () =>
+        setMenu(!document.body.classList.contains("menu-open")),
       );
+      mobileNav
+        .querySelectorAll("a")
+        .forEach((a) => a.addEventListener("click", () => setMenu(false)));
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setMenu(false);
+      });
+
+      // Initial render at the correct scroll position (no animation in from 0).
+      current = -1;
+      readTarget();
+      position = target;
+      layout();
     </script>
   </body>
 </html>

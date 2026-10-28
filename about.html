@@ -14,6 +14,8 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="about.css" />
+    <link rel="stylesheet" href="particles.css" />
     <style>
       :root {
         --black: #060606;
@@ -588,6 +590,366 @@
         margin-bottom: 24px;
       }
 
+      /* ── CRAFT: centered header + bento cards ── */
+      #craftfx {
+        position: relative;
+        z-index: 2;
+        background: rgb(6, 6, 6);
+        border-top: 1px solid rgba(236, 233, 227, 0.08);
+        padding: clamp(4rem, 9vw, 8rem) clamp(1.2rem, 5vw, 3rem);
+        overflow: hidden;
+      }
+
+      .craft-wrap {
+        position: relative;
+        max-width: 1180px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .craft-top {
+        text-align: center;
+        margin-bottom: clamp(2rem, 5vw, 3.5rem);
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid rgba(236, 233, 227, 0.12);
+        border-radius: 999px;
+        background: rgba(236, 233, 227, 0.03);
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(236, 233, 227, 0.6);
+      }
+      .pill i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4ade80;
+        animation: blink 2.2s infinite ease-in-out;
+      }
+      .craft-title {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(2.6rem, 7vw, 5.5rem);
+        line-height: 0.95;
+        margin: 1.4rem 0 1rem;
+        color: var(--white);
+      }
+      .craft-title em {
+        font-family: var(--serif);
+        font-style: italic;
+        font-weight: 300;
+        text-transform: none;
+        color: rgba(236, 233, 227, 0.55);
+      }
+      .craft-sub {
+        font-family: var(--serif);
+        font-size: clamp(1rem, 1.6vw, 1.15rem);
+        line-height: 1.7;
+        max-width: 520px;
+        margin: 0 auto;
+        opacity: 0.6;
+      }
+
+      /* shared card look */
+      .card {
+        position: relative;
+        border: 1px solid rgba(236, 233, 227, 0.08);
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(236, 233, 227, 0.04),
+          rgba(236, 233, 227, 0.012)
+        );
+        overflow: hidden;
+      }
+
+      .craft-grid {
+        display: grid;
+        grid-template-columns: 1.55fr 1fr;
+        gap: 14px;
+      }
+
+      /* shape card */
+      #craftfx .craft-stage {
+        min-height: clamp(380px, 44vw, 520px);
+        background:
+          radial-gradient(
+            circle at 50% 46%,
+            rgba(236, 233, 227, 0.07),
+            transparent 55%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(236, 233, 227, 0.04),
+            rgba(236, 233, 227, 0.012)
+          );
+      }
+      .stage-top {
+        position: absolute;
+        top: 1.2rem;
+        left: 1.4rem;
+        right: 1.4rem;
+        display: flex;
+        justify-content: space-between;
+        pointer-events: none;
+      }
+      .stage-tag {
+        font-family: var(--mono);
+        font-size: 0.6rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(236, 233, 227, 0.35);
+      }
+      #craftfx .craft-word {
+        position: absolute;
+        left: 1.4rem;
+        bottom: 2.6rem;
+        font-family: var(--display);
+        font-size: clamp(2.8rem, 6vw, 5.5rem);
+        line-height: 0.88;
+        color: var(--white);
+        pointer-events: none;
+      }
+      #craftfx .craft-word.swap {
+        animation: pfxSwap 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes pfxSwap {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      #craftfx .craft-hint {
+        position: absolute;
+        left: 1.4rem;
+        bottom: 1.1rem;
+        margin: 0;
+        font-size: 0.6rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(236, 233, 227, 0.3);
+        pointer-events: none;
+      }
+
+      /* discipline cards */
+      .craft-list {
+        display: grid;
+        grid-template-rows: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .dc {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 1.1rem;
+        padding: 1.1rem 1.4rem;
+        text-align: left;
+        font: inherit;
+        color: inherit;
+        cursor: none;
+        transition:
+          border-color 0.35s,
+          background 0.35s,
+          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .dc:hover {
+        transform: translateX(4px);
+        border-color: rgba(236, 233, 227, 0.2);
+      }
+      .dc-num {
+        font-family: var(--mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        color: rgba(236, 233, 227, 0.35);
+        transition: color 0.3s;
+      }
+      .dc-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+      }
+      .dc-title {
+        font-family: var(--display);
+        font-size: 1.8rem;
+        letter-spacing: 0.03em;
+        line-height: 1;
+        color: var(--white);
+      }
+      .dc-desc {
+        font-family: var(--serif);
+        font-size: 0.98rem;
+        line-height: 1.5;
+        opacity: 0.6;
+      }
+      .dc-arrow {
+        font-family: var(--mono);
+        color: rgba(236, 233, 227, 0.3);
+        transition:
+          color 0.3s,
+          transform 0.3s;
+      }
+      .dc::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 0;
+        background: #4ade80;
+      }
+      .dc.active {
+        border-color: rgba(74, 222, 128, 0.35);
+        background: linear-gradient(
+          180deg,
+          rgba(74, 222, 128, 0.07),
+          rgba(236, 233, 227, 0.012)
+        );
+      }
+      .dc.active .dc-num,
+      .dc.active .dc-arrow {
+        color: #4ade80;
+      }
+      .dc.active .dc-arrow {
+        transform: rotate(45deg);
+      }
+      .dc.active::after {
+        animation: dcFill 3.5s linear forwards;
+      }
+      @keyframes dcFill {
+        to {
+          width: 100%;
+        }
+      }
+
+      /* signature card */
+      .craft-sign {
+        margin-top: 14px;
+        padding: 1.4rem 1.4rem 0;
+      }
+      .craft-name {
+        position: relative;
+        height: clamp(170px, 19vw, 250px);
+        margin: 0 -1.4rem;
+      }
+      .craft-name .fx-hint {
+        left: 1.4rem;
+        bottom: 1rem;
+      }
+
+      @media (max-width: 900px) {
+        .craft-grid {
+          grid-template-columns: 1fr;
+        }
+        .craft-list {
+          grid-template-rows: none;
+          grid-template-columns: 1fr 1fr;
+        }
+        .craft-name {
+          height: 240px;
+        }
+      }
+      @media (max-width: 768px) {
+        .dc {
+          cursor: pointer;
+        }
+      }
+      @media (max-width: 560px) {
+        .craft-list {
+          grid-template-columns: 1fr;
+        }
+        .craft-name {
+          height: 260px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #craftfx .craft-word.swap {
+          animation: none;
+        }
+        .dc.active::after {
+          animation: none;
+          width: 100%;
+        }
+      }
+
+      /* formulas */
+      .dc-eq {
+        margin-top: 0.35rem;
+        font-family: var(--mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        color: rgba(236, 233, 227, 0.35);
+        transition: color 0.3s;
+      }
+      .dc.active .dc-eq {
+        color: #4ade80;
+      }
+      #craftfx .craft-eq {
+        position: absolute;
+        right: 1.4rem;
+        bottom: 1.1rem;
+        margin: 0;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        color: #4ade80;
+        pointer-events: none;
+      }
+
+      /* spec strip */
+      .craft-spec {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: 14px;
+        border-top: 1px solid rgba(236, 233, 227, 0.08);
+        border-bottom: 1px solid rgba(236, 233, 227, 0.08);
+      }
+      .spec {
+        padding: 1.4rem 1.4rem 1.4rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .spec + .spec {
+        padding-left: 1.4rem;
+        border-left: 1px solid rgba(236, 233, 227, 0.08);
+      }
+      .spec-k {
+        font-family: var(--display);
+        font-size: 1.6rem;
+        letter-spacing: 0.04em;
+        line-height: 1;
+      }
+      .spec-v {
+        font-family: var(--serif);
+        font-size: 0.98rem;
+        line-height: 1.5;
+        opacity: 0.6;
+      }
+
+      @media (max-width: 900px) {
+        .craft-spec {
+          grid-template-columns: 1fr;
+        }
+        .spec,
+        .spec + .spec {
+          padding: 1.1rem 0;
+          border-left: 0;
+        }
+        .spec + .spec {
+          border-top: 1px solid rgba(236, 233, 227, 0.08);
+        }
+      }
       /* ── IMAGES ROW ── */
       .images-row {
         display: grid;
@@ -656,6 +1018,7 @@
         padding: clamp(16px, 4vw, 32px) clamp(1.2rem, 5vw, 40px);
         flex-wrap: wrap;
         gap: 8px;
+        pointer-events: none;
       }
       .statement-word {
         font-family: "Bebas Neue", sans-serif;
@@ -685,6 +1048,36 @@
       .statement .dot.bm2 {
         bottom: 200px;
         right: 160px;
+      }
+
+      /* ── NEW PARTICLE FX (particles-fx.js) ── */
+      .fx-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .fx-trail {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9996;
+      }
+      .fx-hint {
+        position: absolute;
+        left: clamp(1.2rem, 5vw, 40px);
+        bottom: 1.4rem;
+        font-family: "DM Mono", monospace;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: rgba(236, 233, 227, 0.3);
+        pointer-events: none;
       }
 
       /* ── ARCHIVE / BIO ── */
@@ -874,6 +1267,18 @@
         }
         .approach-text {
           padding-top: 0;
+        }
+
+        /* Craft + name */
+        #craftfx {
+          padding-top: 4rem;
+        }
+        .craft-stage {
+          min-height: 52svh;
+          padding-bottom: 2rem;
+        }
+        .craft-name {
+          height: 240px;
         }
 
         /* Archive: 2-column, left col narrower */
@@ -1326,7 +1731,7 @@
           ><span class="pulse"></span>About</a
         >
         <a href="services.html" class="avail-pill"
-          ><span class="pulse"></span>Services</a
+          ><span class="pulse"></span>Works</a
         >
         <a href="contact.html" class="avail-pill"
           ><span class="pulse"></span>Get Started</a
@@ -1390,7 +1795,7 @@
     </section>
 
     <!-- INTRO -->
-    <section class="intro">
+    <section class="intro" data-fx="constellation">
       <h1 class="intro-headline reveal d1">
         On Improvement,<br />Clarity, and the<br />Creative Process
       </h1>
@@ -1444,33 +1849,116 @@
       </div>
     </section>
 
-    <!-- IMAGES ROW -->
-    <div class="images-row">
-      <div class="img-card reveal-scale">
-        <img src="image/Free_Cosmetic_Bottle_Mockup_1.jpg" alt="" />
-        <span class="img-card-label">Product Design</span>
-        <span class="img-card-num">01</span>
-      </div>
-      <div class="img-card reveal-scale d2">
-        <img src="image/square-box-mockups-on-concrete-isometric.webp" alt="" />
-        <span class="img-card-label">Packaging Design</span>
-        <span class="img-card-num">02</span>
-      </div>
-    </div>
+    <section id="craftfx">
+      <div class="craft-wrap">
+        <div class="craft-top">
+          <h2 class="craft-title reveal d1">
+            Less on screen.<br /><em>More</em> behind it.
+          </h2>
+          <p class="craft-sub reveal d2">
+            Minimal by design. Every movement is driven by maths and physics,
+            rendered with Three.js, WebGL and particles.
+          </p>
+        </div>
 
-    <!-- STATEMENT -->
-    <div class="statement">
-      <img src="image/6324217.jpg" alt="" />
-      <div class="dot tl"></div>
-      <div class="dot tr"></div>
-      <div class="dot bl"></div>
-      <div class="dot bm"></div>
-      <div class="dot bm2"></div>
-      <div class="statement-overlay">
-        <span class="statement-word reveal-left">Frontend as experience</span>
-        <span class="statement-word reveal d3">Backend as Architecture</span>
+        <div class="craft-grid">
+          <div
+            class="craft-stage card reveal-scale d1"
+            data-pfx="morph"
+            data-pfx-labels="Particles|WebGL|Three.js|Motion"
+          >
+            <div class="stage-top">
+              <span class="stage-tag">Live shape</span>
+              <span class="stage-tag" id="craft-count">01 / 04</span>
+            </div>
+            <div class="craft-word" data-pfx-label>Particles</div>
+            <p class="craft-hint">Tap the shape to morph it</p>
+            <p class="craft-eq" id="craft-eq">θ = i · 137.5°</p>
+          </div>
+
+          <div class="craft-list">
+            <button class="dc card active reveal d2" type="button">
+              <span class="dc-num">01</span>
+              <span class="dc-body">
+                <span class="dc-title">Particles</span>
+                <span class="dc-desc"
+                  >Thousands of points placed by the golden angle and moved by
+                  springs.</span
+                >
+                <span class="dc-eq">θ = i · 137.5°</span>
+              </span>
+              <span class="dc-arrow">↗</span>
+            </button>
+            <button class="dc card reveal d3" type="button">
+              <span class="dc-num">02</span>
+              <span class="dc-body">
+                <span class="dc-title">WebGL</span>
+                <span class="dc-desc"
+                  >Fragment shaders for glitch, grain and light, computed per
+                  pixel on the GPU.</span
+                >
+                <span class="dc-eq">uv += (mouse − uv) · pull</span>
+              </span>
+              <span class="dc-arrow">↗</span>
+            </button>
+            <button class="dc card reveal d4" type="button">
+              <span class="dc-num">03</span>
+              <span class="dc-body">
+                <span class="dc-title">Three.js</span>
+                <span class="dc-desc"
+                  >Real depth, camera and light in scenes kept quiet and
+                  restrained.</span
+                >
+                <span class="dc-eq">x′ = x·cosθ − z·sinθ</span>
+              </span>
+              <span class="dc-arrow">↗</span>
+            </button>
+            <button class="dc card reveal d5" type="button">
+              <span class="dc-num">04</span>
+              <span class="dc-body">
+                <span class="dc-title">Motion</span>
+                <span class="dc-desc"
+                  >Easing, inertia and damping, so movement feels physical,
+                  never decorative.</span
+                >
+                <span class="dc-eq">v = (v + k·Δx) · 0.9</span>
+              </span>
+              <span class="dc-arrow">↗</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="craft-spec reveal d1">
+          <div class="spec">
+            <span class="spec-k">Minimal</span
+            ><span class="spec-v"
+              >One palette. Two typefaces. Nothing that doesn't earn its
+              place.</span
+            >
+          </div>
+          <div class="spec">
+            <span class="spec-k">Maths</span
+            ><span class="spec-v"
+              >Golden angle 137.5°, parametric surfaces, rotation
+              matrices.</span
+            >
+          </div>
+          <div class="spec">
+            <span class="spec-k">Physics</span
+            ><span class="spec-v"
+              >Spring 0.06, damping 0.90, forces that push and settle.</span
+            >
+          </div>
+        </div>
+
+        <div class="craft-sign card reveal d1">
+          <span class="pill"><i></i>Crafted by</span>
+          <div class="craft-name" data-fx="text" data-fx-text="Adeogun Mojola">
+            <span class="fx-hint">Move through the name</span>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
     <!-- ARCHIVE / BIO -->
     <section class="archive">
@@ -1878,5 +2366,31 @@
         requestAnimationFrame(render);
       })();
     </script>
+    <script src="particles.js" defer></script>
+    <script>
+      (function () {
+        const stage = document.querySelector("#craftfx .craft-stage");
+        const word = stage.querySelector("[data-pfx-label]");
+        const cards = [...document.querySelectorAll("#craftfx .dc")];
+        const count = document.getElementById("craft-count");
+        const labels = (stage.dataset.pfxLabels || "").split("|");
+        const sync = () => {
+          const i = Math.max(0, labels.indexOf(word.textContent.trim()));
+          cards.forEach((c, n) => c.classList.toggle("active", n === i));
+          if (count) count.textContent = "0" + (i + 1) + " / 0" + labels.length;
+        };
+        new MutationObserver(sync).observe(word, {
+          childList: true,
+          characterData: true,
+          subtree: true,
+        });
+        cards.forEach((c, n) =>
+          c.addEventListener("click", () => stage.pfxGoto && stage.pfxGoto(n)),
+        );
+        sync();
+      })();
+    </script>
+    <script src="about.js"></script>
+    <script src="particles-fx.js" defer></script>
   </body>
 </html>

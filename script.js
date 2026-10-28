@@ -726,35 +726,62 @@ document.querySelectorAll(".project").forEach((project) => {
     );
 });
 
-/* ── Parallax Images ── */
-document.querySelectorAll(".project-image img").forEach((img) => {
-  gsap.fromTo(
-    img,
-    { yPercent: 7 },
-    {
-      yPercent: -7,
-      ease: "none",
-      scrollTrigger: {
-        trigger: img.parentElement,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
+/* ── Parallax Media (images + videos) ── */
+const MEDIA_BASE_SCALE = 1.06; // slight overscan so the parallax shift never shows gaps
+
+document
+  .querySelectorAll(".project-image img, .project-image video")
+  .forEach((media) => {
+    gsap.set(media, {
+      scale: MEDIA_BASE_SCALE,
+      transformOrigin: "center center",
+    });
+
+    gsap.fromTo(
+      media,
+      { yPercent: 2 },
+      {
+        yPercent: -2,
+        ease: "none",
+        scrollTrigger: {
+          trigger: media.parentElement,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
       },
-    },
-  );
-});
+    );
+  });
 
 /* ── Project Hover ── */
 document.querySelectorAll(".project").forEach((project) => {
-  const image = project.querySelector("img");
+  const media = project.querySelector(
+    ".project-image video, .project-image img",
+  );
   const title = project.querySelector("h3");
+
   project.addEventListener("mouseenter", () => {
-    gsap.to(title, { x: 20, duration: 0.5, ease: "power3.out" });
-    gsap.to(image, { scale: 1.08, duration: 1, ease: "power4.out" });
+    if (title) gsap.to(title, { x: 20, duration: 0.5, ease: "power3.out" });
+    if (media) {
+      gsap.to(media, {
+        scale: MEDIA_BASE_SCALE + 0.03,
+        duration: 1,
+        ease: "power4.out",
+        overwrite: "auto",
+      });
+    }
   });
+
   project.addEventListener("mouseleave", () => {
-    gsap.to(title, { x: 0, duration: 0.5, ease: "power3.out" });
-    gsap.to(image, { scale: 1, duration: 1, ease: "power4.out" });
+    if (title) gsap.to(title, { x: 0, duration: 0.5, ease: "power3.out" });
+    if (media) {
+      gsap.to(media, {
+        scale: MEDIA_BASE_SCALE,
+        duration: 1,
+        ease: "power4.out",
+        overwrite: "auto",
+      });
+    }
   });
 });
 
@@ -885,11 +912,12 @@ document.querySelectorAll(".project").forEach((project) => {
     transformPerspective: 1000,
     transformOrigin: "center",
   });
-  const tiltX = gsap.quickTo(imageWrap, "rotateX", {
+
+  const tiltX = gsap.quickTo(imageWrap, "rotationX", {
     duration: 0.5,
     ease: "power2.out",
   });
-  const tiltY = gsap.quickTo(imageWrap, "rotateY", {
+  const tiltY = gsap.quickTo(imageWrap, "rotationY", {
     duration: 0.5,
     ease: "power2.out",
   });
@@ -910,6 +938,7 @@ document.querySelectorAll(".project").forEach((project) => {
     },
     { passive: true },
   );
+
   project.addEventListener("mouseleave", () => {
     rect = null;
     tiltX(0);
@@ -956,6 +985,46 @@ document.querySelectorAll(".mobile-nav-list a").forEach((link) => {
   link.addEventListener("click", () => {
     document.body.classList.remove("menu-open");
   });
+});
+
+/* ── Project Videos: force muted autoplay, play only when visible, log problems ── */
+document.querySelectorAll(".project-image video").forEach((video) => {
+  video.muted = true;
+  video.defaultMuted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.setAttribute("muted", "");
+  video.setAttribute("playsinline", "");
+
+  video.addEventListener("error", () => {
+    console.error(
+      "VIDEO ERROR code:",
+      video.error && video.error.code,
+      video.error && video.error.message,
+      video.currentSrc,
+    );
+  });
+
+  video.addEventListener("loadeddata", () => {
+    console.log("VIDEO OK", video.videoWidth + "x" + video.videoHeight);
+  });
+
+  const tryPlay = () => {
+    const p = video.play();
+    if (p && typeof p.catch === "function") {
+      p.catch((err) =>
+        console.warn("Video play blocked:", err.name, err.message),
+      );
+    }
+  };
+
+  new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) tryPlay();
+      else video.pause();
+    },
+    { threshold: 0.25 },
+  ).observe(video);
 });
 
 window.addEventListener("load", () => {

@@ -850,7 +850,11 @@ body.menu-open .mobile-nav-list a {
 
 .project-image {
   display: block;
-  height: clamp(420px, 70vh, 750px);
+  width: 100%;
+  max-width: 1280px; /* native width of a 720p video = 1:1 pixels */
+  margin-inline: auto;
+  aspect-ratio: 16 / 9; /* no cropping, no stretching */
+  height: auto; /* remove the old clamp(420px, 70vh, 750px) */
   overflow: hidden;
   border-radius: 32px;
   position: relative;
@@ -864,17 +868,15 @@ body.menu-open .mobile-nav-list a {
   clip-path: inset(0 0 0 0);
 }
 
-/* GSAP owns this element's transform (parallax + hover zoom), so there is
-   deliberately no CSS transition here: one would restart on every scroll
-   frame. The image is 20% taller than its frame so parallax never shows a gap. */
+.project-image video,
 .project-image img {
   position: absolute;
-  left: 0;
-  top: -10%;
+  inset: 0;
   width: 100%;
-  height: 120%;
+  height: 100%; /* was 120% with top: -10% */
   object-fit: cover;
-  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* keeps video on its own GPU layer */
 }
 
 .project-image::after {
@@ -1036,71 +1038,6 @@ body.menu-open .mobile-nav-list a {
 
 .project:hover::before {
   opacity: 1;
-}
-
-/* ─────────────────────────────────────────────
-   SERVICES (floating card cluster)
-───────────────────────────────────────────── */
-
-.services {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  zoom: 1.3;
-}
-
-.services-title {
-  position: absolute;
-  top: 6rem;
-  left: 6vw;
-  font-family: var(--display);
-  font-size: clamp(3rem, 6vw, 6rem);
-  letter-spacing: 0.02em;
-  color: rgb(255, 255, 255);
-  text-transform: uppercase;
-  pointer-events: none;
-}
-
-.service {
-  position: absolute;
-  padding: 18px 20px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(236, 233, 227, 0.12);
-  color: #ece9e3;
-  backdrop-filter: blur(14px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-  will-change: transform;
-  transition: transform 0.2s ease;
-}
-
-.service h3 {
-  margin: 0;
-  font-size: 14px;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-.service p {
-  margin: 8px 0 0;
-  font-size: 12px;
-  opacity: 0.65;
-  line-height: 1.4;
-}
-
-.primary {
-  width: 260px;
-  background: rgba(236, 233, 227, 0.06);
-  border: 1px solid rgba(236, 233, 227, 0.2);
-}
-
-.secondary {
-  width: 220px;
-}
-
-.tertiary {
-  width: 200px;
-  opacity: 0.85;
 }
 
 /* ─────────────────────────────────────────────
@@ -1750,7 +1687,7 @@ textarea.f-input {
   #contact {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
-    background: rgba(6, 6, 6, 0.78);
+    background: black;
   }
 
   .works-heading {
@@ -1764,7 +1701,8 @@ textarea.f-input {
   }
 
   .project-image {
-    height: 50vh;
+    height: auto; /* replace height: 50vh */
+    aspect-ratio: 16 / 9;
     border-radius: 20px;
   }
 
