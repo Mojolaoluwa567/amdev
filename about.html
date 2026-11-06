@@ -5,54 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>A·M — About</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="shortcut icon"
       href="image/Untitled design (1).png"
       type="image/x-icon"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist:wght@300;400;500&family=Geist+Mono:wght@300;400;500&family=Inter:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="about.css" />
     <link rel="stylesheet" href="particles.css" />
+    <link rel="stylesheet" href="style.css" />
     <style>
       :root {
-        --black: #060606;
-        --white: #ece9e3;
-        --mono: "DM Mono", monospace;
-        --display: "Bebas Neue", sans-serif;
-        --serif: "Cormorant Garamond", serif;
         --accent: rgba(236, 233, 227, 0.06);
         --border: rgba(236, 233, 227, 0.07);
       }
-      *,
-      *::before,
-      *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+
+      /* Header, nav, mobile menu, footer, fonts and base styles now come from style.css.
+         The rules below only undo style.css rules that are meant for the home page. */
+      #site-header {
+        opacity: 1;
+      }
+      #hero-canvas {
+        position: static;
+        inset: auto;
+        z-index: auto;
+        background: transparent;
+        pointer-events: auto;
+      }
+      .hero-scroll {
+        display: flex;
+        flex-direction: row;
+        writing-mode: horizontal-tb;
+        color: var(--white);
+      }
+      .hero-scroll::after {
+        width: auto;
+        height: auto;
+        background: none;
+        animation: none;
+      }
+      .meta-item {
+        margin-left: 0;
       }
       html {
         scroll-behavior: auto;
       }
-      body {
-        background: var(--black);
-        color: var(--white);
-        font-family: var(--mono);
-        overflow-x: hidden;
-        cursor: none;
-      }
-      body::-webkit-scrollbar {
-        display: none;
-      }
-      body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9997;
+
+      /* no italics anywhere */
+      em {
+        font-style: normal;
       }
 
       /* ── CURSOR ── */
@@ -124,233 +129,6 @@
         transition: width 0.05s linear;
       }
 
-      /* ── HEADER ── */
-      #site-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        padding: 1.6rem 3rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 200;
-        transition:
-          transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 0.4s;
-      }
-      #site-header.hidden {
-        transform: translateY(-100%);
-      }
-
-      .logo {
-        font-family: var(--serif);
-        font-weight: 300;
-        font-style: italic;
-        font-size: 1.4rem;
-        letter-spacing: 0.1em;
-        color: var(--white);
-      }
-      .logo-dot {
-        color: rgba(236, 233, 227, 0.3);
-      }
-
-      .site-nav {
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-        flex-direction: column;
-      }
-      .avail-pill {
-        display: flex;
-
-        align-items: center;
-        gap: 0.6rem;
-        padding: 8px 14px;
-        color: #ddd;
-        text-decoration: none;
-        font-size: 1rem;
-        text-transform: uppercase;
-        font-family: var(--display);
-        transition: color 0.2s;
-      }
-      .avail-pill:hover {
-        color: #4ade80;
-      }
-      .avail-pill .pulse {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: #4ade80;
-        animation: blink 2.2s infinite ease-in-out;
-      }
-      @keyframes blink {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.15;
-        }
-      }
-
-      /* ── MOBILE MENU TOGGLE ── */
-      .menu-toggle {
-        display: none;
-        position: relative;
-        z-index: 300;
-        width: 44px;
-        height: 44px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-      }
-      .menu-toggle .bar {
-        display: block;
-        width: 24px;
-        height: 1px;
-        background: var(--white);
-        transition:
-          transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 0.3s ease;
-      }
-      body.menu-open .menu-toggle .bar:nth-child(1) {
-        transform: translateY(7px) rotate(45deg);
-      }
-      body.menu-open .menu-toggle .bar:nth-child(2) {
-        opacity: 0;
-      }
-      body.menu-open .menu-toggle .bar:nth-child(3) {
-        transform: translateY(-7px) rotate(-45deg);
-      }
-
-      /* ── MOBILE NAV ── */
-      #mobile-nav {
-        position: fixed;
-        inset: 0;
-        z-index: 250;
-        background: rgba(6, 6, 6, 0.98);
-        backdrop-filter: blur(20px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 0 3rem;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.45s ease;
-      }
-      .mobile-close {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
-        width: 48px;
-        height: 48px;
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        z-index: 260;
-      }
-      .mobile-close span {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 28px;
-        height: 1px;
-        background: var(--white);
-        transform-origin: center;
-      }
-      .mobile-close span:first-child {
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
-      .mobile-close span:last-child {
-        transform: translate(-50%, -50%) rotate(-45deg);
-      }
-      .mobile-close:hover {
-        transform: rotate(90deg);
-        transition: transform 0.35s ease;
-      }
-      body.menu-open #mobile-nav {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .mobile-nav-list {
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-      .mobile-nav-list li {
-        overflow: hidden;
-      }
-      .mobile-nav-list a {
-        display: inline-block;
-        font-family: var(--display);
-        font-size: clamp(2.4rem, 10vw, 4rem);
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        color: var(--white);
-        text-decoration: none;
-        transform: translateY(110%);
-        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        padding: 0.4rem 0;
-      }
-      body.menu-open .mobile-nav-list a {
-        transform: translateY(0);
-      }
-      .mobile-nav-list li:nth-child(1) a {
-        transition-delay: 0.05s;
-      }
-      .mobile-nav-list li:nth-child(2) a {
-        transition-delay: 0.1s;
-      }
-      .mobile-nav-list li:nth-child(3) a {
-        transition-delay: 0.15s;
-      }
-      .mobile-nav-list li:nth-child(4) a {
-        transition-delay: 0.2s;
-      }
-
-      .mobile-nav-foot {
-        margin-top: 4rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.6rem;
-        font-size: 0.7rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.3);
-      }
-      .mobile-nav-foot a {
-        color: rgba(236, 233, 227, 0.5);
-        text-decoration: none;
-      }
-
-      .mobile-nav-list a {
-        display: inline-block;
-        font-family: var(--display);
-        font-size: clamp(2.4rem, 10vw, 4rem);
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        color: var(--white);
-        text-decoration: none;
-        transform: translateY(110%);
-        transition:
-          transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-          color 0.3s ease;
-        padding: 0.4rem 0;
-      }
-
-      .mobile-nav-list a:hover,
-      .mobile-nav-list a:focus,
-      .mobile-nav-list a:active {
-        color: #4ade80;
-      }
-
       /* ── HERO ── */
       .hero {
         position: relative;
@@ -371,14 +149,14 @@
       }
 
       .meta-item {
-        font-size: 0.75rem;
-
+        font-size: var(--t-micro);
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.587);
-        line-height: 1.4;
+        color: var(--g2);
+        line-height: 1.6;
         overflow: hidden;
-        font-family: var(--mono);
-        letter-spacing: 0.2em;
+        font-family: var(--ui-mono);
+        letter-spacing: 0.12em;
+        font-weight: 500;
       }
 
       .meta-item span {
@@ -387,18 +165,19 @@
 
       .meta-item strong {
         font-weight: 400;
-        color: rgba(255, 255, 255, 0.587);
-        font-family: var(--mono);
+        color: var(--g2);
+        font-family: var(--ui-mono);
       }
 
       .hero-meta2 span {
-        font-family: var(--mono);
-        font-size: 0.82rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.587);
+        color: var(--g2);
         padding-bottom: 1.7rem;
         padding-left: 1rem;
-        letter-spacing: 0.2em;
+        letter-spacing: 0.14em;
+        font-weight: 500;
       }
       #hero-canvas {
         display: block;
@@ -413,12 +192,13 @@
         padding-left: clamp(1.2rem, 5vw, 3rem);
         pointer-events: none;
         z-index: 25;
-        font-weight: 900;
-        font-family: var(--display);
+        font-weight: 700;
+        font-family: var(--hero);
         font-size: clamp(5.5rem, 13vw, 12rem);
+        letter-spacing: 0.01em;
+        text-transform: uppercase;
         padding-bottom: 6rem;
         line-height: 0.88;
-
         color: var(--white);
       }
       .hero-name-line {
@@ -448,8 +228,8 @@
         position: absolute;
         bottom: 40px;
         right: 40px;
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
+        font-family: var(--ui-mono);
+        font-size: 0.55rem;
         letter-spacing: 0.2em;
         text-transform: uppercase;
         opacity: 0.5;
@@ -499,19 +279,21 @@
       }
       .intro-headline {
         grid-column: 1;
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(22px, 3.5vw, 52px);
-        font-weight: 400;
-        line-height: 1.1;
-        letter-spacing: -0.02em;
+        font-family: var(--sans);
+        font-size: clamp(1.6rem, 3vw, 2.6rem);
+        font-weight: 600;
+        line-height: 1.08;
+        letter-spacing: -0.045em;
+        text-transform: capitalize;
+        color: var(--white);
       }
       .intro-body {
         grid-column: 2;
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(0.9rem, 1.5vw, 1rem);
-        line-height: 1.75;
-        opacity: 0.7;
-        max-width: 380px;
+        font-family: var(--sans);
+        font-size: var(--t-body);
+        line-height: 1.5;
+        color: var(--g2);
+        max-width: 38ch;
       }
       .intro-locations {
         grid-column: 3;
@@ -526,15 +308,16 @@
         gap: 12px;
       }
       .intro-loc-item span.slash {
-        font-family: "DM Mono", monospace;
-        font-size: 0.7rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         opacity: 0.4;
       }
       .intro-loc-item span.loc {
-        font-family: "DM Mono", monospace;
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
+        letter-spacing: 0.14em;
         text-transform: uppercase;
+        color: var(--g2);
       }
 
       /* ── APPROACH ── */
@@ -545,13 +328,28 @@
         gap: clamp(30px, 6vw, 80px);
         align-items: start;
       }
+
+      /* small section labels with a coloured dot */
       .approach-label {
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        opacity: 0.4;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-family: var(--sans);
+        font-size: var(--t-small);
+        font-weight: 500;
+        letter-spacing: 0;
+        text-transform: none;
+        color: var(--g1);
+        opacity: 1;
         margin-bottom: 24px;
+      }
+      .approach-label::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4ade80;
+        flex-shrink: 0;
       }
       .approach-image {
         width: 100%;
@@ -572,8 +370,8 @@
         transform: scale(1.04);
       }
       .approach-caption {
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         letter-spacing: 0.1em;
         opacity: 0.4;
         margin-top: 12px;
@@ -584,10 +382,11 @@
         padding-top: 40px;
       }
       .approach-text p {
-        font-size: clamp(0.85rem, 1.5vw, 1rem);
-        line-height: 1.8;
-        opacity: 0.7;
-        margin-bottom: 24px;
+        font-size: var(--t-body);
+        line-height: 1.5;
+        color: var(--g2);
+        max-width: 44ch;
+        margin-bottom: 1.2rem;
       }
 
       /* ── CRAFT: centered header + bento cards ── */
@@ -604,7 +403,6 @@
         position: relative;
         max-width: 1180px;
         margin: 0 auto;
-        position: relative;
         z-index: 1;
       }
 
@@ -620,9 +418,9 @@
         border: 1px solid rgba(236, 233, 227, 0.12);
         border-radius: 999px;
         background: rgba(236, 233, 227, 0.03);
-        font-family: var(--mono);
-        font-size: 0.6rem;
-        letter-spacing: 0.28em;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: rgba(236, 233, 227, 0.6);
       }
@@ -634,27 +432,28 @@
         animation: blink 2.2s infinite ease-in-out;
       }
       .craft-title {
-        font-family: var(--display);
-        font-weight: 400;
-        font-size: clamp(2.6rem, 7vw, 5.5rem);
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: clamp(2.2rem, 6vw, 4.8rem);
         line-height: 0.95;
+        letter-spacing: -0.055em;
+        text-transform: capitalize;
         margin: 1.4rem 0 1rem;
         color: var(--white);
       }
       .craft-title em {
-        font-family: var(--serif);
-        font-style: italic;
-        font-weight: 300;
-        text-transform: none;
-        color: rgba(236, 233, 227, 0.55);
+        font-family: var(--sans);
+        font-style: normal;
+        font-weight: 600;
+        color: var(--g3);
       }
       .craft-sub {
-        font-family: var(--serif);
-        font-size: clamp(1rem, 1.6vw, 1.15rem);
-        line-height: 1.7;
-        max-width: 520px;
+        font-family: var(--sans);
+        font-size: var(--t-body);
+        line-height: 1.5;
+        max-width: 46ch;
         margin: 0 auto;
-        opacity: 0.6;
+        color: var(--g2);
       }
 
       /* shared card look */
@@ -701,9 +500,9 @@
         pointer-events: none;
       }
       .stage-tag {
-        font-family: var(--mono);
-        font-size: 0.6rem;
-        letter-spacing: 0.28em;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: rgba(236, 233, 227, 0.35);
       }
@@ -711,10 +510,13 @@
         position: absolute;
         left: 1.4rem;
         bottom: 2.6rem;
-        font-family: var(--display);
-        font-size: clamp(2.8rem, 6vw, 5.5rem);
-        line-height: 0.88;
-        color: var(--white);
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: clamp(2.4rem, 5vw, 4.5rem);
+        letter-spacing: -0.055em;
+        text-transform: capitalize;
+        line-height: 0.9;
+        color: var(--g1);
         pointer-events: none;
       }
       #craftfx .craft-word.swap {
@@ -735,8 +537,9 @@
         left: 1.4rem;
         bottom: 1.1rem;
         margin: 0;
-        font-size: 0.6rem;
-        letter-spacing: 0.28em;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: rgba(236, 233, 227, 0.3);
         pointer-events: none;
@@ -768,9 +571,9 @@
         border-color: rgba(236, 233, 227, 0.2);
       }
       .dc-num {
-        font-family: var(--mono);
-        font-size: 0.65rem;
-        letter-spacing: 0.2em;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
+        letter-spacing: 0.14em;
         color: rgba(236, 233, 227, 0.35);
         transition: color 0.3s;
       }
@@ -780,20 +583,22 @@
         gap: 0.3rem;
       }
       .dc-title {
-        font-family: var(--display);
-        font-size: 1.8rem;
-        letter-spacing: 0.03em;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 1.3rem;
+        letter-spacing: -0.035em;
+        text-transform: capitalize;
         line-height: 1;
         color: var(--white);
       }
       .dc-desc {
-        font-family: var(--serif);
-        font-size: 0.98rem;
+        font-family: var(--sans);
+        font-size: 0.75rem;
         line-height: 1.5;
-        opacity: 0.6;
+        color: var(--g2);
       }
       .dc-arrow {
-        font-family: var(--mono);
+        font-family: var(--ui-mono);
         color: rgba(236, 233, 227, 0.3);
         transition:
           color 0.3s,
@@ -885,9 +690,9 @@
       /* formulas */
       .dc-eq {
         margin-top: 0.35rem;
-        font-family: var(--mono);
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
+        font-family: var(--ui-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
         color: rgba(236, 233, 227, 0.35);
         transition: color 0.3s;
       }
@@ -899,9 +704,9 @@
         right: 1.4rem;
         bottom: 1.1rem;
         margin: 0;
-        font-family: var(--mono);
-        font-size: 0.7rem;
-        letter-spacing: 0.14em;
+        font-family: var(--ui-mono);
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
         color: #4ade80;
         pointer-events: none;
       }
@@ -925,16 +730,18 @@
         border-left: 1px solid rgba(236, 233, 227, 0.08);
       }
       .spec-k {
-        font-family: var(--display);
-        font-size: 1.6rem;
-        letter-spacing: 0.04em;
+        font-family: var(--sans);
+        font-weight: 600;
+        font-size: 1.2rem;
+        letter-spacing: -0.035em;
+        text-transform: capitalize;
         line-height: 1;
       }
       .spec-v {
-        font-family: var(--serif);
-        font-size: 0.98rem;
+        font-family: var(--sans);
+        font-size: 0.75rem;
         line-height: 1.5;
-        opacity: 0.6;
+        color: var(--g2);
       }
 
       @media (max-width: 900px) {
@@ -980,18 +787,19 @@
         position: absolute;
         bottom: 16px;
         left: 20px;
-        font-family: "bebas neue", monospace;
+        font-family: var(--sans);
+        font-weight: 600;
         font-size: clamp(1.4rem, 4vw, 2.6rem);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
+        letter-spacing: -0.05em;
+        text-transform: capitalize;
         color: #ffffff;
       }
       .img-card-num {
         position: absolute;
         bottom: 16px;
         right: 20px;
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         opacity: 0.3;
       }
 
@@ -1021,9 +829,11 @@
         pointer-events: none;
       }
       .statement-word {
-        font-family: "Bebas Neue", sans-serif;
+        font-family: var(--sans);
+        font-weight: 600;
         font-size: clamp(20px, 4.5vw, 80px);
-        letter-spacing: 0.05em;
+        letter-spacing: -0.05em;
+        text-transform: capitalize;
         color: var(--white);
       }
       .statement .dot {
@@ -1072,9 +882,9 @@
         position: absolute;
         left: clamp(1.2rem, 5vw, 40px);
         bottom: 1.4rem;
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
-        letter-spacing: 0.3em;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
+        letter-spacing: 0.14em;
         text-transform: uppercase;
         color: rgba(236, 233, 227, 0.3);
         pointer-events: none;
@@ -1103,16 +913,17 @@
         opacity: 0.8;
       }
       .archive-sub {
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         letter-spacing: 0.12em;
         text-transform: uppercase;
         opacity: 0.4;
       }
       .archive-title {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 1.3rem;
-        font-weight: 400;
+        font-family: var(--sans);
+        font-size: 1.1rem;
+        font-weight: 600;
+        letter-spacing: -0.03em;
         margin-top: 6px;
         line-height: 1.3;
       }
@@ -1126,8 +937,8 @@
         margin-bottom: 32px;
       }
       .tag {
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         letter-spacing: 0.1em;
         text-transform: uppercase;
         opacity: 0.5;
@@ -1135,39 +946,23 @@
         border-bottom: 1px solid rgba(236, 233, 227, 0.2);
       }
       .archive-body {
-        font-size: clamp(0.85rem, 1.5vw, 1rem);
-        line-height: 1.8;
-        opacity: 0.7;
+        font-size: var(--t-body);
+        line-height: 1.5;
+        color: var(--g2);
       }
       .archive-body p {
-        margin-bottom: 20px;
+        margin-bottom: 1.2rem;
+        max-width: 44ch;
       }
       .archive-right {
         padding-top: 20px;
       }
       .archive-right p {
-        font-size: clamp(0.85rem, 1.5vw, 1rem);
-        line-height: 1.8;
-        opacity: 0.65;
-        margin-bottom: 20px;
-      }
-
-      /* ── FOOTER ── */
-      footer {
-        position: relative;
-        z-index: 2;
-        padding: 2rem clamp(1.2rem, 5vw, 3rem);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        border-top: 1px solid rgba(236, 233, 227, 0.04);
-        font-size: 0.7rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: rgba(236, 233, 227, 0.642);
-        background: var(--black);
+        font-size: var(--t-body);
+        line-height: 1.5;
+        color: var(--g2);
+        margin-bottom: 1.2rem;
+        max-width: 44ch;
       }
 
       /* ── REVEAL ── */
@@ -1221,8 +1016,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "DM Mono", monospace;
-        font-size: 0.6rem;
+        font-family: var(--ui-mono);
+        font-size: var(--t-micro);
         color: rgba(236, 233, 227, 0.2);
         letter-spacing: 0.1em;
         text-transform: uppercase;
@@ -1234,17 +1029,6 @@
 
       /* ── TABLET (≤900px) ── */
       @media (max-width: 900px) {
-        #site-header {
-          padding: 1.4rem 2rem;
-        }
-
-        .site-nav {
-          display: none;
-        }
-        .menu-toggle {
-          display: flex;
-        }
-
         /* Intro: 2-column, locations drop to full row */
         .intro {
           grid-template-columns: 1fr 1fr;
@@ -1293,11 +1077,8 @@
 
       /* ── MOBILE (≤640px) ── */
       @media (max-width: 640px) {
-        #site-header {
-          padding: 1.2rem 1.2rem;
-        }
-        body {
-          cursor: auto;
+        :root {
+          --t-big: clamp(2.8rem, 15vw, 4.5rem);
         }
         #cursor {
           display: none;
@@ -1385,41 +1166,12 @@
           display: flex;
           flex-direction: column;
         }
-
-        /* Footer */
-
-        footer {
-          text-align: center;
-          justify-content: center;
-        }
-
-        /* Mobile nav padding */
-        #mobile-nav {
-          padding: 0 1.5rem;
-        }
       }
 
       /* ── MOBILE / TABLET POLISH ───────────────────────────── */
       @media (max-width: 768px) {
-        body {
-          cursor: auto;
-        }
-
         #cursor {
           display: none;
-        }
-
-        #site-header {
-          padding: 1rem 1.1rem;
-        }
-
-        .logo {
-          font-size: 1.15rem;
-        }
-
-        .menu-toggle {
-          width: 40px;
-          height: 40px;
         }
 
         /* HERO */
@@ -1453,18 +1205,18 @@
         .hero-meta2 {
           margin-bottom: 1rem;
           max-width: 100%;
-          font-family: var(--mono);
+          font-family: var(--ui-mono);
         }
 
         .hero-meta2 span {
           padding-left: 0;
           padding-bottom: 0.8rem;
-          font-size: 0.68rem;
+          font-size: 0.6rem;
           line-height: 1.6;
-          letter-spacing: 0.16em;
+          letter-spacing: 0.14em;
           display: block;
           max-width: 100%;
-          font-family: var(--mono);
+          font-family: var(--ui-mono);
         }
 
         .hero-meta {
@@ -1478,21 +1230,21 @@
         }
 
         .meta-item {
-          letter-spacing: 0.14em;
+          letter-spacing: 0.12em;
           line-height: 1.5;
-          font-family: var(--mono);
+          font-family: var(--ui-mono);
         }
 
         .meta-item span:last-child {
           margin-top: 0.3rem;
-          font-size: 0.8rem;
+          font-size: 0.65rem;
         }
 
         .meta-item strong {
           display: block;
           line-height: 1.6;
-          font-family: var(--mono);
-          font-size: 0.8rem;
+          font-family: var(--ui-mono);
+          font-size: 0.65rem;
         }
 
         .hero-scroll {
@@ -1519,15 +1271,15 @@
 
         .intro-headline {
           grid-column: 1;
-          font-size: clamp(2rem, 9vw, 2.8rem);
+          font-size: clamp(1.8rem, 8vw, 2.4rem);
           line-height: 1.05;
         }
 
         .intro-body {
           grid-column: 1;
           max-width: 100%;
-          font-size: 0.98rem;
-          line-height: 1.75;
+          font-size: 0.85rem;
+          line-height: 1.55;
         }
 
         .intro-locations {
@@ -1548,8 +1300,9 @@
         }
 
         .approach-text p {
-          font-size: 0.96rem;
-          line-height: 1.8;
+          font-size: 0.85rem;
+          line-height: 1.55;
+          max-width: 100%;
         }
 
         .approach-image {
@@ -1646,14 +1399,15 @@
         }
 
         .archive-title {
-          font-size: 1.15rem;
+          font-size: 1rem;
         }
 
         .archive-body,
         .archive-right p,
         .archive-body p {
-          font-size: 0.96rem;
-          line-height: 1.8;
+          font-size: 0.85rem;
+          line-height: 1.55;
+          max-width: 100%;
         }
 
         .tags {
@@ -1664,27 +1418,6 @@
         .tag {
           font-size: 0.58rem;
           line-height: 1.4;
-        }
-
-        /* FOOTER */
-
-        footer {
-          text-align: center;
-          justify-content: center;
-        }
-
-        /* MOBILE NAV */
-        #mobile-nav {
-          padding: 0 1.25rem;
-        }
-
-        .mobile-close {
-          top: 1.2rem;
-          right: 1rem;
-        }
-
-        .mobile-nav-foot {
-          margin-top: 2.5rem;
         }
       }
 
@@ -1697,12 +1430,12 @@
 
         .hero-meta2 span,
         .meta-item {
-          font-size: 0.62rem;
-          letter-spacing: 0.12em;
+          font-size: 0.58rem;
+          letter-spacing: 0.1em;
         }
 
         .intro-headline {
-          font-size: clamp(1.8rem, 10vw, 2.3rem);
+          font-size: clamp(1.6rem, 9vw, 2rem);
         }
 
         .statement-word {
@@ -1723,6 +1456,7 @@
 
     <header id="site-header">
       <div class="logo">A<span class="logo-dot">·</span>M</div>
+
       <nav class="site-nav">
         <a href="index.html" class="avail-pill"
           ><span class="pulse"></span>Home</a
@@ -1730,27 +1464,30 @@
         <a href="about.html" class="avail-pill"
           ><span class="pulse"></span>About</a
         >
-        <a href="services.html" class="avail-pill"
+        <a href="Works.html" class="avail-pill"
           ><span class="pulse"></span>Works</a
         >
         <a href="contact.html" class="avail-pill"
           ><span class="pulse"></span>Get Started</a
         >
       </nav>
+
       <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
-        <span class="bar"></span><span class="bar"></span
-        ><span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
       </button>
     </header>
 
     <nav id="mobile-nav">
       <button class="mobile-close" id="mobile-close" aria-label="Close menu">
-        <span></span><span></span>
+        <span></span>
+        <span></span>
       </button>
       <ul class="mobile-nav-list">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="services.html">Works</a></li>
+        <li><a href="about.html"> About</a></li>
+        <li><a href="works.html">Works</a></li>
         <li><a href="contact.html">Get Started</a></li>
       </ul>
     </nav>
@@ -2392,5 +2129,6 @@
     </script>
     <script src="about.js"></script>
     <script src="particles-fx.js" defer></script>
+    <script src="codelive.js" defer></script>
   </body>
 </html>

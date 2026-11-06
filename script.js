@@ -40,12 +40,15 @@ const marqueeEl = document.querySelector(".marquee-wrap");
 let scrollProgress = 0;
 let maxScroll = 1;
 let vh = window.innerHeight;
+let heroTop = 0;
 /* The WebGL canvas only shows over the hero + marquee. Everything below is
    opaque, so once that is scrolled past we stop drawing the 3D scene. */
 let canvasHideY = Infinity;
 
 const measure = () => {
   vh = window.innerHeight;
+  const h = document.getElementById("hero");
+  if (h) heroTop = h.getBoundingClientRect().top + window.scrollY;
   maxScroll = Math.max(1, document.documentElement.scrollHeight - vh);
   if (marqueeEl) {
     canvasHideY = marqueeEl.getBoundingClientRect().bottom + window.scrollY;
@@ -66,6 +69,7 @@ let lastSY = 0;
 let heroSettled = false;
 
 function updateHero(sy) {
+  sy = Math.max(0, sy - heroTop);
   if (sy < vh) {
     const t = sy / vh;
     if (heroName) {
@@ -553,6 +557,7 @@ const mainEl = document.getElementById("main");
 const headerEl = document.getElementById("site-header");
 
 if (sessionStorage.getItem("introPlayed")) {
+  /* returning visitor: skip the intro and show the site straight away */
   introEl.style.display = "none";
   mainEl.style.opacity = "1";
   headerEl.style.opacity = "1";
@@ -570,7 +575,6 @@ if (sessionStorage.getItem("introPlayed")) {
 
   const introRule = document.getElementById("intro-rule");
   const introSub = document.getElementById("intro-sub");
-  const introWipe = document.getElementById("intro-wipe");
   const letterA = document.getElementById("il-a");
   const letterDot = document.getElementById("il-dot");
   const letterM = document.getElementById("il-m");
@@ -587,6 +591,7 @@ if (sessionStorage.getItem("introPlayed")) {
     }, delay);
   }
 
+  /* 1. Small line + A · M letters rise in */
   tr(introRule, { width: "50px" }, 900, 150);
   tr(letterA, { opacity: "1", transform: "translateY(0)" }, 1000, 700);
   tr(letterDot, { opacity: "1", transform: "translateY(0)" }, 1000, 870);
@@ -597,8 +602,7 @@ if (sessionStorage.getItem("introPlayed")) {
     introSub.style.color = "rgba(236,233,227,0.16)";
   }, 1500);
 
-  tr(introRule, { width: "100vw" }, 900, 1900);
-
+  /* 2. Letters swipe up (the small line fades out with them) */
   setTimeout(() => {
     [letterA, letterDot, letterM].forEach((l, i) => {
       setTimeout(() => {
@@ -610,15 +614,18 @@ if (sessionStorage.getItem("introPlayed")) {
     });
     introSub.style.transition = "opacity .5s ease";
     introSub.style.opacity = "0";
+    introRule.style.transition = "opacity .4s ease";
+    introRule.style.opacity = "0";
   }, 2400);
 
+  /* 3. Straight into the website: no full-width line, no wipe */
   setTimeout(() => {
-    introWipe.style.transition = "transform 1.1s cubic-bezier(.76,0,.24,1)";
-    introWipe.style.transform = "scaleY(0)";
-  }, 2800);
-
-  setTimeout(() => {
-    introEl.style.display = "none";
+    introEl.style.transition = "opacity .45s ease";
+    introEl.style.opacity = "0";
+    introEl.style.pointerEvents = "none";
+    setTimeout(() => {
+      introEl.style.display = "none";
+    }, 450);
 
     mainEl.style.transition = "opacity .7s ease";
     mainEl.style.opacity = "1";
@@ -647,7 +654,7 @@ if (sessionStorage.getItem("introPlayed")) {
         200 + i * 50,
       );
     });
-  }, 3950);
+  }, 3050);
 }
 
 /* ─────────────────────────────────────────────
