@@ -92,7 +92,7 @@ em {
   width: 100vw;
   height: 100vh;
   display: block;
-  background: black;
+  background: rgb(0, 0, 0);
 }
 
 /* ── CURSOR ── */

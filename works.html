@@ -535,9 +535,12 @@
       #scroll-track-progress {
         position: absolute;
         inset: 0 0 auto;
-        height: 0;
+        height: 100%;
         background: var(--green);
         box-shadow: 0 0 16px #4ade8055;
+        transform: scaleY(0);
+        transform-origin: top;
+        will-change: transform;
       }
       @media (max-width: 1150px) {
         .project-details {
@@ -844,6 +847,7 @@
       <span>Built with precision</span>
       <span>By Adeogun Mojola</span>
     </footer>
+
     <script>
       const PROJECTS = [
         {
@@ -851,8 +855,8 @@
           y: "2026",
           d: "An AI-powered quiz and study platform built with Flask and React/Vite — multi-format content ingestion, teacher and student roles, gamification, and AI study aids.",
           g: ["Flask", "React", "SQLAlchemy", "Render"],
-          i: "image/studymate1.webp",
-          l: "https://comingsoon-check-back.vercel.app",
+          i: "image/STUDY.png",
+          l: "https://studymatedemo.vercel.app/",
           type: "Web app",
           group: "web apps",
           color: "#1f3fe0",
@@ -864,13 +868,65 @@
           y: "2025",
           d: "An affordable luxury fashion store where timeless style meets everyday elegance. Browse curated clothing and enjoy a seamless path from discovery to checkout.",
           g: ["Node.js", "PostgreSQL", "Express.js", "Vanilla JS"],
-          i: "image/urbanhive.jpg",
-          l: "https://urbanhive-4der.onrender.com",
+          i: "image/URBANY.png",
+          l: "https://myurbanhive.vercel.app/",
           type: "E-commerce",
           group: "ecommerce",
           color: "#e3171b",
           poster: "linear-gradient(145deg,#321418,#842c32 55%,#cb867a)",
           mark: "URBAN<br>HIVE",
+        },
+        {
+          t: "ABP INDUSTRIES",
+          y: "2024",
+          d: "A corporate website for an agricultural company focused on cultivating, processing, packaging and selling staple food products in Nigeria.",
+          g: ["Three.js", "GSAP", "WebGL", "Lenis"],
+          i: "image/ABPINC.png",
+          l: "https://abpindustries.netlify.app/",
+          type: "Website",
+          group: "websites",
+          color: "#0e8f77",
+          poster: "linear-gradient(145deg,#132317,#3f7743 60%,#92a875)",
+          mark: "ABP<br>INDUSTRIES",
+        },
+        {
+          t: "SMOOTH TRANSIT",
+          y: "2025",
+          d: "A dark editorial-style aviation consulting website — a premium digital experience for international travel, logistics and VIP aviation support.",
+          g: ["JavaScript", "GSAP", "HTML/CSS"],
+          i: "image/SMOOTHTRANSIT.png",
+          l: "https://smoothtransit.vercel.app/",
+          type: "Website",
+          group: "websites",
+          color: "#1f3fe0",
+          poster: "linear-gradient(145deg,#121d30,#2b5670 60%,#6997a7)",
+          mark: "SMOOTH<br>TRANSIT",
+        },
+        {
+          t: "Veya Hotels",
+          y: "2024",
+          d: "A fully horizontal-scrolling luxury hotel website built as a single-page experience — hero to footer on one horizontal axis.",
+          g: ["HTML/CSS", "JavaScript", "GSAP", "Lenis"],
+          i: "image/VEYAS.png",
+          l: "https://veyahotel.vercel.app/",
+          type: "Website",
+          group: "websites",
+          color: "#e3171b",
+          poster: "linear-gradient(145deg,#2a241a,#706047 60%,#baa28a)",
+          mark: "VEYA<br>HOTELS",
+        },
+        {
+          t: "QPAT SOLUTIONS",
+          y: "2025",
+          d: "An education and consulting platform guiding students from first enquiry through to final placement with clarity, structure and purpose.",
+          g: ["HTML/CSS", "JavaScript", "WebGL", "Lenis"],
+          i: "image/QPAT1.png",
+          l: "https://qpat.netlify.app/",
+          type: "Website",
+          group: "websites",
+          color: "#0e8f77",
+          poster: "linear-gradient(145deg,#062425,#095753 60%,#3b9e8c)",
+          mark: "QPAT<br>SOLUTIONS",
         },
         {
           t: "C-CONVERTER",
@@ -891,7 +947,7 @@
           d: "A creative 2D game-inspired portfolio landing page — an experimental, playful take on the portfolio, like a mini side-scrolling game.",
           g: ["Vanilla JS", "HTML", "CSS3", "Lenis"],
           i: "image/game.jpg",
-          l: "https://amdev2.vercel.app/",
+          l: "https://comingsoon-check-back.vercel.app",
           type: "Interactive",
           group: "interactive",
           color: "#2458e0",
@@ -904,64 +960,12 @@
           d: "An experimental Three.js-powered 3D portfolio experience built as a solar-system-inspired project archive.",
           g: ["Three.js", "GSAP", "WebGL", "Lenis"],
           i: "image/helios.jpg",
-          l: "https://solarsystem-two.vercel.app/",
+          l: "https://comingsoon-check-back.vercel.app",
           type: "Interactive",
           group: "interactive",
           color: "#e3171b",
           poster: "linear-gradient(145deg,#15142a,#473d86 60%,#8a8fc3)",
           mark: "HEL<br>IOS",
-        },
-        {
-          t: "ABP INDUSTRIES",
-          y: "2024",
-          d: "A corporate website for an agricultural company focused on cultivating, processing, packaging and selling staple food products in Nigeria.",
-          g: ["Three.js", "GSAP", "WebGL", "Lenis"],
-          i: "image/abpind.jpg",
-          l: "https://abpindustries.netlify.app/",
-          type: "Website",
-          group: "websites",
-          color: "#0e8f77",
-          poster: "linear-gradient(145deg,#132317,#3f7743 60%,#92a875)",
-          mark: "ABP<br>INDUSTRIES",
-        },
-        {
-          t: "SMOOTH TRANSIT",
-          y: "2025",
-          d: "A dark editorial-style aviation consulting website — a premium digital experience for international travel, logistics and VIP aviation support.",
-          g: ["JavaScript", "GSAP", "HTML/CSS"],
-          i: "image/smoothtransit.jpg",
-          l: "https://smooth-transit.vercel.app",
-          type: "Website",
-          group: "websites",
-          color: "#1f3fe0",
-          poster: "linear-gradient(145deg,#121d30,#2b5670 60%,#6997a7)",
-          mark: "SMOOTH<br>TRANSIT",
-        },
-        {
-          t: "PALM & KELL",
-          y: "2024",
-          d: "A fully horizontal-scrolling luxury hotel website built as a single-page experience — hero to footer on one horizontal axis.",
-          g: ["HTML/CSS", "JavaScript", "GSAP", "Lenis"],
-          i: "image/palmkell.jpg",
-          l: "https://comingsoon-check-back.vercel.app",
-          type: "Website",
-          group: "websites",
-          color: "#e3171b",
-          poster: "linear-gradient(145deg,#2a241a,#706047 60%,#baa28a)",
-          mark: "PALM<br>& KELL",
-        },
-        {
-          t: "QPAT SOLUTIONS",
-          y: "2025",
-          d: "An education and consulting platform guiding students from first enquiry through to final placement with clarity, structure and purpose.",
-          g: ["HTML/CSS", "JavaScript", "WebGL", "Lenis"],
-          i: "image/qpat.jpg",
-          l: "https://qpat.netlify.app/",
-          type: "Website",
-          group: "websites",
-          color: "#0e8f77",
-          poster: "linear-gradient(145deg,#062425,#095753 60%,#3b9e8c)",
-          mark: "QPAT<br>SOLUTIONS",
         },
       ];
 
@@ -980,29 +984,49 @@
       let stageWidth = 1,
         stageHeight = 1,
         deviceScale = 1;
+      // Geometry and scroll bounds are measured on resize, not during every frame.
+      let isMobile = false,
+        cachedCardWidth = 440,
+        cachedCardHeight = 245,
+        particleCenterX = 0,
+        particleCenterY = 0,
+        workStartY = 0,
+        workScrollLength = 1,
+        lastParticleDraw = -Infinity;
+      const geometryCache = new Array(N);
 
       // ---- Smooth scrolling (Lenis, with graceful fallback) ----
       let lenis = null;
       if (!reduced && typeof Lenis !== "undefined") {
-        lenis = new Lenis({ lerp: 0.1 });
+        lenis = new Lenis({
+          lerp: 0.19,
+          smoothWheel: true,
+          wheelMultiplier: 0.95,
+          touchMultiplier: 1,
+          syncTouch: false, // preserve natural touch scrolling on phones
+        });
         const loop = (t) => {
           lenis.raf(t);
           requestAnimationFrame(loop);
         };
         requestAnimationFrame(loop);
       }
-      // Reel easing speed: lower = floatier, higher = snappier.
-      // Lenis already smooths the scroll, so the reel uses a lighter ease on top.
-      const EASE = lenis ? 14 : 9;
+      // Lenis smooths the page itself. Keep the cards closely synchronized
+      // so the two easing layers do not feel delayed or rubbery.
+      const EASE = lenis ? 26 : 18;
 
       const bound = (v, min, max) => Math.max(min, Math.min(max, v));
       function scrollToProject(index) {
         const i = bound(index, 0, N - 1);
-        const y = window.scrollY + works.getBoundingClientRect().top;
-        const distance = Math.max(1, works.offsetHeight - innerHeight);
-        const top = y + (i / (N - 1)) * distance;
-        if (lenis) lenis.scrollTo(top, { duration: 1.2 });
-        else window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
+        const top = workStartY + (i / Math.max(1, N - 1)) * workScrollLength;
+        if (lenis) {
+          lenis.scrollTo(top, {
+            duration: 0.95,
+            easing: (t) => 1 - Math.pow(1 - t, 3),
+          });
+        } else {
+          window.scrollTo({ top, behavior: reduced ? "instant" : "smooth" });
+        }
       }
 
       const elements = PROJECTS.map((p, i) => {
@@ -1063,9 +1087,9 @@
         SCALE_FALLOFF: 0.04,
       };
       function cardGeometry(i) {
-        const mob = innerWidth <= 700;
-        const cardWidth = elements[0]?.offsetWidth || 440;
-        const cardHeight = cardWidth / (mob ? 1.7 : 1.82);
+        const mob = isMobile;
+        const cardWidth = cachedCardWidth;
+        const cardHeight = cachedCardHeight;
         const d = i - position,
           a = Math.abs(d);
         const bend = mob ? CURVE.BEND_MOBILE : CURVE.BEND_DESKTOP;
@@ -1091,9 +1115,23 @@
           mob,
         };
       }
-      function layout() {
+      function measureLayout() {
+        // Read layout exactly once after load/resize, not per card on each frame.
+        isMobile = innerWidth <= 700;
+        cachedCardWidth = elements[0]?.offsetWidth || 440;
+        cachedCardHeight = cachedCardWidth / (isMobile ? 1.7 : 1.82);
+        const rr = reel.getBoundingClientRect();
+        const sr = stage.getBoundingClientRect();
+        particleCenterX =
+          rr.left - sr.left + rr.width * (isMobile ? 0.5 : 0.55);
+        particleCenterY = rr.top - sr.top + rr.height * 0.5;
+        workStartY = window.scrollY + works.getBoundingClientRect().top;
+        workScrollLength = Math.max(1, works.offsetHeight - innerHeight);
+      }
+      function layout(now = performance.now(), forceParticles = false) {
         elements.forEach((el, i) => {
           const g = cardGeometry(i);
+          geometryCache[i] = g; // also used by particles; no duplicate geometry work
           const hide = g.a > 3.9;
           el.style.transform = `translate3d(calc(-50% + ${g.x.toFixed(1)}px),calc(-50% + ${g.y.toFixed(1)}px),${g.z.toFixed(1)}px) rotateZ(${g.spin.toFixed(2)}deg) rotateX(${g.pitch.toFixed(2)}deg) rotateY(${g.yaw.toFixed(2)}deg) scale(${g.scale.toFixed(3)})`;
           el.style.zIndex = String(50 + Math.round(g.d * 5));
@@ -1105,30 +1143,37 @@
           el.classList.toggle("active", g.a < 0.5);
         });
         setActive(Math.round(position));
-        $("scroll-track-progress").style.height =
-          ((position / (N - 1)) * 100).toFixed(2) + "%";
-        particles.draw(position);
+        $("scroll-track-progress").style.transform =
+          `scaleY(${(position / Math.max(1, N - 1)).toFixed(4)})`;
+        // The card transforms animate at display refresh rate; the decorative
+        // particle canvas gets a smaller, capped redraw budget.
+        const particleInterval = isMobile ? 33 : 26;
+        if (forceParticles || now - lastParticleDraw >= particleInterval) {
+          particles.draw(position, geometryCache);
+          lastParticleDraw = now;
+        }
       }
-
-      // The reel eases toward the live scroll position each frame (frame-rate independent).
       function readTarget() {
-        const top = works.getBoundingClientRect().top;
-        const available = Math.max(1, works.offsetHeight - innerHeight);
-        target = bound(-top / available, 0, 1) * (N - 1);
+        target =
+          bound((window.scrollY - workStartY) / workScrollLength, 0, 1) *
+          (N - 1);
       }
       function tick(now) {
         raf = 0;
-        const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
+        const dt = Math.min(
+          0.05,
+          Math.max(0.001, (now - last) / 1000 || 0.016),
+        );
         last = now;
         readTarget();
         const diff = target - position;
         if (reduced || Math.abs(diff) < 0.0005) {
           position = target;
-          layout();
-          return; // settled: stop the loop until the next scroll
+          layout(now, true); // final frame must update the particle canvas
+          return; // no perpetual reel animation while idle
         }
         position += diff * (1 - Math.exp(-dt * EASE));
-        layout();
+        layout(now);
         raf = requestAnimationFrame(tick);
       }
       function queueUpdate() {
@@ -1138,11 +1183,18 @@
         }
       }
       window.addEventListener("scroll", queueUpdate, { passive: true });
+      let resizeRequest = 0;
       window.addEventListener(
         "resize",
         () => {
-          particles.resize();
-          queueUpdate();
+          if (resizeRequest) return;
+          resizeRequest = requestAnimationFrame(() => {
+            resizeRequest = 0;
+            measureLayout();
+            particles.resize();
+            lastParticleDraw = -Infinity;
+            queueUpdate();
+          });
         },
         { passive: true },
       );
@@ -1161,7 +1213,7 @@
         const canvas = $("particle-canvas"),
           ctx = canvas.getContext("2d", { alpha: true });
         const TAU = Math.PI * 2,
-          COUNT = innerWidth < 700 ? 520 : 690;
+          COUNT = reduced ? 180 : innerWidth <= 700 ? 280 : 460;
         let seed = 20261027;
         const rand = () => {
           seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
@@ -1237,15 +1289,12 @@
           canvas.height = Math.round(stageHeight * deviceScale);
           ctx.setTransform(deviceScale, 0, 0, deviceScale, 0, 0);
         }
-        function draw(pos) {
+        function draw(pos, geometries) {
           ctx.clearRect(0, 0, stageWidth, stageHeight);
-          const rr = reel.getBoundingClientRect(),
-            sr = stage.getBoundingClientRect();
-          const baseX =
-            rr.left - sr.left + rr.width * (innerWidth <= 700 ? 0.5 : 0.55);
-          const baseY = rr.top - sr.top + rr.height * 0.5;
+          const baseX = particleCenterX;
+          const baseY = particleCenterY;
           for (let i = 0; i < N; i++) {
-            const g = cardGeometry(i);
+            const g = geometries[i];
             if (g.a > 2.65) continue;
             const perspective = 1250 / (1250 - g.z);
             const cx = baseX + g.x * perspective,
@@ -1299,10 +1348,20 @@
 
       // Initial render at the correct scroll position (no animation in from 0).
       current = -1;
+      measureLayout();
       readTarget();
       position = target;
-      layout();
+      layout(performance.now(), true);
+      // Font and viewport changes can alter dimensions after the first paint.
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(() => {
+          measureLayout();
+          particles.resize();
+          queueUpdate();
+        });
+      }
     </script>
+
     <script>
       /* Custom cursor: follows the mouse, ring grows over links and buttons */
       (function () {
@@ -1318,12 +1377,25 @@
         let mx = innerWidth / 2,
           my = innerHeight / 2,
           rx = mx,
-          ry = my;
+          ry = my,
+          cursorRaf = 0;
+        // Wake the cursor only when it moves, rather than rendering forever.
+        function updateCursor() {
+          cursorRaf = 0;
+          rx += (mx - rx) * 0.22;
+          ry += (my - ry) * 0.22;
+          ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
+          if (Math.abs(mx - rx) > 0.15 || Math.abs(my - ry) > 0.15) {
+            cursorRaf = requestAnimationFrame(updateCursor);
+          }
+        }
         document.addEventListener(
           "mousemove",
           (e) => {
             mx = e.clientX;
             my = e.clientY;
+            dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
+            if (!cursorRaf) cursorRaf = requestAnimationFrame(updateCursor);
           },
           { passive: true },
         );
@@ -1339,15 +1411,7 @@
           )
             document.body.classList.remove("cursor-hover");
         });
-        (function tick() {
-          rx += (mx - rx) * 0.15;
-          ry += (my - ry) * 0.15;
-          dot.style.transform = `translate3d(${mx}px,${my}px,0) translate(-50%,-50%)`;
-          ring.style.transform = `translate3d(${rx}px,${ry}px,0) translate(-50%,-50%)`;
-          requestAnimationFrame(tick);
-        })();
       })();
     </script>
-    <script src="codelive.js" defer></script>
   </body>
 </html>
